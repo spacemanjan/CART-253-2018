@@ -1,32 +1,49 @@
 // Exercise 1 - Moving pictures
-// Pippin Barr
+// Yann-Maurice McNiven
 //
 // Starter code for exercise 1.
 // It moves two pictures around on the canvas.
 // One moves linearly down the screen.
 // One moves toward the mouse cursor.
 
+// Added code for exercise 1.
+// Adds two more moving pictures on the canvas.
+// One moves horizontally left to right on the screen.
+// One moves wherever the mouse cursor is.
 
+// Pippin wrote dis
 // The image of a clown face
 var clownImage;
+// Yan wrote dis
+var soupImage;
 // The current position of the clown face
 var clownImageX;
 var clownImageY;
+// Current soup position
+var soupImageX;
+var soupImageY;
 
 // The transparent image of "felt" that wipes down the canvas
 var feltTextureImage;
+// The semi-transparent image of honeycombs that moves horizontally
+var combTextureImage;
 // The current position of the transparent image of "felt"
 var feltTextureImageX;
 var feltTextureImageY;
+// The current position of the "honeycomb" image
+var combTextureImageX;
+var combTextureImageY;
 
 
 // preload()
 //
-// Load the two images we're using before the program starts
+// Load the four images we're using before the program starts
 
 function preload() {
   clownImage = loadImage("assets/images/clown.png");
+  soupImage = loadImage("assets/images/soup.png");
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
+  combTextureImage = loadImage("assets/images/honey-comb.png");
 }
 
 
@@ -46,6 +63,13 @@ function setup() {
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
 
+  // Start the honeycomb image off screen to the left of the createCanvas
+  // what does the width & height stand for in the code?
+  // !!!!!!!!!!!!!!
+  combTextureImageX = 0 - combTextureImage.width/2;
+  combTextureImageY = height/2;
+
+
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
 }
@@ -60,9 +84,13 @@ function draw() {
 
   // Move the felt image down by increasing its y position
   feltTextureImageY += 1;
+  // Move the comb image to the left by increasing the x position
+  combTextureImageX ++;
 
   // Display the felt image
   image(feltTextureImage,feltTextureImageX,feltTextureImageY);
+  // Display the comb image
+  image(combTextureImage,combTextureImageX,combTextureImageY);
 
   // Move the clown by moving it 1/10th of its current distance from the mouse
 
