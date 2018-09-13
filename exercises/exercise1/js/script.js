@@ -6,15 +6,16 @@
 // One moves linearly down the screen.
 // One moves toward the mouse cursor.
 
+// yan wrote this
 // Added code for exercise 1.
 // Adds two more moving pictures on the canvas.
 // One moves horizontally left to right on the screen.
 // One moves wherever the mouse cursor is.
 
-// Pippin wrote dis
+// Pippin wrote half of dis
 // The image of a clown face
 var clownImage;
-// Yan wrote dis
+
 // The images of soup and shrimp
 var soupImage;
 var shrimpImage;
@@ -63,9 +64,11 @@ function setup() {
   // Start the clown image at the centre of the canvas
   clownImageX = width/2;
   clownImageY = height/2;
-  // Start the shrimp image wherever the mouse is
-  // shrimpImageX = mouseX;
-  // shrimpImageY = mouseY;
+
+  // Start the soup image in the middle of the canvas
+  soupImageX = width/2;
+  soupImageY = height/2;
+
   // Start the felt image perfectly off screen above the canvas
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
@@ -109,9 +112,19 @@ function draw() {
 
   // Display the clown image
   image(clownImage,clownImageX,clownImageY);
+  // Calculates the distance between soupX&Y and mouseX&Y
+  var xDistanceSoup = mouseX - soupImageX;
+  var yDistanceSoup = mouseY - soupImageY;
+  // add 1/40th of the x and y distance from the soups current location
+  soupImageX = soupImageX + xDistanceSoup/80;
+  soupImageY = soupImageY + yDistanceSoup/80;
 
+  // Display the soup yum yum
+  image(soupImage,soupImageX,soupImageY);
+
+  // Keeps the shrimp moving with the mouse
   shrimpImageX = mouseX;
   shrimpImageY = mouseY;
-
+  // Display the crustacean
   image(shrimpImage,shrimpImageX,shrimpImageY);
 }
