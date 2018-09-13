@@ -15,13 +15,17 @@
 // The image of a clown face
 var clownImage;
 // Yan wrote dis
+// The images of soup and shrimp
 var soupImage;
+var shrimpImage;
 // The current position of the clown face
 var clownImageX;
 var clownImageY;
-// Current soup position
+// Current soup & shrimp position
 var soupImageX;
 var soupImageY;
+var shrimpImageX;
+var shrimpImageY;
 
 // The transparent image of "felt" that wipes down the canvas
 var feltTextureImage;
@@ -42,6 +46,7 @@ var combTextureImageY;
 function preload() {
   clownImage = loadImage("assets/images/clown.png");
   soupImage = loadImage("assets/images/soup.png");
+  shrimpImage = loadImage("assets/images/shrimp.png");
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
   combTextureImage = loadImage("assets/images/honey-comb.png");
 }
@@ -58,14 +63,15 @@ function setup() {
   // Start the clown image at the centre of the canvas
   clownImageX = width/2;
   clownImageY = height/2;
-
+  // Start the shrimp image wherever the mouse is
+  // shrimpImageX = mouseX;
+  // shrimpImageY = mouseY;
   // Start the felt image perfectly off screen above the canvas
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
 
   // Start the honeycomb image off screen to the left of the createCanvas
-  // what does the width & height stand for in the code?
-  // !!!!!!!!!!!!!!
+  // height/2 means that the image moves along the middle of the screen
   combTextureImageX = 0 - combTextureImage.width/2;
   combTextureImageY = height/2;
 
@@ -103,4 +109,9 @@ function draw() {
 
   // Display the clown image
   image(clownImage,clownImageX,clownImageY);
+
+  shrimpImageX = mouseX;
+  shrimpImageY = mouseY;
+
+  image(shrimpImage,shrimpImageX,shrimpImageY);
 }
