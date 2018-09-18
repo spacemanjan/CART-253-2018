@@ -13,7 +13,7 @@ var avatarY;
 var avatarSize = 50;
 
 // The speed and velocity of our avatar circle
-var avatarSpeed = 10;
+var avatarSpeed = 20;
 var avatarVX = 0;
 var avatarVY = 0;
 
@@ -32,6 +32,13 @@ var enemySpeedIncrease = 0.5;
 
 // How many dodges the player has made
 var dodges = 0;
+
+// Here we have our text variables
+var scoreFont;
+
+function preload() {
+  scoreFont = loadFont('assets/fonts/LuckiestGuy-Regular.ttf');
+}
 
 // setup()
 //
@@ -131,6 +138,8 @@ function draw() {
     dodges = dodges + 1;
     // Tell them how many dodges they have made
     console.log(dodges + " DODGES!");
+    // add a point to the score counter
+
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
     enemyY = random(0,height);
@@ -151,5 +160,11 @@ function draw() {
   fill(255,0,0);
   // Draw the enemy as a circle
   ellipse(enemyX,enemyY,enemySize,enemySize);
+
+  fill(255);
+  text("The score is:",400,30);
+  textSize(15);
+  text(dodges,475,31);
+  ellipse(500,10,100,100);
 
 }
