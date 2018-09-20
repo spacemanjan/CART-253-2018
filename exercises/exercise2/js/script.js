@@ -14,7 +14,7 @@ var avatarY;
 var avatarSize = 50;
 
 // The speed and velocity of our avatar circle
-var avatarSpeed = 20;
+var avatarSpeed = 10;
 var avatarVX = 0;
 var avatarVY = 0;
 
@@ -39,9 +39,13 @@ var scoreFont;
 // Default font Size
 var fontSize = 15;
 
+// Slow mo power variable
+var slowMo = false;
+var slowSpeed = 5;
+var powerMode = false;
 // Made a preload function
 function preload() {
-// loading font pulled from google fonts
+// loading font pulled from google fonts in the assets folder
   scoreFont = loadFont('assets/fonts/LuckiestGuy-Regular.ttf');
 }
 
@@ -124,6 +128,8 @@ function draw() {
     dodges = 0;
     // Reset Score size
     fontSize = 15;
+    // Reset SlowMo
+    slowMo = false;
   }
 
   // Check if the avatar has gone off the screen (cheating!)
@@ -138,6 +144,7 @@ function draw() {
     avatarY = height/2;
     dodges = 0;
     fontSize = 15;
+    slowMo = false;
   }
 
   // Check if the enemy has moved all the way across the screen
@@ -148,14 +155,28 @@ function draw() {
     console.log(dodges + " DODGES!");
     // increase the size of the score
     fontSize = fontSize + 0.5;
-    console.log(fontSize + " GROW!")
+    console.log(fontSize + " GROW!");
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
     enemyY = random(0,height);
     // Increase the enemy's speed and size to make the game harder
     enemySpeed = enemySpeed + enemySpeedIncrease;
     enemySize = enemySize + enemySizeIncrease;
+    // add dot to power Barr
+
   }
+  // slow motion power
+  // every 5 dodges slow motion becomes available
+  if (dodges == 5 || dodges == 10 || dodges == 15 || dodges == 20) {
+    slowMo = true;
+  }
+  // if slow motion is available press the space key to slow enemies
+  if ((slowMo == true) && keyIsDown(32)) {
+    enemySpeed = slowSpeed;
+    slowMo = false;
+    console.log("SLOW MO TIME");
+  }
+
 
   // Display the current number of successful in the console
   console.log(dodges);
