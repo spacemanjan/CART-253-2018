@@ -1,8 +1,9 @@
 /*********************************************************
 
 Exercise 2 - The Artful Dodger
-Pippin Barr
+Yann-Maurice
 
+Pippin Barr:
 Starter code for exercise 2.
 
 *********************************************************/
@@ -35,8 +36,11 @@ var dodges = 0;
 
 // Here we have our text variables
 var scoreFont;
+var fontSize = 15;
 
+// Made a preload function
 function preload() {
+// loading font pulled from google fonts
   scoreFont = loadFont('assets/fonts/LuckiestGuy-Regular.ttf');
 }
 
@@ -117,6 +121,8 @@ function draw() {
     avatarY = height/2;
     // Reset the dodge counter
     dodges = 0;
+    // Reset Score size
+    fontSize = 15;
   }
 
   // Check if the avatar has gone off the screen (cheating!)
@@ -130,6 +136,7 @@ function draw() {
     avatarX = width/2;
     avatarY = height/2;
     dodges = 0;
+    fontSize = 15;
   }
 
   // Check if the enemy has moved all the way across the screen
@@ -138,8 +145,9 @@ function draw() {
     dodges = dodges + 1;
     // Tell them how many dodges they have made
     console.log(dodges + " DODGES!");
-    // add a point to the score counter
-
+    // increase the size of the score
+    fontSize = fontSize + 0.5;
+    console.log(fontSize + " GROW!")
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
     enemyY = random(0,height);
@@ -161,10 +169,18 @@ function draw() {
   // Draw the enemy as a circle
   ellipse(enemyX,enemyY,enemySize,enemySize);
 
+  // Decorative Circle at the top right
   fill(255);
-  text("The score is:",400,30);
-  textSize(15);
-  text(dodges,475,31);
   ellipse(500,10,100,100);
+  // Text elements
+  fill(0);
+  textSize(15);
+  textAlign(RIGHT);
+  text("You've dodged:",450,30);
+  // Number of dodges
+  textSize(fontSize);
+  text(dodges,485,31);
+  textFont(scoreFont);
+  constrain(fontSize + 1,15,25)
 
 }
