@@ -46,6 +46,10 @@ var slowSpeed = 3;
 var rR;
 var rG;
 var rB;
+//color themes
+var playerTheme = 255;
+var backgroundTheme = 150;
+var enemyTheme = 30;
 // Made a preload function
 function preload() {
 // loading font pulled from google fonts in the assets folder
@@ -77,7 +81,7 @@ function setup() {
 // game over situations.
 function draw() {
   // A pink background
-  background(255,220,220);
+  background(playerTheme,backgroundTheme,enemyTheme);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -132,7 +136,7 @@ function draw() {
     avatarY = height/2;
     // Reset the avatar's Size & speed
     avatarSize = 50;
-    avatarSpeed = 0;
+    avatarSpeed = 10;
     // Reset the dodge counter
     dodges = 0;
     // Reset Score size
@@ -152,7 +156,7 @@ function draw() {
     avatarX = width/2;
     avatarY = height/2;
     avatarSize = 50;
-    avatarSpeed = 0;
+    avatarSpeed = 10;
     dodges = 0;
     fontSize = 15;
     slowMo = false;
@@ -175,6 +179,10 @@ function draw() {
     // change size of avatar
     avatarSize = random(1,150);
     avatarSpeed = random(5,17);
+    // change colors
+    playerTheme = random(0,255);
+    backgroundTheme = random(0,255);
+    enemyTheme = random(0,255);
   }
 
   // slow motion power
@@ -184,28 +192,33 @@ function draw() {
   }
   // if slow motion is available press the space key to slow enemies
   if ((slowMo == true) && keyIsDown(32)) {
-    enemySpeed = (enemySpeed/2) + slowSpeed;
+    enemySpeed = (enemySpeed/2.5) + slowSpeed;
     slowMo = false;
   }
-
-
+  // if slow motion is available show "PRESS SPACE TO SLOW DOWN"
   if (slowMo == true) {
     textSize(15);
     fill(rR,rG,rB);
     text("Press Space to Slow Down",450,60);
   } else if (slowMo == false) {
   }
-
+  // End game Screen
+  if (dodges == 50){
+    enemySpeed = 0;
+    fill(rR,rG,rB);
+    textSize(15);
+    text("Wow would you look at that you won!",250,250);
+  }
   // Display the current number of successful in the console
   console.log(dodges);
 
   // The player is black
-  fill(0);
+  fill(playerTheme);
   // Draw the player as a circle
   ellipse(avatarX,avatarY,avatarSize,avatarSize);
 
   // The enemy is red
-  fill(255,0,0);
+  fill(enemyTheme,playerTheme,backgroundTheme);
   // Draw the enemy as a circle
   ellipse(enemyX,enemyY,enemySize,enemySize);
 
@@ -221,7 +234,6 @@ function draw() {
   textSize(fontSize);
   text(dodges,485,31);
   textFont(scoreFont);
-
 
 
 }
