@@ -41,13 +41,11 @@ var fontSize = 15;
 
 // Slow mo power variable
 var slowMo = false;
-var slowSpeed = 5;
+var slowSpeed = 3;
 // random colors
 var rR;
 var rG;
 var rB;
-
-
 // Made a preload function
 function preload() {
 // loading font pulled from google fonts in the assets folder
@@ -132,6 +130,9 @@ function draw() {
     // Reset the avatar's position
     avatarX = width/2;
     avatarY = height/2;
+    // Reset the avatar's Size & speed
+    avatarSize = 50;
+    avatarSpeed = 0;
     // Reset the dodge counter
     dodges = 0;
     // Reset Score size
@@ -150,6 +151,8 @@ function draw() {
     enemySpeed = 5;
     avatarX = width/2;
     avatarY = height/2;
+    avatarSize = 50;
+    avatarSpeed = 0;
     dodges = 0;
     fontSize = 15;
     slowMo = false;
@@ -161,7 +164,7 @@ function draw() {
     dodges = dodges + 1;
     // Tell them how many dodges they have made
     console.log(dodges + " DODGES!");
-    // increase the size of the score
+    // increase the size of the score and constrain it to 25
     fontSize = constrain(fontSize + 0.5,15,25);
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
@@ -169,8 +172,11 @@ function draw() {
     // Increase the enemy's speed and size to make the game harder
     enemySpeed = enemySpeed + enemySpeedIncrease;
     enemySize = enemySize + enemySizeIncrease;
-    // Increase Charge Bar Multiplier by 1
+    // change size of avatar
+    avatarSize = random(1,150);
+    avatarSpeed = random(5,17);
   }
+
   // slow motion power
   // every 5 dodges slow motion becomes available
   if (dodges == 5 || dodges == 10 || dodges == 15 || dodges == 20 || dodges == 25 || dodges == 30 || dodges == 35 || dodges == 40 || dodges == 50) {
@@ -178,18 +184,17 @@ function draw() {
   }
   // if slow motion is available press the space key to slow enemies
   if ((slowMo == true) && keyIsDown(32)) {
-    enemySpeed = slowSpeed;
+    enemySpeed = (enemySpeed/2) + slowSpeed;
     slowMo = false;
-    console.log("SLOW MO TIME");
   }
+
+
   if (slowMo == true) {
     textSize(15);
     fill(rR,rG,rB);
     text("Press Space to Slow Down",450,60);
   } else if (slowMo == false) {
-
   }
-
 
   // Display the current number of successful in the console
   console.log(dodges);
@@ -216,9 +221,7 @@ function draw() {
   textSize(fontSize);
   text(dodges,485,31);
   textFont(scoreFont);
-  // constrain fontSize so it doesn't bleed off screen
 
-  console.log(fontSize);
 
 
 }
