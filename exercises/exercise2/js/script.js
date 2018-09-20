@@ -36,6 +36,7 @@ var dodges = 0;
 
 // Here we have our text variables
 var scoreFont;
+// Default font Size
 var fontSize = 15;
 
 // Made a preload function
@@ -181,6 +182,7 @@ function draw() {
   textSize(fontSize);
   text(dodges,485,31);
   textFont(scoreFont);
+  // constrain fontSize so it doesn't bleed off screen
   constrain(fontSize + 1,15,25)
 
 }
