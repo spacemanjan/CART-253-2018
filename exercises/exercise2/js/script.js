@@ -42,7 +42,12 @@ var fontSize = 15;
 // Slow mo power variable
 var slowMo = false;
 var slowSpeed = 5;
-var powerMode = false;
+// random colors
+var rR;
+var rG;
+var rB;
+
+
 // Made a preload function
 function preload() {
 // loading font pulled from google fonts in the assets folder
@@ -79,7 +84,10 @@ function draw() {
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
   avatarVY = 0;
-
+  // fetch random number for random rgb
+  rR = random(0,255);
+  rG = random(0,255);
+  rB = random(0,255);
   // Check which keys are down and set the avatar's velocity based on its
   // speed appropriately
 
@@ -154,20 +162,18 @@ function draw() {
     // Tell them how many dodges they have made
     console.log(dodges + " DODGES!");
     // increase the size of the score
-    fontSize = fontSize + 0.5;
-    console.log(fontSize + " GROW!");
+    fontSize = constrain(fontSize + 0.5,15,25);
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
     enemyY = random(0,height);
     // Increase the enemy's speed and size to make the game harder
     enemySpeed = enemySpeed + enemySpeedIncrease;
     enemySize = enemySize + enemySizeIncrease;
-    // add dot to power Barr
-
+    // Increase Charge Bar Multiplier by 1
   }
   // slow motion power
   // every 5 dodges slow motion becomes available
-  if (dodges == 5 || dodges == 10 || dodges == 15 || dodges == 20) {
+  if (dodges == 5 || dodges == 10 || dodges == 15 || dodges == 20 || dodges == 25 || dodges == 30 || dodges == 35 || dodges == 40 || dodges == 50) {
     slowMo = true;
   }
   // if slow motion is available press the space key to slow enemies
@@ -175,6 +181,13 @@ function draw() {
     enemySpeed = slowSpeed;
     slowMo = false;
     console.log("SLOW MO TIME");
+  }
+  if (slowMo == true) {
+    textSize(15);
+    fill(rR,rG,rB);
+    text("Press Space to Slow Down",450,60);
+  } else if (slowMo == false) {
+
   }
 
 
@@ -204,6 +217,8 @@ function draw() {
   text(dodges,485,31);
   textFont(scoreFont);
   // constrain fontSize so it doesn't bleed off screen
-  constrain(fontSize + 1,15,25)
+
+  console.log(fontSize);
+
 
 }
