@@ -112,12 +112,12 @@ function setup() {
     }
   }
   //Poster location
-  posterX = windowWidth;
+  posterX = width-200;
   posterY = 0;
-  rectMode(CORNERS);
+
   fill(255);
   noStroke();
-  rect(posterX,posterY,1210,230);
+  rect(posterX,posterY,200,200);
   //Dog picture location
   image(posterImage,(windowWidth/2*1.85),110);
   fill(0);
@@ -127,13 +127,35 @@ function setup() {
   text("PERDITA HUNDO",(windowWidth/2*1.73),190);
   text("LOST DOG",(windowWidth/2*1.78),50);
   // Once we've displayed all decoys, we choose a location for the target
+  // we declare targeX and targetY
   targetX = random(0,width);
   targetY = random(0,height);
+  // make while loop saying "if target(x,y) is in the poster(x,y) then re-randomize target(x,y)"
+  while(targetX >= posterX && targetY <= 200){
+  targetX = random(0,width);
+  targetY = random(0,height);
+}
   // And draw it (this means it will always be on top)
   image(targetImage,targetX,targetY);
+  // Draw poster so ALL dogs (go to heaven...no) appear underneath the poster
+  fill(255);
+  noStroke();
+  rect(posterX,posterY,200,200);
+  //Dog picture location
+  image(posterImage,(windowWidth/2*1.85),110);
+  fill(0);
+  //LOST DOG Text in both english and the universal Esperanto
+  textSize(20);
+  textFont(posterFont);
+  text("PERDITA HUNDO",(windowWidth/2*1.73),190);
+  text("LOST DOG",(windowWidth/2*1.78),50);
 }
 
 function draw() {
+  while(targetX >= posterX && targetY < 200){
+  targetX = random(0,width);
+  targetY = random(0,height);
+}
   if (gameOver) {
     // Prepare our typography
     textFont("Helvetica");
