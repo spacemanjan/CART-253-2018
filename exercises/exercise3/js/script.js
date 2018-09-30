@@ -15,6 +15,9 @@ https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal
 var targetX;
 var targetY;
 var targetImage;
+var targetAcc = 0.15;
+var targetSpeed = 2;
+var targetSize = 120;
 
 // Position and image of the sausage Dog poster
 var posterImage;
@@ -135,8 +138,9 @@ function setup() {
   targetX = random(0,width);
   targetY = random(0,height);
 }
+  // targetSize = 120;
   // And draw it (this means it will always be on top)
-  image(targetImage,targetX,targetY);
+  image(targetImage,targetX,targetY,targetSize,targetSize);
   // Draw poster so ALL dogs (go to heaven...no) appear underneath the poster
   fill(255);
   noStroke();
@@ -149,13 +153,10 @@ function setup() {
   textFont(posterFont);
   text("PERDITA HUNDO",(windowWidth/2*1.73),190);
   text("LOST DOG",(windowWidth/2*1.78),50);
+  console.log(targetX,targetY);
 }
 
 function draw() {
-  while(targetX >= posterX && targetY < 200){
-  targetX = random(0,width);
-  targetY = random(0,height);
-}
   if (gameOver) {
     // Prepare our typography
     textFont("Helvetica");
@@ -165,11 +166,25 @@ function draw() {
     fill(random(255));
     // Tell them they won!
     text("YOU WINNED!",width/2,height/2);
+    // Flashing circle
+    // noFill();
+    // stroke(random(255));
+    // strokeWeight(10);
+    // ellipse(targetX,targetY,targetImage.width,targetImage.height);
 
-    noFill();
-    stroke(random(255));
-    strokeWeight(10);
-    ellipse(targetX,targetY,targetImage.width,targetImage.height);
+    //Create a limited variable that randomly fluctuates the size of the dog
+    var targetGrowth = random(-100,100);
+    //makes the dog run around the screen when they win
+    image(targetImage,targetX,targetY,targetSize,targetSize);
+    targetSpeed = targetSpeed + targetAcc;
+    targetX = targetX + targetSpeed;
+    //what makes the size of doggo grow
+    targetSize = targetSize + targetGrowth;
+    //creates wrapper
+    if (targetX > width) {
+      targetY = random(0,height);
+      targetX = 0 - 100;
+    }
   }
 }
 
