@@ -1,8 +1,9 @@
 /******************************************************************************
 Where's Sausage Dog?
 by Pippin Barr
+Edited by Yann-Maurice McNiven
 
-An algorithmic version of a Where's Wally searching game where you
+An algorithmic version of a Where's Waldo searching game where you
 need to click on the sausage dog you're searching for in amongst all
 the visual noise of other animals.
 
@@ -14,7 +15,13 @@ https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal
 var targetX;
 var targetY;
 var targetImage;
-jij
+
+// Position and image of the sausage Dog poster
+var posterImage;
+var posterX;
+var posterY;
+var posterFont;
+
 // The ten decoy images
 var decoyImage1;
 var decoyImage2;
@@ -39,7 +46,7 @@ var gameOver = false;
 // Loads the target and decoy images before the program starts
 function preload() {
   targetImage = loadImage("assets/images/animals-target.png");
-
+  posterImage = loadImage("assets/images/animals-target.png");
   decoyImage1 = loadImage("assets/images/animals-01.png");
   decoyImage2 = loadImage("assets/images/animals-02.png");
   decoyImage3 = loadImage("assets/images/animals-03.png");
@@ -50,6 +57,8 @@ function preload() {
   decoyImage8 = loadImage("assets/images/animals-08.png");
   decoyImage9 = loadImage("assets/images/animals-09.png");
   decoyImage10 = loadImage("assets/images/animals-10.png");
+
+  posterFont = loadFont("assets/fonts/Raleway-Black.ttf");
 }
 
 // setup()
@@ -102,7 +111,21 @@ function setup() {
       image(decoyImage10,x,y);
     }
   }
-
+  //Poster location
+  posterX = windowWidth;
+  posterY = 0;
+  rectMode(CORNERS);
+  fill(255);
+  noStroke();
+  rect(posterX,posterY,1210,230);
+  //Dog picture location
+  image(posterImage,(windowWidth/2*1.85),110);
+  fill(0);
+  //LOST DOG Text in both english and the universal Esperanto
+  textSize(20);
+  textFont(posterFont);
+  text("PERDITA HUNDO",(windowWidth/2*1.73),190);
+  text("LOST DOG",(windowWidth/2*1.78),50);
   // Once we've displayed all decoys, we choose a location for the target
   targetX = random(0,width);
   targetY = random(0,height);
