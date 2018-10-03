@@ -42,6 +42,7 @@ var decoyImage8;
 var decoyImage9;
 var decoyImage10;
 
+//declare doggos array
 var doggos = [];
 
 // The number of decoys to show on the screen, randomly
@@ -51,7 +52,7 @@ var numDecoys = 200;
 // Keep track of whether they've won
 var gameOver = false;
 
-// Play sound variable
+// sound variable
 var flightMp3;
 var wagner = false;
 
@@ -88,7 +89,9 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   background("#ffff00");
   imageMode(CENTER);
-
+  //
+  //set up doggos array & doggos properties
+  // there are 40 doggos each with a x,y,acceleration
   for (var i = 0; i < 40; i++) {
     doggos[i] = {
       x: random(-width, -10),
@@ -171,6 +174,7 @@ function setup() {
 
 function draw() {
   if (gameOver) {
+    // make the wagner variable true
     wagner = true;
     //* GAME OVER *//
     //
@@ -200,14 +204,16 @@ function draw() {
     image(targetImage, targetX, targetY, targetSize, targetSize);
 
     //spawns multiple dogs to run around on the end screen
+    //as long as i is less then the number of doggos(40) then keep making dogs
     for (var i = 2; i < doggos.length; i++) {
-      let d = doggos[i]
-      image(targetImage, d.x, d.y, targetSize, targetSize);
-      d.x += d.acc
-      // d.y += d.acc
+      let dogs = doggos[i]
+      image(targetImage, dogs.x, dogs.y, targetSize, targetSize);
+      dogs.x += dogs.acc
 
-      if (d.x > width + 40) {
-        d.x = -200
+    //* Wraper for doggos *//
+    //makes a simple wrapper for the many doggos//
+      if (dogs.x > width + 40) {
+        dogs.x = -200
       }
     }
 
@@ -227,6 +233,9 @@ function draw() {
     }
 
   }
+  //* MUSIC *//
+  //
+  //play music when game is over.
   if (wagner == true) {
     flightMp3.play();
   }
