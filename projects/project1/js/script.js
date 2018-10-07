@@ -32,7 +32,12 @@ var preyY;
 var preyRadius = 25;
 var preyVX;
 var preyVY;
-var preyMaxSpeed = 4;
+var preyMaxSpeed = 5.5;
+// Prey perlin noise variable
+//* ASK PIPPIN ABOUT PERLIN NOISE *//
+var preyTX;
+var preyTY;
+
 // Prey health
 var preyHealth;
 var preyMaxHealth = 100;
@@ -65,6 +70,9 @@ function setupPrey() {
   preyVX = -preyMaxSpeed;
   preyVY = preyMaxSpeed;
   preyHealth = preyMaxHealth;
+  //
+  preyTX = random(0,1000);
+  preyTY = random(0,1000);
 }
 
 // setupPlayer()
@@ -202,14 +210,14 @@ function movePrey() {
   // Change the prey's velocity at random intervals
   // random() will be < 0.05 5% of the time, so the prey
   // will change direction on 5% of frames
-  if (random() < 0.05) {
-    // Set velocity based on random values to get a new direction
-    // and speed of movement
-    // Use map() to convert from the 0-1 range of the random() function
-    // to the appropriate range of velocities for the prey
-    preyVX = map(random(),0,1,-preyMaxSpeed,preyMaxSpeed);
-    preyVY = map(random(),0,1,-preyMaxSpeed,preyMaxSpeed);
-  }
+  // Set velocity based on random values to get a new direction
+  // and speed of movement
+  // Use map() to convert from the 0-1 range of the random() function
+  // to the appropriate range of velocities for the prey
+  preyVX = map(noise(preyTX),0,1,-preyMaxSpeed,preyMaxSpeed);
+  preyVY = map(noise(preyTY),0,1,-preyMaxSpeed,preyMaxSpeed);
+  preyTX += 0.01;
+  preyTY += 0.01;
 
   // Update prey position based on velocity
   preyX += preyVX;
