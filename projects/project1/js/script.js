@@ -88,6 +88,8 @@ function setupPlayer() {
   playerX = 4*width/5;
   playerY = height/2;
   playerHealth = playerMaxHealth;
+  playerImgHappy = loadImage("assets/images/smileyface.png");
+  playerImgSad = loadImage("assets/images/sadface.png");
 }
 
 // draw()
@@ -279,7 +281,12 @@ function drawPrey() {
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
   fill(playerFill,playerHealth);
-  ellipse(playerX,playerY,playerRadius*2);
+  imageMode(CENTER);
+  tint(255,255);
+// sadface which appears if you can't eat enough pills
+  image(playerImgSad,playerX,playerY,100,100);
+  tint(255,playerHealth);
+  image(playerImgHappy,playerX,playerY,100,100);
 }
 
 // showGameOver()
@@ -290,7 +297,7 @@ function showGameOver() {
   textAlign(CENTER,CENTER);
   fill(0);
   var gameOverText = "GAME OVER\n";
-  gameOverText += "You ate " + preyEaten + " prey\n";
+  gameOverText += "You ate " + preyEaten + " pills\n";
   gameOverText += "before you died."
   text(gameOverText,width/2,height/2);
 }
