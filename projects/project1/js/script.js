@@ -57,6 +57,11 @@ var preyEaten = 0;
 var soundtrack;
 var gulpSound;
 
+// color variables
+var r;
+var g;
+var b;
+
 function preload(){
 soundtrack = new Audio ("assets/sounds/requiem.mp3");
 gulpSound = new Audio ("assets/sounds/gulp.mp3");
@@ -108,7 +113,7 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100,100,200);
+  background(r,g,b);
 
   if (!gameOver) {
     handleInput();
@@ -125,6 +130,7 @@ function draw() {
     sprintPlayer();
 
     sounds();
+    changeGame();
   }
   else {
     showGameOver();
@@ -305,14 +311,44 @@ function drawPlayer() {
   tint(255,playerHealth);
   image(playerImgHappy,playerX,playerY,100,100);
 }
-
+// game changer function
+function changeGame(){
+// Declare R G B which controls the background color
+  r = 100;
+  g = 100;
+  b = 200;
+// epilectic background colors
+  if (preyEaten >= 12 && preyEaten < 22){
+    r = random(0,255);
+    g = random(0,255);
+    b = random(0,255);
+  }
+  else if (preyEaten >= 22 && preyEaten < 32) {
+    r = 117;
+    g = 173;
+    b = 60;
+    preyMaxSpeed = 9;
+  }
+  else if (preyEaten >= 32 && preyEaten < 42){
+    r = random(0,255);
+    g = random(0,255);
+    b = random(0,255);
+    preyMaxSpeed = 12;
+  }
+  else if (preyEaten >= 42){
+    r = 80;
+    g = 81;
+    b = 79;
+    preyMaxSpeed = 18;
+  }
+}
 // showGameOver()
 //
 // Display text about the game being over!
 function showGameOver() {
   textSize(32);
   textAlign(CENTER,CENTER);
-  fill(0);
+  fill(255);
   var gameOverText = "GAME OVER\n";
   gameOverText += "You ate " + preyEaten + " pills\n";
   gameOverText += "before you died."
