@@ -221,7 +221,6 @@ function sounds() {
   // play sounds
   soundtrack.currenttime = 0;
   soundtrack.play();
-
 }
 
 // checkEating()
