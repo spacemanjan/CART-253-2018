@@ -19,12 +19,14 @@ var playerY;
 var playerRadius = 25;
 var playerVX = 0;
 var playerVY = 0;
-var playerMaxSpeed = 2;
+var playerMaxSpeed;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
 // Player fill color
 var playerFill = 50;
+// Player sprint
+var playerSprint = false;
 
 // Prey position, size, velocity
 var preyX;
@@ -32,7 +34,7 @@ var preyY;
 var preyRadius = 25;
 var preyVX;
 var preyVY;
-var preyMaxSpeed = 5.5;
+var preyMaxSpeed = 5;
 // Prey perlin noise variable
 //* ASK PIPPIN ABOUT PERLIN NOISE *//
 var preyTX;
@@ -105,6 +107,8 @@ function draw() {
 
     drawPrey();
     drawPlayer();
+
+    sprintPlayer();
   }
   else {
     showGameOver();
@@ -126,6 +130,11 @@ function handleInput() {
     playerVX = 0;
   }
 
+  if (keyIsDown(32)){
+    playerSprint = true;
+  } else {
+    playerSprint = false;
+  }
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerMaxSpeed;
@@ -162,14 +171,28 @@ function movePlayer() {
     playerY -= height;
   }
 }
-
+// Sets playerMaxSpeed at 4 when sprinting
+// resets playerMaxSpeed at 2 when not sprinting
+function sprintPlayer() {
+  if (playerSprint == true) {
+    playerMaxSpeed = 4;
+  }
+  else if (playerSprint == false){
+    playerMaxSpeed = 2;
+  }
+}
 // updateHealth()
 //
 // Reduce the player's health (every frame)
 // Check if the player is dead
 function updateHealth() {
   // Reduce player health, constrain to reasonable range
+  if (playerSprint == false) {
   playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
+  }
+  else if (playerSprint == true) {
+  playerHealth = constrain(playerHealth - 1,0,playerMaxHealth);
+  }
   // Check if the player is dead
   if (playerHealth === 0) {
     // If so, the game is over
