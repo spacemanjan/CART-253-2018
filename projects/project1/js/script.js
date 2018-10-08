@@ -53,6 +53,14 @@ var preyFill = 200;
 var eatHealth = 25.5;
 // Number of prey eaten during the game
 var preyEaten = 0;
+// Sound effects & Music
+var soundtrack;
+var gulpSound;
+
+function preload(){
+soundtrack = new Audio ("assets/sounds/requiem.mp3");
+gulpSound = new Audio ("assets/sounds/gulp.mp3");
+}
 
 // setup()
 //
@@ -115,6 +123,8 @@ function draw() {
     drawPlayer();
 
     sprintPlayer();
+
+    sounds();
   }
   else {
     showGameOver();
@@ -207,6 +217,13 @@ function updateHealth() {
   }
 }
 
+function sounds() {
+  // play sounds
+  soundtrack.currenttime = 0;
+  soundtrack.play();
+
+}
+
 // checkEating()
 //
 // Check if the player overlaps the prey and updates health of both
@@ -222,6 +239,7 @@ function checkEating() {
 
     // Check if the prey died
     if (preyHealth === 0) {
+      gulpSound.play();
       // Move the "new" prey to a random position
       preyX = random(0,width);
       preyY = random(0,height);
