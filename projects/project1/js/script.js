@@ -13,13 +13,15 @@ sprinting, random movement, screen wrap.
 // Track whether the game is over
 var gameOver = false;
 
-// Player position, size, velocity
+// Player position, size, velocity, images
 var playerX;
 var playerY;
 var playerRadius = 25;
 var playerVX = 0;
 var playerVY = 0;
 var playerMaxSpeed;
+var playerImgHappy;
+var playerImgSad;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
@@ -28,13 +30,14 @@ var playerFill = 50;
 // Player sprint
 var playerSprint = false;
 
-// Prey position, size, velocity
+// Prey position, size, velocity, image
 var preyX;
 var preyY;
 var preyRadius = 25;
 var preyVX;
 var preyVY;
 var preyMaxSpeed = 5;
+var preyImg;
 // Prey perlin noise variable
 //* ASK PIPPIN ABOUT PERLIN NOISE *//
 var preyTX;
@@ -42,12 +45,12 @@ var preyTY;
 
 // Prey health
 var preyHealth;
-var preyMaxHealth = 100;
+var preyMaxHealth = 255;
 // Prey fill color
 var preyFill = 200;
 
 // Amount of health obtained per frame of "eating" the prey
-var eatHealth = 10;
+var eatHealth = 25.5;
 // Number of prey eaten during the game
 var preyEaten = 0;
 
@@ -75,6 +78,7 @@ function setupPrey() {
   //
   preyTX = random(0,1000);
   preyTY = random(0,1000);
+  preyImg = loadImage("assets/images/pill.png");
 }
 
 // setupPlayer()
@@ -190,6 +194,7 @@ function updateHealth() {
   if (playerSprint == false) {
   playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
   }
+  // If player is sprinting lose more health
   else if (playerSprint == true) {
   playerHealth = constrain(playerHealth - 1,0,playerMaxHealth);
   }
@@ -209,7 +214,7 @@ function checkEating() {
   // Check if it's an overlap
   if (d < playerRadius + preyRadius) {
     // Increase the player health
-    playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
+    playerHealth = constrain(playerHealth + eatHealth/2,0,playerMaxHealth);
     // Reduce the prey health
     preyHealth = constrain(preyHealth - eatHealth,0,preyMaxHealth);
 
@@ -230,12 +235,8 @@ function checkEating() {
 //
 // Moves the prey based on random velocity changes
 function movePrey() {
-  // Change the prey's velocity at random intervals
-  // random() will be < 0.05 5% of the time, so the prey
-  // will change direction on 5% of frames
-  // Set velocity based on random values to get a new direction
-  // and speed of movement
-  // Use map() to convert from the 0-1 range of the random() function
+  // change the prey's movement to be dictated by perlin noise
+  // Use map() to convert from the 0-1 range of the noise() function
   // to the appropriate range of velocities for the prey
   preyVX = map(noise(preyTX),0,1,-preyMaxSpeed,preyMaxSpeed);
   preyVY = map(noise(preyTY),0,1,-preyMaxSpeed,preyMaxSpeed);
@@ -264,10 +265,13 @@ function movePrey() {
 
 // drawPrey()
 //
-// Draw the prey as an ellipse with alpha based on health
+// Draw the prey as an image with alpha based on health
+//* need to add alpha *//
 function drawPrey() {
   fill(preyFill,preyHealth);
-  ellipse(preyX,preyY,preyRadius*2);
+  imageMode(CENTER);
+  tint(255,preyHealth);
+  image(preyImg,preyX,preyY,75,75);
 }
 
 // drawPlayer()
