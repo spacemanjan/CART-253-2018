@@ -61,17 +61,18 @@ var gulpSound;
 var r;
 var g;
 var b;
-
-function preload(){
-soundtrack = new Audio ("assets/sounds/requiem.mp3");
-gulpSound = new Audio ("assets/sounds/gulp.mp3");
+//preload function
+//-------NEW CODE--------//
+function preload() {
+  soundtrack = new Audio("assets/sounds/requiem.mp3");
+  gulpSound = new Audio("assets/sounds/gulp.mp3");
 }
-
+//------END NEW---------//
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(500,500);
+  createCanvas(500, 500);
 
   noStroke();
 
@@ -83,14 +84,14 @@ function setup() {
 //
 // Initialises prey's position, velocity, and health
 function setupPrey() {
-  preyX = width/5;
-  preyY = height/2;
+  preyX = width / 5;
+  preyY = height / 2;
   preyVX = -preyMaxSpeed;
   preyVY = preyMaxSpeed;
   preyHealth = preyMaxHealth;
   //
-  preyTX = random(0,1000);
-  preyTY = random(0,1000);
+  preyTX = random(0, 1000);
+  preyTY = random(0, 1000);
   preyImg = loadImage("assets/images/pill.png");
 }
 
@@ -98,8 +99,8 @@ function setupPrey() {
 //
 // Initialises player position and health
 function setupPlayer() {
-  playerX = 4*width/5;
-  playerY = height/2;
+  playerX = 4 * width / 5;
+  playerY = height / 2;
   playerHealth = playerMaxHealth;
   playerImgHappy = loadImage("assets/images/smileyface.png");
   playerImgSad = loadImage("assets/images/sadface.png");
@@ -113,7 +114,7 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(r,g,b);
+  background(r, g, b);
 
   if (!gameOver) {
     handleInput();
@@ -131,8 +132,7 @@ function draw() {
 
     sounds();
     changeGame();
-  }
-  else {
+  } else {
     showGameOver();
   }
 }
@@ -144,27 +144,24 @@ function handleInput() {
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
     playerVX = -playerMaxSpeed;
-  }
-  else if (keyIsDown(RIGHT_ARROW)) {
+  } else if (keyIsDown(RIGHT_ARROW)) {
     playerVX = playerMaxSpeed;
-  }
-  else {
+  } else {
     playerVX = 0;
   }
-
-  if (keyIsDown(32)){
+//--------NEW CODE---------//
+  if (keyIsDown(32)) {
     playerSprint = true;
   } else {
     playerSprint = false;
   }
+//-------END NEW---------//
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerMaxSpeed;
-  }
-  else if (keyIsDown(DOWN_ARROW)) {
+  } else if (keyIsDown(DOWN_ARROW)) {
     playerVY = playerMaxSpeed;
-  }
-  else {
+  } else {
     playerVY = 0;
   }
 }
@@ -181,41 +178,41 @@ function movePlayer() {
   // Wrap when player goes off the canvas
   if (playerX < 0) {
     playerX += width;
-  }
-  else if (playerX > width) {
+  } else if (playerX > width) {
     playerX -= width;
   }
 
   if (playerY < 0) {
     playerY += height;
-  }
-  else if (playerY > height) {
+  } else if (playerY > height) {
     playerY -= height;
   }
 }
+//------------NEW CODE-----------------//
 // Sets playerMaxSpeed at 4 when sprinting
 // resets playerMaxSpeed at 2 when not sprinting
 function sprintPlayer() {
   if (playerSprint == true) {
-    playerMaxSpeed = 4;
-  }
-  else if (playerSprint == false){
+    playerMaxSpeed = 5;
+  } else if (playerSprint == false) {
     playerMaxSpeed = 2;
   }
 }
+//-----------END NEW-----------------//
 // updateHealth()
-//
+//-------- UPGRADED CODE---------------//
 // Reduce the player's health (every frame)
 // Check if the player is dead
 function updateHealth() {
   // Reduce player health, constrain to reasonable range
   if (playerSprint == false) {
-  playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
+    playerHealth = constrain(playerHealth - 0.5, 0, playerMaxHealth);
   }
   // If player is sprinting lose more health
   else if (playerSprint == true) {
-  playerHealth = constrain(playerHealth - 1,0,playerMaxHealth);
+    playerHealth = constrain(playerHealth - 1, 0, playerMaxHealth);
   }
+//---------- END --------------------//
   // Check if the player is dead
   if (playerHealth === 0) {
     // If so, the game is over
@@ -234,20 +231,20 @@ function sounds() {
 // Check if the player overlaps the prey and updates health of both
 function checkEating() {
   // Get distance of player to prey
-  var d = dist(playerX,playerY,preyX,preyY);
+  var d = dist(playerX, playerY, preyX, preyY);
   // Check if it's an overlap
   if (d < playerRadius + preyRadius) {
     // Increase the player health
-    playerHealth = constrain(playerHealth + eatHealth/2,0,playerMaxHealth);
+    playerHealth = constrain(playerHealth + eatHealth / 2, 0, playerMaxHealth);
     // Reduce the prey health
-    preyHealth = constrain(preyHealth - eatHealth,0,preyMaxHealth);
+    preyHealth = constrain(preyHealth - eatHealth, 0, preyMaxHealth);
 
     // Check if the prey died
     if (preyHealth === 0) {
       gulpSound.play();
       // Move the "new" prey to a random position
-      preyX = random(0,width);
-      preyY = random(0,height);
+      preyX = random(0, width);
+      preyY = random(0, height);
       // Give it full health
       preyHealth = preyMaxHealth;
       // Track how many prey were eaten
@@ -263,8 +260,8 @@ function movePrey() {
   // change the prey's movement to be dictated by perlin noise
   // Use map() to convert from the 0-1 range of the noise() function
   // to the appropriate range of velocities for the prey
-  preyVX = map(noise(preyTX),0,1,-preyMaxSpeed,preyMaxSpeed);
-  preyVY = map(noise(preyTY),0,1,-preyMaxSpeed,preyMaxSpeed);
+  preyVX = map(noise(preyTX), 0, 1, -preyMaxSpeed, preyMaxSpeed);
+  preyVY = map(noise(preyTY), 0, 1, -preyMaxSpeed, preyMaxSpeed);
   preyTX += 0.01;
   preyTY += 0.01;
 
@@ -275,15 +272,13 @@ function movePrey() {
   // Screen wrapping
   if (preyX < 0) {
     preyX += width;
-  }
-  else if (preyX > width) {
+  } else if (preyX > width) {
     preyX -= width;
   }
 
   if (preyY < 0) {
     preyY += height;
-  }
-  else if (preyY > height) {
+  } else if (preyY > height) {
     preyY -= height;
   }
 }
@@ -293,64 +288,109 @@ function movePrey() {
 // Draw the prey as an image with alpha based on health
 //* need to add alpha *//
 function drawPrey() {
-  fill(preyFill,preyHealth);
+  fill(preyFill, preyHealth);
   imageMode(CENTER);
-  tint(255,preyHealth);
-  image(preyImg,preyX,preyY,75,75);
+  tint(255, preyHealth);
+  image(preyImg, preyX, preyY, 75, 75);
 }
 
 // drawPlayer()
 //
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
-  fill(playerFill,playerHealth);
+  fill(playerFill, playerHealth);
   imageMode(CENTER);
-  tint(255,255);
-// sadface which appears if you can't eat enough pills
-  image(playerImgSad,playerX,playerY,100,100);
-  tint(255,playerHealth);
-  image(playerImgHappy,playerX,playerY,100,100);
+  tint(255, 255);
+  // sadface which appears if you can't eat enough pills
+  image(playerImgSad, playerX, playerY, 100, 100);
+  tint(255, playerHealth);
+  image(playerImgHappy, playerX, playerY, 100, 100);
 }
+//
+//
+//-----------NEW CODE-------------//
 // game changer function
-function changeGame(){
-// Declare R G B which controls the background color
+function changeGame() {
+  // Declare R G B which controls the background color
   r = 100;
   g = 100;
   b = 200;
-// epilectic background colors
-  if (preyEaten >= 12 && preyEaten < 22){
-    r = random(0,255);
-    g = random(0,255);
-    b = random(0,255);
-  }
-  else if (preyEaten >= 22 && preyEaten < 32) {
+  // epilectic background colors & text
+  if (preyEaten >= 1 && preyEaten < 3){
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("I'm somebody now", width/2, height-50);
+  } else if (preyEaten >= 3 && preyEaten < 7){
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("Everybody likes me", width/2, height-50);
+  } else if (preyEaten >= 7 && preyEaten < 12) {
     r = 117;
     g = 173;
     b = 60;
-    preyMaxSpeed = 9;
-  }
-  else if (preyEaten >= 32 && preyEaten < 42){
-    r = random(0,255);
-    g = random(0,255);
-    b = random(0,255);
-    preyMaxSpeed = 12;
-  }
-  else if (preyEaten >= 42){
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("It's a reason to get up", width/2, height-50);
+  } else if (preyEaten >= 12 && preyEaten < 20) {
+    r = random(0, 255);
+    g = random(0, 255);
+    b = random(0, 255);
+    preyMaxSpeed = 6;
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("It's a reason to smile", width/2, height-50);
+  } else if (preyEaten >= 17 && preyEaten < 20){
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("I like the way I feel", width/2, height-50);
+  } else if (preyEaten >= 20 && preyEaten < 27) {
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("Why should I make my bed", width/2, height-50);
+    r = 255;
+    g = 186;
+    b = 28;
+    preyMaxSpeed = 11;
+  } else if (preyEaten >= 27 && preyEaten < 30) {
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("They'll all like me", width/2, height-50);
+    r = random(0, 255);
+    g = random(0, 255);
+    b = random(0, 255);
+    preyMaxSpeed = 17;
+  } else if (preyEaten >= 30 && preyEaten < 37) {
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(255);
+    text("It's a reason to smile", width/2, height-50);
     r = 80;
     g = 81;
     b = 79;
-    preyMaxSpeed = 18;
+  } else if (preyEaten >= 37 && preyEaten < 45) {
+    r = random(0, 255);
+    g = random(0, 255);
+    b = random(0, 255);
+    preyMaxSpeed = 28;
   }
 }
+//----------END NEW---------------//
 // showGameOver()
 //
 // Display text about the game being over!
 function showGameOver() {
   textSize(32);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
   fill(255);
   var gameOverText = "GAME OVER\n";
   gameOverText += "You ate " + preyEaten + " pills\n";
   gameOverText += "before you died."
-  text(gameOverText,width/2,height/2);
+  text(gameOverText, width / 2, height / 2);
 }
