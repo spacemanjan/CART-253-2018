@@ -27,8 +27,24 @@ var playerHealth;
 var playerMaxHealth = 255;
 // Player fill color
 var playerFill = 50;
+
 // Player sprint
 var playerSprint = false;
+
+// crazy effects
+// images that appear when you "overdose"
+//tv
+var tvImg;
+var tvX;
+var tvY;
+//burger
+var burgerImg;
+var burgerX;
+var burgerY;
+//happyface
+var joyImg;
+var joyX;
+var joyY;
 
 // Prey position, size, velocity, image
 var preyX;
@@ -38,8 +54,7 @@ var preyVX;
 var preyVY;
 var preyMaxSpeed = 5;
 var preyImg;
-// Prey perlin noise variable
-//* ASK PIPPIN ABOUT PERLIN NOISE *//
+// Prey perlin noise time variable
 var preyTX;
 var preyTY;
 
@@ -56,7 +71,7 @@ var preyEaten = 0;
 // Sound effects & Music
 var soundtrack;
 var gulpSound;
-
+var whiteNoise;
 // color variables
 var r;
 var g;
@@ -66,6 +81,7 @@ var b;
 function preload() {
   soundtrack = new Audio("assets/sounds/requiem.mp3");
   gulpSound = new Audio("assets/sounds/gulp.mp3");
+  whiteNoise = new Audio("assets/sounds/whitenoise.mp3");
 }
 //------END NEW---------//
 // setup()
@@ -78,6 +94,7 @@ function setup() {
 
   setupPrey();
   setupPlayer();
+  setupDecoy();
 }
 
 // setupPrey()
@@ -89,10 +106,11 @@ function setupPrey() {
   preyVX = -preyMaxSpeed;
   preyVY = preyMaxSpeed;
   preyHealth = preyMaxHealth;
-  //
+  //Set up prey
   preyTX = random(0, 1000);
   preyTY = random(0, 1000);
   preyImg = loadImage("assets/images/pill.png");
+  //Set up decoy preys
 }
 
 // setupPlayer()
@@ -104,8 +122,19 @@ function setupPlayer() {
   playerHealth = playerMaxHealth;
   playerImgHappy = loadImage("assets/images/smileyface.png");
   playerImgSad = loadImage("assets/images/sadface.png");
+  sounds();
 }
-
+function setupDecoy() {
+  tvX = 100;
+  tvY = 100;
+  tvImg = loadImage("assets/images/tv.png");
+  joyX = 250;
+  joyY = 500;
+  joyImg = loadImage("assets/images/joy.png");
+  burgerX = 40;
+  burgerY = 420;
+  burgerImg = loadImage("assets/images/burger.png");
+}
 // draw()
 //
 // While the game is active, checks input
@@ -127,13 +156,14 @@ function draw() {
 
     drawPrey();
     drawPlayer();
+    drawDecoy();
 
     sprintPlayer();
 
-    sounds();
     changeGame();
   } else {
     showGameOver();
+    handleInput();
   }
 }
 
@@ -154,6 +184,9 @@ function handleInput() {
     playerSprint = true;
   } else {
     playerSprint = false;
+  }
+  if (keyIsDown(13)){
+    resetAll();
   }
 //-------END NEW---------//
   // Check for vertical movement
@@ -200,6 +233,7 @@ function sprintPlayer() {
 }
 //-----------END NEW-----------------//
 // updateHealth()
+
 //-------- UPGRADED CODE---------------//
 // Reduce the player's health (every frame)
 // Check if the player is dead
@@ -217,14 +251,16 @@ function updateHealth() {
   if (playerHealth === 0) {
     // If so, the game is over
     gameOver = true;
+    whiteNoise.pause();
   }
 }
-
+//----------NEW CODE----------------//
 function sounds() {
   // play sounds
-  soundtrack.currenttime = 0;
+  soundtrack.currentTime = 0;
   soundtrack.play();
 }
+//-----------END NEW----------------//
 
 // checkEating()
 //
@@ -252,7 +288,16 @@ function checkEating() {
     }
   }
 }
+function resetAll(){
+  setupPrey();
+  setupPlayer();
 
+  preyEaten = 0;
+  preyMaxSpeed = 5;
+  gameOver = false;
+}
+
+//---------NEW CODE-------------------------------------//
 // movePrey()
 //
 // Moves the prey based on random velocity changes
@@ -285,8 +330,7 @@ function movePrey() {
 
 // drawPrey()
 //
-// Draw the prey as an image with alpha based on health
-//* need to add alpha *//
+// Draw the prey as an image with tint based on health
 function drawPrey() {
   fill(preyFill, preyHealth);
   imageMode(CENTER);
@@ -306,6 +350,61 @@ function drawPlayer() {
   tint(255, playerHealth);
   image(playerImgHappy, playerX, playerY, 100, 100);
 }
+//----------NEW CODE--------------//
+function drawDecoy() {
+if (preyEaten >= 12 && preyEaten < 20) {
+  tint(255,255);
+  tvX += 20;
+  tvY += 20;
+  image(tvImg, tvX, tvY, 100, 100);
+  if (tvX < 0) {
+    tvX += width;
+  } else if (tvX > width) {
+    tvX -= width;
+  }
+
+  if (tvY < 0) {
+    tvY += height;
+  } else if (tvY > height) {
+    tvY -= height;
+  }
+}
+if (preyEaten >= 17 && preyEaten < 20) {
+  tint(255,255);
+  joyX -= 12;
+  joyY -= 2;
+  image(joyImg, joyX, joyY, 100, 75);
+  if (joyX < 0) {
+    joyX += width;
+  } else if (joyX > width) {
+    joyX -= width;
+  }
+
+  if (joyY < 0) {
+    joyY += height;
+  } else if (joyY > height) {
+    joyY -= height;
+  }
+}
+if (preyEaten >= 27 && preyEaten < 30) {
+  tint(255,255);
+  burgerX += 12;
+  burgerY -= 38;
+  image(burgerImg, burgerX, burgerY, 100, 75);
+  if (burgerX < 0) {
+  burgerX += width;
+} else if (burgerX > width) {
+    burgerX -= width;
+  }
+  if (burgerY < 0) {
+    burgerY += height;
+  } else if (burgerY > height) {
+    burgerY -= height;
+  }
+}
+}
+//----------END NEW---------------//
+//
 //
 //
 //-----------NEW CODE-------------//
@@ -335,6 +434,9 @@ function changeGame() {
     fill(0);
     text("It's a reason to get up", width/2, height-50);
   } else if (preyEaten >= 12 && preyEaten < 20) {
+    // Creat epileptic fever dream
+    // Increase prey preyMaxSpeed
+    // play white noise
     r = random(0, 255);
     g = random(0, 255);
     b = random(0, 255);
@@ -343,6 +445,7 @@ function changeGame() {
     textAlign(CENTER, CENTER);
     fill(0);
     text("It's a reason to smile", width/2, height-50);
+    whiteNoise.play();
   } else if (preyEaten >= 17 && preyEaten < 20){
     textSize(32);
     textAlign(CENTER, CENTER);
@@ -357,6 +460,7 @@ function changeGame() {
     g = 186;
     b = 28;
     preyMaxSpeed = 11;
+    whiteNoise.pause();
   } else if (preyEaten >= 27 && preyEaten < 30) {
     textSize(32);
     textAlign(CENTER, CENTER);
@@ -366,6 +470,7 @@ function changeGame() {
     g = random(0, 255);
     b = random(0, 255);
     preyMaxSpeed = 17;
+    whiteNoise.play();
   } else if (preyEaten >= 30 && preyEaten < 37) {
     textSize(32);
     textAlign(CENTER, CENTER);
@@ -379,6 +484,7 @@ function changeGame() {
     g = random(0, 255);
     b = random(0, 255);
     preyMaxSpeed = 28;
+    whiteNoise.play();
   }
 }
 //----------END NEW---------------//
@@ -391,6 +497,7 @@ function showGameOver() {
   fill(255);
   var gameOverText = "GAME OVER\n";
   gameOverText += "You ate " + preyEaten + " pills\n";
-  gameOverText += "before you died."
+  gameOverText += "before you died.\n";
+  gameOverText += "press ENTER to restart";
   text(gameOverText, width / 2, height / 2);
 }
