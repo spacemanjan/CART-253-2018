@@ -421,7 +421,7 @@ function changeGame() {
   r = 119;
   g = 137;
   b = 165;
-  // epilectic background colors & text
+  // epilectic background colors & text & music
   if (preyEaten >= 0 && preyEaten < 1) {
   textSize(40);
   textAlign(CENTER, CENTER);
@@ -429,6 +429,7 @@ function changeGame() {
   var titleText = "REQUIEM\n";
   titleText += "SIMULATOR";
   text(titleText, width/2, 0+50);
+  soundtrack.play();
   } else if (preyEaten >= 1 && preyEaten < 3){
     textSize(32);
     textAlign(CENTER, CENTER);
