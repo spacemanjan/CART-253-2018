@@ -124,6 +124,7 @@ function setupPlayer() {
   playerImgSad = loadImage("assets/images/sadface.png");
   sounds();
 }
+//------------NEW CODE-------------------//
 function setupDecoy() {
   tvX = 100;
   tvY = 100;
@@ -135,6 +136,7 @@ function setupDecoy() {
   burgerY = 420;
   burgerImg = loadImage("assets/images/burger.png");
 }
+//------------END NEW------------------//
 // draw()
 //
 // While the game is active, checks input
@@ -154,16 +156,20 @@ function draw() {
     updateHealth();
     checkEating();
 
+//---NEW----//
+    changeGame();
+//---END----//
     drawPrey();
     drawPlayer();
+//---NEW----//
     drawDecoy();
 
     sprintPlayer();
-
-    changeGame();
+//---END----//
   } else {
     showGameOver();
     handleInput();
+    soundCheck();
   }
 }
 
@@ -251,7 +257,6 @@ function updateHealth() {
   if (playerHealth === 0) {
     // If so, the game is over
     gameOver = true;
-    whiteNoise.pause();
   }
 }
 //----------NEW CODE----------------//
@@ -259,6 +264,11 @@ function sounds() {
   // play sounds
   soundtrack.currentTime = 0;
   soundtrack.play();
+}
+function soundCheck() {
+  if (gameOver == true) {
+  whiteNoise.pause();
+  }
 }
 //-----------END NEW----------------//
 
@@ -411,11 +421,18 @@ if (preyEaten >= 27 && preyEaten < 30) {
 // game changer function
 function changeGame() {
   // Declare R G B which controls the background color
-  r = 100;
-  g = 100;
-  b = 200;
+  r = 119;
+  g = 137;
+  b = 165;
   // epilectic background colors & text
-  if (preyEaten >= 1 && preyEaten < 3){
+  if (preyEaten >= 0 && preyEaten < 1) {
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  var titleText = "REQUIEM\n";
+  titleText += "SIMULATOR";
+  text(titleText, width/2, 0+50);
+  } else if (preyEaten >= 1 && preyEaten < 3){
     textSize(32);
     textAlign(CENTER, CENTER);
     fill(0);
@@ -426,9 +443,9 @@ function changeGame() {
     fill(0);
     text("Everybody likes me", width/2, height-50);
   } else if (preyEaten >= 7 && preyEaten < 12) {
-    r = 117;
-    g = 173;
-    b = 60;
+    r = 249;
+    g = 249;
+    b = 149;
     textSize(32);
     textAlign(CENTER, CENTER);
     fill(0);
@@ -456,9 +473,9 @@ function changeGame() {
     textAlign(CENTER, CENTER);
     fill(0);
     text("Why should I make my bed", width/2, height-50);
-    r = 255;
-    g = 186;
-    b = 28;
+    r = 147;
+    g = 10;
+    b = 2;
     preyMaxSpeed = 11;
     whiteNoise.pause();
   } else if (preyEaten >= 27 && preyEaten < 30) {
@@ -496,8 +513,42 @@ function showGameOver() {
   textAlign(CENTER, CENTER);
   fill(255);
   var gameOverText = "GAME OVER\n";
+//---------NEW CODE-------------------//
+  if (preyEaten >= 0 && preyEaten <= 7){
   gameOverText += "You ate " + preyEaten + " pills\n";
-  gameOverText += "before you died.\n";
+  gameOverText += "before you died\n";
+  gameOverText += "alone.\n";
+  gameOverText += "\n";
   gameOverText += "press ENTER to restart";
   text(gameOverText, width / 2, height / 2);
+} else if (preyEaten >= 7 && preyEaten <=12){
+  gameOverText += "You ate " + preyEaten + " pills\n";
+  gameOverText += "before you died of sadness.\n";
+  gameOverText += "\n";
+  gameOverText += "\n";
+  gameOverText += "press ENTER to restart";
+  text(gameOverText, width / 2, height / 2);
+} else if (preyEaten >= 12 && preyEaten <=23) {
+  gameOverText += "You ate " + preyEaten + " pills\n";
+  gameOverText += "before you lost your mind.\n";
+  gameOverText += "\n";
+  gameOverText += "\n";
+  gameOverText += "press ENTER to restart";
+  text(gameOverText, width / 2, height / 2);
+} else if (preyEaten >= 20 && preyEaten <=27) {
+  gameOverText += "You ate " + preyEaten + " pills\n";
+  gameOverText += "before you wandered off.\n";
+  gameOverText += "\n";
+  gameOverText += "\n";
+  gameOverText += "press ENTER to restart";
+  text(gameOverText, width / 2, height / 2);
+} else if (preyEaten >= 27) {
+  gameOverText += "You ate " + preyEaten + " pills\n";
+  gameOverText += "before you died by\n";
+  gameOverText += "overdose.\n";
+  gameOverText += "\n";
+  gameOverText += "press ENTER to restart";
+  text(gameOverText, width / 2, height / 2);
+}
+//------END NEW------------//
 }
