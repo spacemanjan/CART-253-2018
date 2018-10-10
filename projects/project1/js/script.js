@@ -95,6 +95,7 @@ function setup() {
   setupPrey();
   setupPlayer();
   setupDecoy();
+  sounds();
 }
 
 // setupPrey()
@@ -110,7 +111,6 @@ function setupPrey() {
   preyTX = random(0, 1000);
   preyTY = random(0, 1000);
   preyImg = loadImage("assets/images/pill.png");
-  //Set up decoy preys
 }
 
 // setupPlayer()
@@ -122,7 +122,6 @@ function setupPlayer() {
   playerHealth = playerMaxHealth;
   playerImgHappy = loadImage("assets/images/smileyface.png");
   playerImgSad = loadImage("assets/images/sadface.png");
-  sounds();
 }
 //------------NEW CODE-------------------//
 function setupDecoy() {
@@ -301,7 +300,7 @@ function checkEating() {
 function resetAll(){
   setupPrey();
   setupPlayer();
-
+  sounds();
   preyEaten = 0;
   preyMaxSpeed = 5;
   gameOver = false;
