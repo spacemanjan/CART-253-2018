@@ -265,9 +265,7 @@ function sounds() {
   soundtrack.play();
 }
 function soundCheck() {
-  if (gameOver == true) {
   whiteNoise.pause();
-  }
 }
 //-----------END NEW----------------//
 
