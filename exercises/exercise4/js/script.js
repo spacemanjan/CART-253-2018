@@ -1,5 +1,6 @@
 // Pong
 // by Pippin Barr
+// Remixed by Yann-Maurice McNiven
 //
 // A primitive implementation of Pong with no scoring system
 // just the ability to play the game with the keyboard.
@@ -26,6 +27,10 @@ var ball = {
 // How far in from the walls the paddles should be drawn on x
 var paddleInset = 50;
 
+//---NEW CODE---//
+var scoreKeeper;
+//---END CODE---//
+
 // LEFT PADDLE
 
 // Basic definition of a left paddle object with its key properties of
@@ -39,7 +44,10 @@ var leftPaddle = {
   vy: 0,
   speed: 5,
   upKeyCode: 87, // The key code for W
-  downKeyCode: 83 // The key code for S
+  downKeyCode: 83, // The key code for S
+  //---NEW CODE---//
+  scoreKeeper: 0
+  //---END CODE---//
 }
 
 // RIGHT PADDLE
@@ -55,7 +63,10 @@ var rightPaddle = {
   vy: 0,
   speed: 5,
   upKeyCode: 38, // The key code for the UP ARROW
-  downKeyCode: 40 // The key code for the DOWN ARROW
+  downKeyCode: 40, // The key code for the DOWN ARROW
+  //---NEW CODE---//
+  scoreKeeper: 0
+  //---END CODE---//
 }
 
 // A variable to hold the beep sound we will play on bouncing
@@ -252,16 +263,26 @@ function handleBallOffScreen() {
   var ballLeft = ball.x - ball.size/2;
   var ballRight = ball.x + ball.size/2;
 
+      //----NEW CODE----//
   // Check for ball going off the sides
-  if (ballRight < 0 || ballLeft > width) {
+  if (ballLeft < 0) {
     // If it went off either side, reset it to the centre
     ball.x = width/2;
     ball.y = height/2;
+    leftPaddle.scoreKeeper += 1;
+    console.log(leftPaddle.scoreKeeper);
     // NOTE that we don't change its velocity here so it just
     // carries on moving with the same velocity after its
     // position is reset.
     // This is where we would count points etc!
   }
+  if (ballRight > width) {
+  ball.x = width/2;
+  ball.y = height/2;
+  rightPaddle.scoreKeeper += 1;
+  console.log(rightPaddle.scoreKeeper);
+  }
+      //----END CODE----//
 }
 
 // displayBall()
