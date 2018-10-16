@@ -29,6 +29,7 @@ var paddleInset = 50;
 
 //---NEW CODE---//
 var scoreKeeper;
+var gameOver = false;
 //---END CODE---//
 
 // LEFT PADDLE
@@ -68,17 +69,25 @@ var rightPaddle = {
   //---NEW CODE---//
   scoreKeeper: 0,
   point: false
-  //---END CODE---//
 }
+// SOUNDS
 
 // A variable to hold the beep sound we will play on bouncing
-var beepSFX;
 
+var bongRightSFX;
+var bongLeftSFX;
+var bingSFX;
+var soundTrack;
+
+  //---END CODE---//
 // preload()
 //
 // Loads the beep audio for the sound of bouncing
 function preload() {
-  beepSFX = new Audio("assets/sounds/beep.wav");
+  bongRightSFX = new Audio("assets/sounds/bong_right.mp3");
+  bongLeftSFX = new Audio("assets/sounds/bong_left.mp3");
+  bingSFX = new Audio("assets/sounds/ding.mp3");
+  soundTrack = new Audio("assets/sounds/lofi.mp3");
 }
 
 // setup()
@@ -125,7 +134,9 @@ function setupBall() {
 function draw() {
   // Fill the background
   background(bgColor);
+  soundTrack.play();
 
+  if (!gameOver) {
   // Handle input
   // Notice how we're using the SAME FUNCTION to handle the input
   // for the two paddles!
@@ -158,9 +169,11 @@ function draw() {
   displayPaddle(rightPaddle);
   displayBall();
 
-  // Sijds
+  // Resets the ball and launches it
   reset();
-
+} else {
+  endGame();
+  }
 }
 
 
@@ -228,26 +241,24 @@ function handleBallWallCollision() {
     // If it touched the top or bottom, reverse its vy
     ball.vy = -ball.vy;
     // Play our bouncing sound effect by rewinding and then playing
-    beepSFX.currentTime = 0;
-    beepSFX.play();
   }
 }
 
 //----------NEW CODE-----------------//
 // reset()
 //
-// resets the ball's location and launch it properly 
+// resets the ball's location and launch it properly
 function reset() {
 ball.vy = constrain(ball.vy,-10,10);
   if (leftPaddle.point == true) {
-    ball.vx = random(-5,-10);
+    ball.vx = random(-5,-7);
     ball.y = random(10,height);
-    ball.vy = random(-5,10);
+    ball.vy = random(-5,5);
   }
   if (rightPaddle.point == true) {
-    ball.vx = random(5,10);
+    ball.vx = random(5,7);
     ball.y = random(10,height);
-    ball.vy = random(-5,10);
+    ball.vy = random(-5,5);
   }
 }
 
@@ -268,6 +279,11 @@ function handleScore(paddle) {
     // changing the colors
     fgColor -= 5;
     bgColor += 5;
+    bingSFX.currentTime = 0;
+    bingSFX.play();
+  }
+  if (fgColor == 0) {
+    gameOver = true;
   }
 }
 
@@ -299,8 +315,14 @@ function handleBallPaddleCollision(paddle) {
       // Then the ball is touching the paddle so reverse its vx
       ball.vx = -ball.vx;
       // Play our bouncing sound effect by rewinding and then playing
-      beepSFX.currentTime = 0;
-      beepSFX.play();
+      if (ballRight >= width - 100) {
+      bongLeftSFX.currentTime = 0;
+      bongLeftSFX.play();
+      }
+      if (ballLeft <= 0 + 100) {
+      bongRightSFX.currentTime = 0;
+      bongRightSFX.play();
+      }
     }
   }
 }
@@ -353,4 +375,10 @@ function displayBall() {
 function displayPaddle(paddle) {
   fill(fgColor);
   rect(paddle.x,paddle.y,paddle.w,paddle.h);
+}
+
+function endGame() {
+    text("did you want to win?",width/2-50,height/2);
+    text(rightPaddle.scoreKeeper,width/4,height/3);
+    text(leftPaddle.scoreKeeper,width/4*3,height/3);
 }
