@@ -79,7 +79,7 @@ var bongLeftSFX;
 var bingSFX;
 var soundTrack;
 
-  //---END CODE---//
+//---END CODE---//
 // preload()
 //
 // Loads the beep audio for the sound of bouncing
@@ -97,7 +97,7 @@ function preload() {
 // and velocities.
 function setup() {
   // Create canvas and set drawing modes
-  createCanvas(640,480);
+  createCanvas(640, 480);
   rectMode(CENTER);
   noStroke();
 
@@ -111,19 +111,19 @@ function setup() {
 function setupPaddles() {
   // Initialise the left paddle
   leftPaddle.x = paddleInset;
-  leftPaddle.y = height/2;
+  leftPaddle.y = height / 2;
 
   // Initialise the right paddle
   rightPaddle.x = width - paddleInset;
-  rightPaddle.y = height/2;
+  rightPaddle.y = height / 2;
 }
 
 // setupBall()
 //
 // Sets the position and velocity of the ball
 function setupBall() {
-  ball.x = width/2;
-  ball.y = height/2;
+  ball.x = width / 2;
+  ball.y = height / 2;
   ball.vx = ball.speed;
   ball.vy = ball.speed;
 }
@@ -137,42 +137,42 @@ function draw() {
   soundTrack.play();
 
   if (!gameOver) {
-  // Handle input
-  // Notice how we're using the SAME FUNCTION to handle the input
-  // for the two paddles!
-  handleInput(leftPaddle);
-  handleInput(rightPaddle);
+    // Handle input
+    // Notice how we're using the SAME FUNCTION to handle the input
+    // for the two paddles!
+    handleInput(leftPaddle);
+    handleInput(rightPaddle);
 
-  // Handle score
-  // Updates the paddle with the corresponding effects based on score
-  handleScore(leftPaddle);
-  handleScore(rightPaddle);
+    // Handle score
+    // Updates the paddle with the corresponding effects based on score
+    handleScore(leftPaddle);
+    handleScore(rightPaddle);
 
 
-  // Update positions of all objects
-  // Notice how we're using the SAME FUNCTION to handle the input
-  // for all three objects!
-  updatePosition(leftPaddle);
-  updatePosition(rightPaddle);
-  updatePosition(ball);
+    // Update positions of all objects
+    // Notice how we're using the SAME FUNCTION to handle the input
+    // for all three objects!
+    updatePosition(leftPaddle);
+    updatePosition(rightPaddle);
+    updatePosition(ball);
 
-  // Handle collisions
-  handleBallWallCollision();
-  handleBallPaddleCollision(leftPaddle);
-  handleBallPaddleCollision(rightPaddle);
+    // Handle collisions
+    handleBallWallCollision();
+    handleBallPaddleCollision(leftPaddle);
+    handleBallPaddleCollision(rightPaddle);
 
-  // Handle the ball going off screen
-  handleBallOffScreen();
+    // Handle the ball going off screen
+    handleBallOffScreen();
 
-  // Display the paddles and ball
-  displayPaddle(leftPaddle);
-  displayPaddle(rightPaddle);
-  displayBall();
+    // Display the paddles and ball
+    displayPaddle(leftPaddle);
+    displayPaddle(rightPaddle);
+    displayBall();
 
-  // Resets the ball and launches it
-  reset();
-} else {
-  endGame();
+    // Resets the ball and launches it
+    reset();
+  } else {
+    endGame();
   }
 }
 
@@ -205,8 +205,7 @@ function handleInput(paddle) {
   else if (keyIsDown(paddle.downKeyCode)) {
     // Move down
     paddle.vy = paddle.speed;
-  }
-  else {
+  } else {
     // Otherwise stop moving
     paddle.vy = 0;
   }
@@ -231,10 +230,10 @@ function updatePosition(object) {
 function handleBallWallCollision() {
 
   // Calculate edges of ball for clearer if statement below
-  var ballTop = ball.y - ball.size/2;
-  var ballBottom = ball.y + ball.size/2;
-  var ballLeft = ball.x - ball.size/2;
-  var ballRight = ball.x + ball.size/2;
+  var ballTop = ball.y - ball.size / 2;
+  var ballBottom = ball.y + ball.size / 2;
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
 
   // Check for ball colliding with top and bottom
   if (ballTop < 0 || ballBottom > height) {
@@ -249,16 +248,16 @@ function handleBallWallCollision() {
 //
 // resets the ball's location and launch it properly
 function reset() {
-ball.vy = constrain(ball.vy,-10,10);
+  ball.vy = constrain(ball.vy, -10, 10);
   if (leftPaddle.point == true) {
-    ball.vx = random(-5,-7);
-    ball.y = random(10,height);
-    ball.vy = random(-5,5);
+    ball.vx = random(-5, -7);
+    ball.y = random(10, height);
+    ball.vy = random(-5, 5);
   }
   if (rightPaddle.point == true) {
-    ball.vx = random(5,7);
-    ball.y = random(10,height);
-    ball.vy = random(-5,5);
+    ball.vx = random(5, 7);
+    ball.y = random(10, height);
+    ball.vy = random(-5, 5);
   }
 }
 
@@ -268,8 +267,8 @@ ball.vy = constrain(ball.vy,-10,10);
 // also manages the changing variables
 function handleScore(paddle) {
   // constrain paddle height and speed
-  paddle.h = constrain(paddle.h,20,70);
-  paddle.speed = constrain(paddle.speed,5,20);
+  paddle.h = constrain(paddle.h, 20, 70);
+  paddle.speed = constrain(paddle.speed, 5, 20);
   // Calculate edges of ball for clearer if statement below
   if (paddle.point == true) {
     // make the paddle smaller & faster by 0.25
@@ -297,16 +296,16 @@ function handleScore(paddle) {
 function handleBallPaddleCollision(paddle) {
 
   // Calculate edges of ball for clearer if statements below
-  var ballTop = ball.y - ball.size/2;
-  var ballBottom = ball.y + ball.size/2;
-  var ballLeft = ball.x - ball.size/2;
-  var ballRight = ball.x + ball.size/2;
+  var ballTop = ball.y - ball.size / 2;
+  var ballBottom = ball.y + ball.size / 2;
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
 
   // Calculate edges of paddle for clearer if statements below
-  var paddleTop = paddle.y - paddle.h/2;
-  var paddleBottom = paddle.y + paddle.h/2;
-  var paddleLeft = paddle.x - paddle.w/2;
-  var paddleRight = paddle.x + paddle.w/2;
+  var paddleTop = paddle.y - paddle.h / 2;
+  var paddleBottom = paddle.y + paddle.h / 2;
+  var paddleLeft = paddle.x - paddle.w / 2;
+  var paddleRight = paddle.x + paddle.w / 2;
 
   // First check it is in the vertical range of the paddle
   if (ballBottom > paddleTop && ballTop < paddleBottom) {
@@ -314,15 +313,21 @@ function handleBallPaddleCollision(paddle) {
     if (ballLeft < paddleRight && ballRight > paddleLeft) {
       // Then the ball is touching the paddle so reverse its vx
       ball.vx = -ball.vx;
-      // Play our bouncing sound effect by rewinding and then playing
+      //
+      //----------NEW CODE----------------//
+      //
+      // mesures the distance between the ball and the center of the paddle and angles the rebound accordingly
+      ball.vy = map(paddle.y - ball.y, -paddle.h / 2, paddle.h, ball.speed, -ball.speed);
+      // Play our bouncing sound effects by rewinding and then playing them when they get hit
       if (ballRight >= width - 100) {
-      bongLeftSFX.currentTime = 0;
-      bongLeftSFX.play();
+        bongLeftSFX.currentTime = 0;
+        bongLeftSFX.play();
       }
       if (ballLeft <= 0 + 100) {
-      bongRightSFX.currentTime = 0;
-      bongRightSFX.play();
+        bongRightSFX.currentTime = 0;
+        bongRightSFX.play();
       }
+      //------------END CODE--------------//
     }
   }
 }
@@ -335,14 +340,14 @@ function handleBallPaddleCollision(paddle) {
 function handleBallOffScreen() {
 
   // Calculate edges of ball for clearer if statement below
-  var ballLeft = ball.x - ball.size/2;
-  var ballRight = ball.x + ball.size/2;
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
 
-      //----NEW CODE----//
+  //----NEW CODE----//
   // Check for ball going off the sides
   if (ballLeft < 0) {
     // If it went off either side, reset it to the centre
-    ball.x = width/2;
+    ball.x = width / 2;
     console.log(leftPaddle.scoreKeeper);
     leftPaddle.scoreKeeper += 1;
     // NOTE that we don't change its velocity here so it just
@@ -353,12 +358,12 @@ function handleBallOffScreen() {
     // This marks the paddle as having been scored against
   }
   if (ballRight > width) {
-    ball.x = width/2;
+    ball.x = width / 2;
     console.log(rightPaddle.scoreKeeper);
     rightPaddle.scoreKeeper += 1;
     leftPaddle.point = true;
   }
-      //----END CODE----//
+    //----END CODE----//
 }
 
 // displayBall()
@@ -366,7 +371,7 @@ function handleBallOffScreen() {
 // Draws ball on screen based on its properties
 function displayBall() {
   fill(fgColor);
-  rect(ball.x,ball.y,ball.size,ball.size);
+  rect(ball.x, ball.y, ball.size, ball.size);
 }
 
 // displayPaddle(paddle)
@@ -374,11 +379,11 @@ function displayBall() {
 // Draws the specified paddle on screen based on its properties
 function displayPaddle(paddle) {
   fill(fgColor);
-  rect(paddle.x,paddle.y,paddle.w,paddle.h);
+  rect(paddle.x, paddle.y, paddle.w, paddle.h);
 }
 
 function endGame() {
-    text("did you want to win?",width/2-50,height/2);
-    text(rightPaddle.scoreKeeper,width/4,height/3);
-    text(leftPaddle.scoreKeeper,width/4*3,height/3);
+  text("did you want to win?", width / 2 - 50, height / 2);
+  text(rightPaddle.scoreKeeper, width / 4, height / 3);
+  text(leftPaddle.scoreKeeper, width / 4 * 3, height / 3);
 }
