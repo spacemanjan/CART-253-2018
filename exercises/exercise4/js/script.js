@@ -158,6 +158,9 @@ function draw() {
   displayPaddle(rightPaddle);
   displayBall();
 
+  // Sijds
+  reset();
+
 }
 
 
@@ -231,7 +234,22 @@ function handleBallWallCollision() {
 }
 
 //----------NEW CODE-----------------//
-
+// reset()
+//
+// resets the ball's location and launch it properly 
+function reset() {
+ball.vy = constrain(ball.vy,-10,10);
+  if (leftPaddle.point == true) {
+    ball.vx = random(-5,-10);
+    ball.y = random(10,height);
+    ball.vy = random(-5,10);
+  }
+  if (rightPaddle.point == true) {
+    ball.vx = random(5,10);
+    ball.y = random(10,height);
+    ball.vy = random(-5,10);
+  }
+}
 
 // handleScore()
 //
@@ -247,7 +265,6 @@ function handleScore(paddle) {
     paddle.h -= 1;
     paddle.speed += 0.25;
     paddle.point = false;
-    console.log(leftPaddle.h);
     // changing the colors
     fgColor -= 5;
     bgColor += 5;
@@ -255,6 +272,7 @@ function handleScore(paddle) {
 }
 
 //-------END CODE------------------//
+
 
 // handleBallPaddleCollision(paddle)
 //
@@ -303,7 +321,6 @@ function handleBallOffScreen() {
   if (ballLeft < 0) {
     // If it went off either side, reset it to the centre
     ball.x = width/2;
-    ball.y = height/2;
     console.log(leftPaddle.scoreKeeper);
     leftPaddle.scoreKeeper += 1;
     // NOTE that we don't change its velocity here so it just
@@ -314,11 +331,10 @@ function handleBallOffScreen() {
     // This marks the paddle as having been scored against
   }
   if (ballRight > width) {
-  ball.x = width/2;
-  ball.y = height/2;
-  console.log(rightPaddle.scoreKeeper);
-  rightPaddle.scoreKeeper += 1;
-  leftPaddle.point = true;
+    ball.x = width/2;
+    console.log(rightPaddle.scoreKeeper);
+    rightPaddle.scoreKeeper += 1;
+    leftPaddle.point = true;
   }
       //----END CODE----//
 }
