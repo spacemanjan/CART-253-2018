@@ -1,5 +1,6 @@
 // Basic OO Pong
 // by Pippin Barr
+// edited by Yann-Maurice McNiven
 //
 // A primitive implementation of Pong with no scoring system
 // just the ability to play the game with the keyboard.
@@ -20,12 +21,15 @@ var rightPaddle;
 function setup() {
   createCanvas(640,480);
   // Create a ball
+  // Ball (x,y,vx,vy,size,speed)
   ball = new Ball(width/2,height/2,5,5,10,5);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW);
+  // paddle(x,y,w,h,speed,downKey,upKey)
+  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,0);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(0,height/2,10,60,10,83,87);
+  // paddle(x,y,w,h,speed,downKey,upKey)
+  leftPaddle = new Paddle(0,height/2,10,60,10,83,87,0);
 }
 
 // draw()
@@ -41,11 +45,11 @@ function draw() {
   ball.update();
   leftPaddle.update();
   rightPaddle.update();
-
+//=======================================NEW CODE============================//
   if (ball.isOffScreen()) {
     ball.reset();
   }
-
+//=======================================END CODE============================//
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
 

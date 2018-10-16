@@ -42,6 +42,14 @@ Ball.prototype.update = function () {
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
   if (this.x + this.size < 0 || this.x > width) {
+//=======================================NEW CODE============================//
+    if (this.x >= width) {
+      leftPaddle.score += 1;
+    }
+    if (this.x <= 0) {
+      rightPaddle.score += 1;
+    }
+//=======================================END CODE============================//
     return true;
   }
   else {
@@ -71,6 +79,8 @@ Ball.prototype.handleCollision = function(paddle) {
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
+      console.log(leftPaddle.score);
+      console.log(rightPaddle.score);
     }
   }
 }
