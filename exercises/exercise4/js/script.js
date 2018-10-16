@@ -46,7 +46,8 @@ var leftPaddle = {
   upKeyCode: 87, // The key code for W
   downKeyCode: 83, // The key code for S
   //---NEW CODE---//
-  scoreKeeper: 0
+  scoreKeeper: 0,
+  point: false
   //---END CODE---//
 }
 
@@ -65,7 +66,8 @@ var rightPaddle = {
   upKeyCode: 38, // The key code for the UP ARROW
   downKeyCode: 40, // The key code for the DOWN ARROW
   //---NEW CODE---//
-  scoreKeeper: 0
+  scoreKeeper: 0,
+  point: false
   //---END CODE---//
 }
 
@@ -89,7 +91,6 @@ function setup() {
   createCanvas(640,480);
   rectMode(CENTER);
   noStroke();
-  fill(fgColor);
 
   setupPaddles();
   setupBall();
@@ -131,6 +132,12 @@ function draw() {
   handleInput(leftPaddle);
   handleInput(rightPaddle);
 
+  // Handle score
+  // Updates the paddle with the corresponding effects based on score
+  handleScore(leftPaddle);
+  handleScore(rightPaddle);
+
+
   // Update positions of all objects
   // Notice how we're using the SAME FUNCTION to handle the input
   // for all three objects!
@@ -150,6 +157,7 @@ function draw() {
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
   displayBall();
+
 }
 
 
@@ -222,6 +230,32 @@ function handleBallWallCollision() {
   }
 }
 
+//----------NEW CODE-----------------//
+
+
+// handleScore()
+//
+// Keeps track of score and makes changes
+// also manages the changing variables
+function handleScore(paddle) {
+  // constrain paddle height and speed
+  paddle.h = constrain(paddle.h,20,70);
+  paddle.speed = constrain(paddle.speed,5,20);
+  // Calculate edges of ball for clearer if statement below
+  if (paddle.point == true) {
+    // make the paddle smaller & faster by 0.25
+    paddle.h -= 1;
+    paddle.speed += 0.25;
+    paddle.point = false;
+    console.log(leftPaddle.h);
+    // changing the colors
+    fgColor -= 5;
+    bgColor += 5;
+  }
+}
+
+//-------END CODE------------------//
+
 // handleBallPaddleCollision(paddle)
 //
 // Checks if the ball overlaps the specified paddle and if so
@@ -256,7 +290,8 @@ function handleBallPaddleCollision(paddle) {
 // handleBallOffScreen()
 //
 // Checks if the ball has gone off screen to the left or right
-// and moves it back to the centre if so
+// and moves it back to the centre if so.
+// Checks the score, and effects the paddles & depending on the score.
 function handleBallOffScreen() {
 
   // Calculate edges of ball for clearer if statement below
@@ -269,18 +304,21 @@ function handleBallOffScreen() {
     // If it went off either side, reset it to the centre
     ball.x = width/2;
     ball.y = height/2;
-    leftPaddle.scoreKeeper += 1;
     console.log(leftPaddle.scoreKeeper);
+    leftPaddle.scoreKeeper += 1;
     // NOTE that we don't change its velocity here so it just
     // carries on moving with the same velocity after its
     // position is reset.
     // This is where we would count points etc!
+    rightPaddle.point = true;
+    // This marks the paddle as having been scored against
   }
   if (ballRight > width) {
   ball.x = width/2;
   ball.y = height/2;
-  rightPaddle.scoreKeeper += 1;
   console.log(rightPaddle.scoreKeeper);
+  rightPaddle.scoreKeeper += 1;
+  leftPaddle.point = true;
   }
       //----END CODE----//
 }
@@ -289,6 +327,7 @@ function handleBallOffScreen() {
 //
 // Draws ball on screen based on its properties
 function displayBall() {
+  fill(fgColor);
   rect(ball.x,ball.y,ball.size,ball.size);
 }
 
@@ -296,5 +335,6 @@ function displayBall() {
 //
 // Draws the specified paddle on screen based on its properties
 function displayPaddle(paddle) {
+  fill(fgColor);
   rect(paddle.x,paddle.y,paddle.w,paddle.h);
 }
