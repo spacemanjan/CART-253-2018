@@ -45,9 +45,13 @@ Ball.prototype.isOffScreen = function () {
 //=======================================NEW CODE============================//
     if (this.x >= width) {
       leftPaddle.score += 1;
+      leftPaddle.latestPoint = true;
+      rightPaddle.latestPoint = false;
     }
     if (this.x <= 0) {
       rightPaddle.score += 1;
+      rightPaddle.latestPoint = true;
+      leftPaddle.latestPoint = false;
     }
 //=======================================END CODE============================//
     return true;
@@ -79,8 +83,7 @@ Ball.prototype.handleCollision = function(paddle) {
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
-      console.log(leftPaddle.score);
-      console.log(rightPaddle.score);
+      console.log(leftPaddle.latestPoint);
     }
   }
 }
@@ -92,8 +95,6 @@ Ball.prototype.handleCollision = function(paddle) {
 Ball.prototype.reset = function () {
 //=====================NEW CODE=====================================//
 // reset the vy back to 5
-// this.vy = this.vy; //does not do the same thing as setting it to 5
-// ASK MICHAEL OR PIPPIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 this.vy = 5;
 // if ball x goes off the right side
 if (this.x > width) {
