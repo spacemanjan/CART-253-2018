@@ -43,27 +43,33 @@ Visuals.prototype.scoreBoard = function() {
     }
   }
 }
-//colorManager();
+// colorManager();
 //
 // if a player scores their side become active with color
 Visuals.prototype.colorManager = function() {
-
-  //
-  // var leftPaddleX = leftPaddle.x;
-  // var leftPaddleY = leftPaddle.y;
-  // var rightPaddleX = rightPaddle.x;
-  // var rightPaddleY = leftPaddle.y;
-
   if (this.leftWinning == true) {
     fill(random(100,255),0,0);
     rect(width/2,0,-width/2,height);
-    // if (this.leftScore >= 5) {
-    //   fill(0,random(0,255),0);
-    //   rect(leftPaddleX, leftPaddleY, leftPaddle.w, leftPaddle.h)
-    // }
   }
   if (this.rightWinning == true) {
     fill(0,0,random(100,255));
     rect(width/2,0,width/2,height);
  }
+}
+// effectsManager();
+//
+// makes rgb paddles appear and move when activated with a point
+Visuals.prototype.effectsManager = function(paddle) {
+
+  if (paddle.latestPoint == true) {
+    noStroke();
+    if (paddle.score >= 1) {
+      fill(random(0,255),0,0,100);
+      rect(paddle.x + random(-10,10), paddle.y + random(-10,10), paddle.w, paddle.h);
+      fill(0,random(0,255),0,100);
+      rect(paddle.x + random(-10,10), paddle.y + random(-10,10), paddle.w, paddle.h);
+      fill(0,0,random(0,255),100);
+      rect(paddle.x + random(-10,10), paddle.y + random(-10,10), paddle.w, paddle.h);
+    }
+  }
 }

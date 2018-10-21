@@ -46,8 +46,6 @@ function draw() {
   background(0);
   visuals.colorManager();
 
-
-
   leftPaddle.handleInput();
   rightPaddle.handleInput();
 
@@ -66,5 +64,7 @@ function draw() {
   leftPaddle.display();
   rightPaddle.display();
 
+  visuals.effectsManager(leftPaddle);
+  visuals.effectsManager(rightPaddle);
   visuals.scoreBoard();
 }
