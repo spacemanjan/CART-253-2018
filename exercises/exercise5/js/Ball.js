@@ -88,7 +88,28 @@ Ball.prototype.handleCollision = function(paddle) {
 // reset()
 //
 // Set position back to the middle of the screen
+// Send the ball towards the winning paddle
 Ball.prototype.reset = function () {
+//=====================NEW CODE=====================================//
+// reset the vy back to 5
+// this.vy = this.vy; //does not do the same thing as setting it to 5
+// ASK MICHAEL OR PIPPIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+this.vy = 5;
+// if ball x goes off the right side
+if (this.x > width) {
+  // reverse the velocity the ball was going at to send it to the left paddle
+  this.vx = -this.vx;
+  this.vy = -this.vy;
+  this.vy = random(-this.vy,this.vy);
+}
+// if ball x goes off the left side
+if (this.x < 0){
+  // reverse the velocity to send the ball to the right side
+  this.vx = -this.vx;
+  this.vy = -this.vy;
+  this.vy = random(-this.vy,this.vy);
+}
+//=====================END CODE=====================================//
   this.x = width/2;
   this.y = height/2;
 }
