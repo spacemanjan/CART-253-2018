@@ -17,7 +17,15 @@ var rightPaddle;
 //=====================NEW CODE===========================//
 var visuals;
 var endGame = false;
+var soundStatic;
+// preload
+//
+// preloads audio file
+function preload() {
+  soundStatic = new Audio("assets/sounds/static.mp3");
+}
 //=====================END CODE===========================//
+
 
 // setup()
 //
@@ -77,6 +85,8 @@ function draw() {
     visuals.gameOver();
     visuals.colorManager();
     visuals.scoreBoard();
+    soundStatic.currentTime = 0;
+    soundStatic.play();
   }
 
   //==========================END CODE====================================//
