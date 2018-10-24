@@ -57,7 +57,7 @@ function draw() {
   //========================NEW CODE======================================//
   background(0);
   if (!endGame) {
-    visuals.update(leftPaddle.score, rightPaddle.score);
+    visuals.update(rightPaddle.score, leftPaddle.score);
     visuals.colorManager();
     //=========================END CODE=====================================//
     leftPaddle.handleInput();

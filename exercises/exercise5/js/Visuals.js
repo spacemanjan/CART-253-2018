@@ -23,9 +23,9 @@ Visuals.prototype.update = function(rightScore, leftScore) {
   this.rightScore = rightScore;
   this.totalScore = this.leftScore + this.rightScore;
   if (this.rightScore > this.leftScore) {
-    this.winning = 'left';
-  } else if (this.rightScore < this.leftScore) {
     this.winning = 'right';
+  } else if (this.rightScore < this.leftScore) {
+    this.winning = 'left';
   } else {
     this.winning = 'neither';
   }
