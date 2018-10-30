@@ -19,16 +19,17 @@ var rightPaddle;
 //
 // Creates the ball and paddles
 function setup() {
-  crateCanvas(640,480);
+//========FIXED===================///
+  createCanvas(640,480);
   noStroke();
   // Create a ball
   ball = new Ball(width/2,height/2,50,50,10,50);
   // Create the right paddle with UP and DOWN as controls
-  //========FIXED===================///
+//========FIXED===================///
   rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  //========FIXED===================///
+//========FIXED===================///
   leftPaddle = new Paddle(0,height/2,10,60,10,83,87);
 
 
@@ -55,6 +56,6 @@ function draw() {
 
   ball.display();
   leftPaddle.display();
-  //========FIXED===================///
+//========FIXED===================///
   rightPaddle.display();
 }
