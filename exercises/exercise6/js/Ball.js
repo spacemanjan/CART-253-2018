@@ -43,9 +43,10 @@ Ball.prototype.update = function () {
 //
 // Checks if the ball has moved off the screen and, if so, returns true.
 // Otherwise it returns false.
+//========FIXED===================///
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
-  if (this.x + this.size < 0 && this.x > width) {
+  if (this.x + this.size < 0 || this.x > width) {
   return true;
   }
   else {
@@ -58,7 +59,7 @@ Ball.prototype.isOffScreen = function () {
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function () {
 //========FIXED===================///
-  rect(this.x, this.y,10,10);
+  rect(this.x, this.y,this.size,this.size);
 }
 
 // handleCollision(paddle)
