@@ -23,6 +23,7 @@ function setup() {
   createCanvas(640,480);
   noStroke();
   // Create a ball
+  //========FIXED===================///
   ball = new Ball(width/2,height/2,5,5,10,10);
   // Create the right paddle with UP and DOWN as controls
 //========FIXED===================///
