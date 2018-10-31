@@ -24,7 +24,6 @@ function Ball(x,y,vx,vy,size,speed) {
 //========FIXED===================///
 Ball.prototype.update = function () {
   // Update position with velocity
-  console.log(this.x, this.y)
   this.x = this.vx;
   this.y += this.vy;
 
@@ -34,7 +33,7 @@ Ball.prototype.update = function () {
   // Check for touching upper or lower edge and reverse velocity if so
   //========FIXED===================///
   if (this.y === 0 || this.y + this.size === height) {
-    this.vy = -this.vy;
+    this.vy = this.vy;
   }
 }
 
@@ -56,7 +55,8 @@ Ball.prototype.isOffScreen = function () {
 //
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function () {
-  rect(this.x, this.y);
+//========FIXED===================///
+  rect(this.x, this.y,10,10);
 }
 
 // handleCollision(paddle)
@@ -72,7 +72,7 @@ Ball.prototype.handleCollision = function(paddle) {
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
-      this.vx = this.vx;
+      this.vx = -this.vx;
     }
   }
 }
