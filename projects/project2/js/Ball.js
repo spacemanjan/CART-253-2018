@@ -39,9 +39,18 @@ Ball.prototype.update = function () {
 //
 // Checks if the ball has moved off the screen and, if so, returns true.
 // Otherwise it returns false.
+// Adds points to respective paddle when the ball goes into the goal.
 Ball.prototype.isOffScreen = function () {
-  // Check for going off screen and reset if so
+// Check for going off screen and reset if so
   if (this.x + this.size < 0 || this.x > width) {
+//=======ADDED CODE============//
+    if (this.x + this.size <0){
+      rightPaddle.score += 1;
+    }
+    if (this.x > width){
+      leftPaddle.score += 1;
+    }
+    console.log(leftPaddle.score, rightPaddle.score);
     return true;
   }
   else {
