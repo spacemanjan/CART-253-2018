@@ -26,6 +26,8 @@ function setup() {
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0,height/2,10,60,10,83,87,0);
+
+  title = new Title(true,false);
 }
 
 // draw()
@@ -36,6 +38,12 @@ function draw() {
 // Check if game over is triggered, if not the game plays
   if (leftPaddle.gameOver() || rightPaddle.gameOver()){
     background(255);
+    title.end = true;
+    title.display();
+  } else {
+  if (title.start === true) {
+    background(100);
+    title.display();
   } else {
   background(0);
 
@@ -56,5 +64,6 @@ function draw() {
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
+}
 }
 }
