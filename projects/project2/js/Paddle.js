@@ -51,11 +51,22 @@ Paddle.prototype.display = function() {
   rect(this.x,this.y,this.w,this.h);
 }
 
+//reset()
+//
+// Resets the paddles and score to zero when game resets after a game over.
+Paddle.prototype.reset = function() {
+  this.x = this.x;
+  this.y = this.y;
+  this.score = 0;
+}
+
+
 //gameOver()
 //
 // Checks if the score is at 11, if it's at 11 then triggers game over
 Paddle.prototype.gameOver = function(){
   if (this.score === 11){
+    title.end = true;
     return true;
   }
   else {

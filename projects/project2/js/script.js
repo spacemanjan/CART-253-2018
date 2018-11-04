@@ -1,8 +1,10 @@
-// Basic OO Pong
-// by Pippin Barr
+// Space Invader Pong
+// by Yann-Maurice McNiven
+// base code by Pippin Barr
 //
-// A primitive implementation of Pong with no scoring system
-// just the ability to play the game with the keyboard.
+// Pong in space! The most adventurous way to play the classic game.
+// but watch out aliens are out to play with you too, defend yourself with your points.
+// Defeat your opponent and aliens with lasers and score with balls it's time for space pong.
 //
 // Arrow keys control the right hand paddle, W and S control
 // the left hand paddle.
@@ -26,7 +28,8 @@ function setup() {
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0,height/2,10,60,10,83,87,0);
-
+  // initiates the title feature
+  //  UP_ARROW to start DOWN_ARROW to restart after game over.
   title = new Title(true,false);
 }
 
@@ -36,11 +39,20 @@ function setup() {
 // and displays everything.
 function draw() {
 // Check if game over is triggered, if not the game plays
+// also checks which title to display depending on the title's properties.
   if (leftPaddle.gameOver() || rightPaddle.gameOver()){
     background(255);
-    title.end = true;
     title.display();
+    // if title.start is true during a game over, reset the paddles position
+    // and score making it not gameOver anymore + change title screens.
+    if (title.start === true) {
+      title.end = false;
+      leftPaddle.reset();
+      rightPaddle.reset();
+    }
   } else {
+  // if it's not a game over and title.start is true display start screen.
+  // else time to play.
   if (title.start === true) {
     background(100);
     title.display();
