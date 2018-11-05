@@ -7,6 +7,7 @@
 // Ball constructor
 //
 // Sets the properties with the provided arguments
+
 function Ball(x,y,vx,vy,size,speed) {
   this.x = x;
   this.y = y;
@@ -82,6 +83,24 @@ Ball.prototype.handleCollision = function(paddle) {
       this.vx = -this.vx;
     }
   }
+}
+
+//handleCapture()
+//
+// Check to see if ball has been caught by alien & if it's been beemed up
+// if yes then ball is caught and imobile
+// if the ball has been beemed up add 1 point for the aliens and reset the ball.
+Ball.prototype.handleCapture = function(Aliens){
+  if (aliens.capture === true) {
+    this.x = aliens.x;
+    this.y = aliens.y;
+    if (this.y < 0){
+      aliens.capture = false;
+      aliens.score += 1;
+      ball.reset();
+    }
+  }
+
 }
 
 // reset()

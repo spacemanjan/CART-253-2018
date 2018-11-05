@@ -15,22 +15,26 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
+var aliens;
 
 // setup()
 //
 // Creates the ball and paddles
 function setup() {
-  createCanvas(640,480);
+  createCanvas(640, 480);
   // Create a ball
-  ball = new Ball(width/2,height/2,5,5,10,5);
+  ball = new Ball(width / 2, height / 2, 5, 5, 10, 5);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,0);
+  rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(0,height/2,10,60,10,83,87,0);
+  leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
+  // Create aliens with autonomous controls
+  //Aliens(x, y, vx, vy, size, speed, capture, score)
+  aliens = new Aliens(250, 10, 1, -1, 50, 0.010, false, 0);
   // initiates the title feature
   //  UP_ARROW to start DOWN_ARROW to restart after game over.
-  title = new Title(true,false);
+  title = new Title(true, false);
 }
 
 // draw()
@@ -38,9 +42,10 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-// Check if game over is triggered, if not the game plays
-// also checks which title to display depending on the title's properties.
-  if (leftPaddle.gameOver() || rightPaddle.gameOver()){
+  //===========TITLE SCREENS====================//
+  // Check if game over is triggered, if not the game plays
+  // also checks which title to display depending on the title's properties.
+  if (leftPaddle.gameOver() || rightPaddle.gameOver()) {
     background(255);
     title.display();
     // if title.start is true during a game over, reset the paddles position
@@ -51,31 +56,35 @@ function draw() {
       rightPaddle.reset();
     }
   } else {
-  // if it's not a game over and title.start is true display start screen.
-  // else time to play.
-  if (title.start === true) {
-    background(100);
-    title.display();
-  } else {
-  background(0);
+    // if it's not a game over and title.start is true display start screen.
+    // else time to play.
+    if (title.start === true) {
+      background(100);
+      title.display();
+    } else {
+      //=========GAME START======================//
+      background(0);
 
-  leftPaddle.handleInput();
-  rightPaddle.handleInput();
+      leftPaddle.handleInput();
+      rightPaddle.handleInput();
 
-  ball.update();
-  leftPaddle.update();
-  rightPaddle.update();
+      ball.update();
+      leftPaddle.update();
+      rightPaddle.update();
+      aliens.hunt();
 
-  if (ball.isOffScreen()) {
-    ball.reset();
+      if (ball.isOffScreen()) {
+        ball.reset();
+      }
+
+      ball.handleCollision(leftPaddle);
+      ball.handleCollision(rightPaddle);
+      ball.handleCapture();
+
+      ball.display();
+      leftPaddle.display();
+      rightPaddle.display();
+      aliens.display();
+    }
   }
-
-  ball.handleCollision(leftPaddle);
-  ball.handleCollision(rightPaddle);
-
-  ball.display();
-  leftPaddle.display();
-  rightPaddle.display();
-}
-}
 }
