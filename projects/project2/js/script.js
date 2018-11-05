@@ -13,6 +13,7 @@
 
 // Variable to contain the objects representing our ball and paddles
 var ball;
+var badBall = [];
 var leftPaddle;
 var rightPaddle;
 var aliens;
@@ -31,7 +32,7 @@ function setup() {
   leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
   // Create aliens with autonomous controls
   //Aliens(x, y, vx, vy, size, speed, capture, score)
-  aliens = new Aliens(250, 10, 1, -1, 50, 0.010, false, 0);
+  aliens = new Aliens(250, 10, 1, -1, 50, 0.010, false, false, 0);
   // initiates the title feature
   //  UP_ARROW to start DOWN_ARROW to restart after game over.
   title = new Title(true, false);
@@ -82,6 +83,15 @@ function draw() {
       ball.handleCapture();
 
       ball.display();
+      //=======ASK IF THIS IS OKAY=============//
+      for (var i = 0; i < aliens.score; i++) {
+        badBall.push(new BadBall(1 + i, 0, 5, 25, 10, 10));
+        badBall[i].display();
+        badBall[i].update();
+        badBall[i].handleCollision(leftPaddle);
+        badBall[i].handleCollision(rightPaddle);
+      }
+
       leftPaddle.display();
       rightPaddle.display();
       aliens.display();

@@ -1,11 +1,13 @@
 // aliens
-
+//
+//  An Alien class, Aliens will swoop down from above the game canvas to abduct the ball
+// if an alien sucessfully abducts the ball then a bad ball will spawn and begin to wreak havoc.
 
 // aliens constructor
 //
 // sets up the aliens properties, tracks how many balls the alien has captured
 // as well as the speed it will chase the ball at and wether it has caught a ball.
-function Aliens(x, y, vx, vy, size, speed, capture, score) {
+function Aliens(x, y, vx, vy, size, speed, capture, destroyed, score) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -13,6 +15,7 @@ function Aliens(x, y, vx, vy, size, speed, capture, score) {
   this.size = size;
   this.speed = speed;
   this.capture = capture;
+  this.destroyed = destroyed;
   this.score = score;
 }
 
@@ -44,5 +47,4 @@ Aliens.prototype.hunt = function(Ball) {
     this.capture = true;
     this.y += this.vy;
   }
-
 }

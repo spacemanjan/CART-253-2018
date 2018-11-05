@@ -6,7 +6,7 @@
 // Paddle constructor
 //
 // Sets the properties with the provided arguments or defaults
-function Paddle(x,y,w,h,speed,downKey,upKey,score) {
+function Paddle(x, y, w, h, speed, downKey, upKey, score) {
   this.x = x;
   this.y = y;
   this.vx = 0;
@@ -26,11 +26,9 @@ function Paddle(x,y,w,h,speed,downKey,upKey,score) {
 Paddle.prototype.handleInput = function() {
   if (keyIsDown(this.upKey)) {
     this.vy = -this.speed;
-  }
-  else if (keyIsDown(this.downKey)) {
+  } else if (keyIsDown(this.downKey)) {
     this.vy = this.speed;
-  }
-  else {
+  } else {
     this.vy = 0;
   }
 }
@@ -40,7 +38,8 @@ Paddle.prototype.handleInput = function() {
 // Constrain the resulting position to be within the canvas
 Paddle.prototype.update = function() {
   this.y += this.vy;
-  this.y = constrain(this.y,0,height-this.h);
+  this.y = constrain(this.y, 0, height - this.h);
+  this.h = constrain(this.h, 30, 60);
 }
 
 // display()
@@ -48,7 +47,7 @@ Paddle.prototype.update = function() {
 // Draw the paddle as a rectangle on the screen
 Paddle.prototype.display = function() {
   fill(255);
-  rect(this.x,this.y,this.w,this.h);
+  rect(this.x, this.y, this.w, this.h);
 }
 
 //reset()
@@ -64,12 +63,11 @@ Paddle.prototype.reset = function() {
 //gameOver()
 //
 // Checks if the score is at 11, if it's at 11 then triggers game over
-Paddle.prototype.gameOver = function(){
-  if (this.score === 11){
+Paddle.prototype.gameOver = function() {
+  if (this.score === 11) {
     title.end = true;
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 }
