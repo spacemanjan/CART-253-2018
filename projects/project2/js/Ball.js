@@ -97,6 +97,9 @@ Ball.prototype.handleCapture = function(Aliens) {
       aliens.score += 1;
       ball.reset();
     }
+  } else if (aliens.destroyed === true){
+    this.x = this.x;
+    this.y = this.y;
   }
 
 }

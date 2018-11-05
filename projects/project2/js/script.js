@@ -12,14 +12,15 @@
 // Written with JavaScript OOP.
 
 // Variable to contain the objects representing our ball and paddles
+var leftPaddle;
+var leftShot;
+var leftScore;
+var rightPaddle;
+var rightShot;
+var rightScore;
+var aliens;
 var ball;
 var badBall = [];
-var leftPaddle;
-var rightPaddle;
-var leftShot;
-var rightShot;
-var aliens;
-
 // setup()
 //
 // Creates the ball and paddles
@@ -27,17 +28,23 @@ function setup() {
   createCanvas(640, 480);
   // Create a ball
   ball = new Ball(width / 2, height / 2, 5, 5, 10, 5);
-  // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
-  // Create the right Paddle shot with the SHIFT key as a trigger
-  // Shooter(x, y, xv, w, h, speed, shootKey, ammo)
-  rightShot = new Shooter(rightPaddle.x-10, rightPaddle.y, 10, 30, 10, -10, 16, rightPaddle.score, false);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
   // Create the left Paddle shot with the SPACE key as a trigger
   // Shooter(x, y, vx, w, h, speed, shootKey, ammo)
   leftShot = new Shooter(leftPaddle.x, leftPaddle.y, 10, 30, 10, 10, 32, leftPaddle.score, false);
+  // Create score board for the left Paddle
+  //(x, y, size, score, spacing)
+  leftScore = new ScoreManager(30, 25, 15, 20);
+  // Create the right paddle with UP and DOWN as controls
+  rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
+  // Create the right Paddle shot with the SHIFT key as a trigger
+  // Shooter(x, y, xv, w, h, speed, shootKey, ammo)
+  rightShot = new Shooter(rightPaddle.x-10, rightPaddle.y, 10, 30, 10, -10, 16, rightPaddle.score, false);
+  // Create score board for the right Paddle
+  //(x, y, size, score, spacing)
+  rightScore = new ScoreManager(width-45, 25, 15, -20);
   // Create aliens with autonomous controls
   //Aliens(x, y, vx, vy, size, speed, capture, score)
   aliens = new Aliens(250, 10, 1, -1, 50, 0.010, false, false, 0);
@@ -71,50 +78,57 @@ function draw() {
       background(100);
       title.display();
     } else {
+
+
       //=========GAME START======================//
       background(0);
-
+      //=========LEFT PADDLE=====================//
       leftPaddle.handleInput();
-      rightPaddle.handleInput();
-
       leftShot.handleInput(leftPaddle);
-      rightShot.handleInput(rightPaddle);
-
-      ball.update();
       leftPaddle.update();
-      rightPaddle.update();
       leftShot.update(leftPaddle);
+        if (leftShot.isOffScreen()){
+            leftShot.reset(leftPaddle);
+          }
+      leftShot.handleCollision();
+      leftScore.update(leftPaddle);
+      //=========RIGHT PADDLE===================//
+      rightPaddle.handleInput();
+      rightShot.handleInput(rightPaddle);
+      rightPaddle.update();
       rightShot.update(rightPaddle);
-      if (leftShot.isOffScreen()){
-      leftShot.reset(leftPaddle);
-    }
-    if (rightShot.isOffScreen()) {
-      rightShot.reset(rightPaddle);
-    }
-      aliens.hunt();
-
-      if (ball.isOffScreen()) {
-        ball.reset();
-      }
-
+        if (rightShot.isOffScreen()) {
+            rightShot.reset(rightPaddle);
+          }
+      rightShot.handleCollision();
+      rightScore.update(rightPaddle);
+      //========ALIENS========================//
+        // aliens.hunt();
+        // aliens.stun();
+     //=========BALL========================//
+      ball.update();
+        if (ball.isOffScreen()) {
+          ball.reset();
+        }
       ball.handleCollision(leftPaddle);
       ball.handleCollision(rightPaddle);
       ball.handleCapture();
-
       ball.display();
+      //========BAD BALL======================//
       //=======ASK IF THIS IS OKAY=============//
-      for (var i = 0; i < aliens.score; i++) {
-        badBall.push(new BadBall(1 + i, 0, 5, 25, 10, 10));
-        badBall[i].display();
-        badBall[i].update();
-        badBall[i].handleCollision(leftPaddle);
-        badBall[i].handleCollision(rightPaddle);
-      }
+      // for (var i = 0; i < aliens.score; i++) {
+      //   badBall.push(new BadBall(1 + i, 0, 5, 25, 10, 10));
+      //   badBall[i].display();
+      //   badBall[i].update();
+      //   badBall[i].handleCollision(leftPaddle);
+      //   badBall[i].handleCollision(rightPaddle);
+      // }
+      //=========DISPLAY ORDER===============//
       leftShot.display();
       rightShot.display();
       leftPaddle.display();
       rightPaddle.display();
-      aliens.display();
+      // aliens.display();
     }
   }
 }

@@ -30,11 +30,25 @@ Aliens.prototype.display = function() {
   pop();
 }
 
+Aliens.prototype.stun = function(){
+  var s = second();
+  if (this.destroyed === true){
+    this.y = -25;
+    if (s <= 10){
+    this.capture = false;
+    } else {
+      s = 0;
+      this.destroyed = false;
+    }
+  }
+}
+
 // hunt()
 //
 // The main controller of the alien, mesures the distance between the alien and ball
 // checks to see if it's caught the ball or not, if not keeps chasing if yes begins to ascend
 Aliens.prototype.hunt = function(Ball) {
+  if (this.destroyed === false){
   var d = dist(this.x, this.y, ball.x, ball.y);
   var dx = this.x - ball.x;
   var dy = this.y - ball.y;
@@ -46,4 +60,5 @@ Aliens.prototype.hunt = function(Ball) {
     this.capture = true;
     this.y += this.vy;
   }
+}
 }

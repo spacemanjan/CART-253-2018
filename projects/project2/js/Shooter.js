@@ -36,9 +36,14 @@ Shooter.prototype.handleInput = function() {
 // Constrain the resulting position to be within the canvas
 Shooter.prototype.update = function(paddle) {
   if (this.fire === true) {
+    if (paddle.score >= 1){
     this.x += this.speed;
   } else {
+    this.fire = false;
+  }
+  } else {
   this.y += paddle.vy;
+  this.y = constrain(this.y, 0, height);
 }
 }
 
@@ -50,8 +55,14 @@ Shooter.prototype.display = function() {
   rect(this.x, this.y, this.w, this.h);
 }
 
-Shooter.prototype.handleCollision = function() {
+Shooter.prototype.handleCollision = function(Aliens) {
+// does the bullet overlap the alien
+if (this.x + this.w > aliens.x && this.x < aliens.x + aliens.size){
 
+    if (this.y + this.h> aliens.y && this.y < aliens.y + aliens.size) {
+  aliens.destroyed = true;
+}
+}
 }
 
 Shooter.prototype.isOffScreen = function(){
@@ -67,6 +78,8 @@ Shooter.prototype.isOffScreen = function(){
 // Resets the paddles and score to zero when game resets after a game over.
 Shooter.prototype.reset = function(paddle) {
   this.fire = false;
+  this.ammo -= 1;
+  paddle.score -=1;
   this.x = paddle.x;
   this.y = paddle.y;
 }
