@@ -47,7 +47,14 @@ Paddle.prototype.update = function() {
 // Draw the paddle as a rectangle on the screen
 Paddle.prototype.display = function() {
   fill(255);
+  noStroke();
   rect(this.x, this.y, this.w, this.h);
+  //left paddle gun decor
+  rect(this.x+9, this.y+12.5, this.w,this.h-25);
+  rect(this.x+19, this.y+25,this.w, this.h-50);
+  //right paddle gun decore
+  rect(this.x-10, this.y+12.5, this.w,this.h-25);
+  rect(this.x-19, this.y+25,this.w, this.h-50);
 }
 
 //reset()

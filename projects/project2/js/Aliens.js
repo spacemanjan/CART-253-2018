@@ -39,7 +39,6 @@ Aliens.prototype.hunt = function(Ball) {
   var dx = this.x - ball.x;
   var dy = this.y - ball.y;
   // if the distance between the alien and the ball is not 0
-  console.log(this.capture, this.score);
   if (d > ball.size * 2.5) {
     this.x -= (dx * this.speed);
     this.y -= (dy * this.speed);

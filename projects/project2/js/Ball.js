@@ -51,7 +51,6 @@ Ball.prototype.isOffScreen = function() {
     if (this.x > width) {
       leftPaddle.score += 1;
     }
-    console.log(leftPaddle.score, rightPaddle.score);
     return true;
   } else {
     return false;

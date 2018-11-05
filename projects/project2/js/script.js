@@ -16,6 +16,8 @@ var ball;
 var badBall = [];
 var leftPaddle;
 var rightPaddle;
+var leftShot;
+var rightShot;
 var aliens;
 
 // setup()
@@ -27,9 +29,15 @@ function setup() {
   ball = new Ball(width / 2, height / 2, 5, 5, 10, 5);
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
+  // Create the right Paddle shot with the SHIFT key as a trigger
+  // Shooter(x, y, xv, w, h, speed, shootKey, ammo)
+  rightShot = new Shooter(rightPaddle.x-10, rightPaddle.y, 10, 30, 10, -10, 16, rightPaddle.score, false);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
+  // Create the left Paddle shot with the SPACE key as a trigger
+  // Shooter(x, y, vx, w, h, speed, shootKey, ammo)
+  leftShot = new Shooter(leftPaddle.x, leftPaddle.y, 10, 30, 10, 10, 32, leftPaddle.score, false);
   // Create aliens with autonomous controls
   //Aliens(x, y, vx, vy, size, speed, capture, score)
   aliens = new Aliens(250, 10, 1, -1, 50, 0.010, false, false, 0);
@@ -69,9 +77,20 @@ function draw() {
       leftPaddle.handleInput();
       rightPaddle.handleInput();
 
+      leftShot.handleInput(leftPaddle);
+      rightShot.handleInput(rightPaddle);
+
       ball.update();
       leftPaddle.update();
       rightPaddle.update();
+      leftShot.update(leftPaddle);
+      rightShot.update(rightPaddle);
+      if (leftShot.isOffScreen()){
+      leftShot.reset(leftPaddle);
+    }
+    if (rightShot.isOffScreen()) {
+      rightShot.reset(rightPaddle);
+    }
       aliens.hunt();
 
       if (ball.isOffScreen()) {
@@ -91,7 +110,8 @@ function draw() {
         badBall[i].handleCollision(leftPaddle);
         badBall[i].handleCollision(rightPaddle);
       }
-
+      leftShot.display();
+      rightShot.display();
       leftPaddle.display();
       rightPaddle.display();
       aliens.display();
