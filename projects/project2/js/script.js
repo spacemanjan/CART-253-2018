@@ -46,16 +46,16 @@ function setup() {
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
   // Create the left Paddle shot with the SPACE key as a trigger
-  // Shooter (x, y, vx, w, h, speed, shootKey, ammo)
-  leftShot = new Shooter(leftPaddle.x, leftPaddle.y, 10, 30, 10, 10, 32, leftPaddle.score, false);
+  // Shooter (x, y, vx, speed, shootKey, ammo)
+  leftShot = new Shooter(leftPaddle.x, leftPaddle.y, 10, 32, false);
   // Create score board for the left Paddle
   //ScoreManager (x, y, size, score, spacing)
   leftScore = new ScoreManager(30, 25, 15, 20);
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
   // Create the right Paddle shot with the SHIFT key as a trigger
-  // Shooter (x, y, xv, w, h, speed, shootKey, ammo)
-  rightShot = new Shooter(rightPaddle.x-10, rightPaddle.y, 10, 30, 10, -10, 16, rightPaddle.score, false);
+  // Shooter (x, y, xv, speed, shootKey, ammo)
+  rightShot = new Shooter(rightPaddle.x-10, rightPaddle.y, -10, 16, false);
   // Create score board for the right Paddle
   // ScoreManager (x, y, size, score, spacing)
   rightScore = new ScoreManager(width-45, 25, 15, -20);
@@ -89,7 +89,7 @@ function draw() {
     }
   } else {
     // if it's not a game over and title.start is true display start screen.
-    // BackgroundArt selects a new random star background, else time to play.
+    // BackgroundArt selects a new random star background else time to play.
     if (title.start === true) {
       background(100);
       title.display();
@@ -105,8 +105,11 @@ function draw() {
         if (leftShot.isOffScreen()){
             leftShot.reset(leftPaddle);
           }
-      leftShot.handleCollision();
+      leftShot.handleCollision(rightPaddle);
       leftScore.update(leftPaddle);
+      leftShot.display();
+      leftPaddle.display();
+      leftPaddle.hitCheck();
       //=========RIGHT PADDLE===================//
       rightPaddle.handleInput();
       rightShot.handleInput(rightPaddle);
@@ -115,8 +118,11 @@ function draw() {
         if (rightShot.isOffScreen()) {
             rightShot.reset(rightPaddle);
           }
-      rightShot.handleCollision();
+      rightShot.handleCollision(leftPaddle);
       rightScore.update(rightPaddle);
+      rightShot.display();
+      rightPaddle.display();
+      rightPaddle.hitCheck();
       //========ALIENS========================//
         // aliens.hunt();
         // aliens.stun();
@@ -138,11 +144,6 @@ function draw() {
       //   badBall[i].handleCollision(leftPaddle);
       //   badBall[i].handleCollision(rightPaddle);
       // }
-      //=========DISPLAY ORDER===============//
-      leftShot.display();
-      rightShot.display();
-      leftPaddle.display();
-      rightPaddle.display();
       // aliens.display();
     }
   }
