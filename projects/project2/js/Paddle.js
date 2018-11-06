@@ -108,7 +108,7 @@ Paddle.prototype.reset = function() {
 //
 // Checks if the score is at 11, if it's at 11 then triggers game over
 Paddle.prototype.gameOver = function() {
-  if (this.score === 25) {
+  if (this.score === 11) {
     title.end = true;
     return true;
   } else {

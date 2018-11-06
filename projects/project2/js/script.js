@@ -25,6 +25,7 @@ var extraT;
 var ball;
 var badBall = [];
 var evilBall;
+var soundTrack
 
 //preload()
 function preload(){
@@ -36,6 +37,8 @@ function preload(){
   extraT = loadImage("assets/images/alien.png");
 
   evilBall = loadImage("assets/images/badball.png")
+
+  soundTrack = new Audio("assets/sounds/Nocturne.mp3");
 }
 
 // setup()
@@ -47,6 +50,7 @@ function setup() {
   //BackgroundArt (x, y, size, numStar)
   starBackg = new BackgroundArt(0, 0, 640, 480);
   // Create a ball
+  //Ball(x, y, vx, vy, size, speed)
   ball = new Ball(width / 2, height / 2, 5, 5, 10, 5);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
@@ -100,8 +104,10 @@ function draw() {
       background(100);
       title.display();
       starBackg.selection();
+      soundTrack.currentTime = 0;
     } else {
       //=========GAME START======================//
+      soundTrack.play();
       starBackg.display();
       //=========LEFT PADDLE=====================//
       leftPaddle.handleInput();

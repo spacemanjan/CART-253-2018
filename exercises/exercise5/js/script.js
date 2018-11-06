@@ -44,6 +44,7 @@ function setup() {
   leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0, false);
 
   visuals = new Visuals();
+  soundStatic.currentTime = 0;
 }
 
 // draw()
@@ -85,7 +86,6 @@ function draw() {
     visuals.gameOver();
     visuals.colorManager();
     visuals.scoreBoard();
-    soundStatic.currentTime = 0;
     soundStatic.play();
   }
 

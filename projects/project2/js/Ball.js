@@ -47,9 +47,13 @@ Ball.prototype.isOffScreen = function() {
     //=======ADDED CODE============//
     if (this.x + this.size < 0) {
       rightPaddle.score += 1;
+      this.vx = -this.vx;
+      this.vy = -this.vy;
     }
     if (this.x > width) {
       leftPaddle.score += 1;
+      this.vx = -this.vx;
+      this.vy = -this.vy;
     }
     return true;
   } else {
@@ -79,6 +83,7 @@ Ball.prototype.handleCollision = function(paddle) {
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
+      this.vy = map(paddle.y - this.y, -paddle.h / 2, paddle.h, this.speed, -this.speed);
     }
   }
 }
@@ -108,6 +113,7 @@ Ball.prototype.handleCapture = function(Aliens) {
 //
 // Set position back to the middle of the screen
 Ball.prototype.reset = function() {
+  this.vy = 5;
   this.x = width / 2;
   this.y = height / 2;
 }

@@ -79,7 +79,7 @@ Visuals.prototype.scoreBoard = function() {
   }
   // GAME OVER PROTOCOL
 
-  if (this.totalScore >= 50) {
+  if (this.totalScore >= 20) {
     endGame = true;
   }
 }
