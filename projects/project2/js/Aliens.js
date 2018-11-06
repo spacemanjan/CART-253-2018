@@ -7,16 +7,21 @@
 //
 // sets up the aliens properties, tracks how many balls the alien has captured
 // as well as the speed it will chase the ball at and wether it has caught a ball.
-function Aliens(x, y, vx, vy, size, speed, capture, destroyed, score) {
+function Aliens(x, y, vy, size, speed, capture, destroyed, score) {
   this.x = x;
   this.y = y;
-  this.vx = vx;
   this.vy = vy;
   this.size = size;
   this.speed = speed;
   this.capture = capture;
   this.destroyed = destroyed;
   this.score = score;
+  this.timer = {
+    startTime: 0,
+    running: false,
+    duration: 5000,
+    finished: false
+  }
 }
 
 //display()
@@ -24,23 +29,28 @@ function Aliens(x, y, vx, vy, size, speed, capture, destroyed, score) {
 // displays the alien as a large white square for now.
 Aliens.prototype.display = function() {
   push();
-  rectMode(CENTER);
+  imageMode(CENTER);
   fill(255);
-  rect(this.x, this.y, this.size, this.size);
+  image(extraT, this.x, this.y, this.size, this.size);
   pop();
 }
 
 Aliens.prototype.stun = function(){
-  var s = second();
   if (this.destroyed === true){
-    this.y = -25;
-    if (s <= 10){
+    if (this.timer.running) {
     this.capture = false;
-    } else {
-      s = 0;
+    this.y -= 25;
+      if (millis() - this.timer.startTime >= this.timer.duration) {
+        this.timer.finished = true;
+      }
+      if (this.timer.finished) {
+      this.timer.running = false;
       this.destroyed = false;
     }
   }
+} else {
+    this.destroyed = false;
+}
 }
 
 // hunt()
@@ -50,12 +60,13 @@ Aliens.prototype.stun = function(){
 Aliens.prototype.hunt = function(Ball) {
   if (this.destroyed === false){
   var d = dist(this.x, this.y, ball.x, ball.y);
-  var dx = this.x - ball.x;
-  var dy = this.y - ball.y;
-  // if the distance between the alien and the ball is not 0
-  if (d > ball.size * 2.5) {
+  var dx = (this.x - ball.x)*1.20;
+  var dy = (this.y - ball.y)*1.20;
+  // if the distance between the alien and the ball is not 30
+  if (d > ball.size * 3) {
     this.x -= (dx * this.speed);
     this.y -= (dy * this.speed);
+  // if the distance between the alien and the ball is 30 or less
   } else {
     this.capture = true;
     this.y += this.vy;

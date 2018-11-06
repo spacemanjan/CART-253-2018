@@ -56,15 +56,17 @@ Shooter.prototype.display = function() {
   rect(this.x, this.y+2.5, this.w*5, this.h);
 }
 
-// Shooter.prototype.handleCollision = function(Aliens) {
-// // does the bullet overlap the alien
-// if (this.x + this.w > aliens.x && this.x < aliens.x + aliens.size){
-//
-//     if (this.y + this.h> aliens.y && this.y < aliens.y + aliens.size) {
-//   aliens.destroyed = true;
-// }
-// }
-// }
+Shooter.prototype.handleDestroy = function(Aliens) {
+// does the bullet overlap the alien
+if (this.x + this.w > aliens.x - aliens.size/2 && this.x < aliens.x + aliens.size/2) {
+    if (this.y + this.h> aliens.y - aliens.size/2 && this.y < aliens.y + aliens.size/2) {
+      aliens.timer.startTime = millis();
+      aliens.timer.running = true;
+      aliens.timer.finished = false;
+      aliens.destroyed = true;
+}
+}
+}
 
 
 //handleCollision(left or right)

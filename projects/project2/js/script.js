@@ -21,6 +21,7 @@ var rightPaddle;
 var rightShot;
 var rightScore;
 var aliens;
+var extraT;
 var ball;
 var badBall = [];
 
@@ -30,6 +31,8 @@ function preload(){
   loadImage("assets/images/stars3.png"),loadImage("assets/images/stars4.png"),
   loadImage("assets/images/stars5.png"),loadImage("assets/images/stars6.png"),
   loadImage("assets/images/stars7.png")];
+
+  extraT = loadImage("assets/images/alien.png");
 }
 
 // setup()
@@ -61,7 +64,7 @@ function setup() {
   rightScore = new ScoreManager(width-45, 25, 15, -20);
   // Create aliens with autonomous controls
   //Aliens (x, y, vx, vy, size, speed, capture, score)
-  aliens = new Aliens(250, 10, 1, -1, 50, 0.010, false, false, 0);
+  aliens = new Aliens(250, 10, -3, 50, 0.015, false, false, 0);
   // initiates the title feature
   // UP_ARROW to start DOWN_ARROW to restart after game over.
   title = new Title(true, false);
@@ -124,8 +127,10 @@ function draw() {
       rightPaddle.display();
       rightPaddle.hitCheck();
       //========ALIENS========================//
-        // aliens.hunt();
-        // aliens.stun();
+        leftShot.handleDestroy();
+        rightShot.handleDestroy();
+        aliens.hunt();
+        aliens.stun();
      //=========BALL========================//
       ball.update();
         if (ball.isOffScreen()) {
@@ -144,7 +149,7 @@ function draw() {
       //   badBall[i].handleCollision(leftPaddle);
       //   badBall[i].handleCollision(rightPaddle);
       // }
-      // aliens.display();
+      aliens.display();
     }
   }
 }

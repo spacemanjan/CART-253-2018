@@ -93,8 +93,8 @@ Ball.prototype.handleCapture = function(Aliens) {
     this.x = aliens.x;
     this.y = aliens.y;
     if (this.y < 0) {
-      aliens.capture = false;
       aliens.score += 1;
+      aliens.capture = false;
       ball.reset();
     }
   } else if (aliens.destroyed === true){
