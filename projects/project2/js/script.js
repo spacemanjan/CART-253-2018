@@ -79,7 +79,7 @@ function setup() {
   rightScore = new ScoreManager(width - 45, 25, 15, -20);
   // Create aliens with autonomous controls
   //Aliens (x, y, vx, vy, size, speed, capture, score)
-  aliens = new Aliens(250, 10, -3, 50, 0.015, false, false, 0);
+  aliens = new Aliens(250, 10, -7, 50, 0.015, false, false, 0);
   // initiates the title feature
   // UP_ARROW to start DOWN_ARROW to restart after game over.
   title = new Title(true, false);
