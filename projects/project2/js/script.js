@@ -24,6 +24,7 @@ var aliens;
 var extraT;
 var ball;
 var badBall = [];
+var evilBall;
 
 //preload()
 function preload(){
@@ -33,6 +34,8 @@ function preload(){
   loadImage("assets/images/stars7.png")];
 
   extraT = loadImage("assets/images/alien.png");
+
+  evilBall = loadImage("assets/images/badball.png")
 }
 
 // setup()
@@ -129,6 +132,7 @@ function draw() {
       //========ALIENS========================//
         leftShot.handleDestroy();
         rightShot.handleDestroy();
+    //=====ASK FOR HELP TO IMPROVE?===========//
         aliens.hunt();
         aliens.stun();
      //=========BALL========================//
@@ -142,13 +146,14 @@ function draw() {
       ball.display();
       //========BAD BALL======================//
       //=======ASK IF THIS IS OKAY=============//
-      // for (var i = 0; i < aliens.score; i++) {
-      //   badBall.push(new BadBall(1 + i, 0, 5, 25, 10, 10));
-      //   badBall[i].display();
-      //   badBall[i].update();
-      //   badBall[i].handleCollision(leftPaddle);
-      //   badBall[i].handleCollision(rightPaddle);
-      // }
+      for (var i = 0; i < aliens.score; i++) {
+        //BadBall(x, y, vx, vy, size, speed)
+        badBall.push(new BadBall(1 + i, 0, 5, 50, 30, 10));
+        badBall[i].display();
+        badBall[i].update();
+        badBall[i].handleCollision(leftPaddle);
+        badBall[i].handleCollision(rightPaddle);
+      }
       aliens.display();
     }
   }

@@ -23,16 +23,14 @@ BadBall.prototype.update = function() {
   // Update position with velocity
   this.x += this.vx;
   // when ball reaches one side of the reverse x velocity and move down one row.
-  if (this.x + this.size < 0 || this.x > width) {
+  if (this.x < 0 || this.x + this.size/2 > width) {
     this.vx = -this.vx;
     this.y += this.vy;
   }
-  // Constrain y position to be on screen
-  this.y = constrain(this.y, 0, height - this.size);
-  // Check for touching upper or lower edge and neutralize bad ball if so.
-  if (this.y + this.size === height) {
-    this.x = 250;
-    this.y = 250;
+  // Check for touching lower edge and neutralize bad ball if so.
+  if (this.y + this.size/2 === height) {
+    this.x = 0;
+    this.y = -100;
     this.vx = 0;
     this.vy = 0;
   }
@@ -43,19 +41,19 @@ BadBall.prototype.update = function() {
 // Draw the bad ball as a  red rectangle on the screen
 BadBall.prototype.display = function() {
   fill(255, 0, 0);
-  rect(this.x, this.y, this.size, this.size);
+  image(evilBall, this.x, this.y, this.size, this.size);
 }
 
 // handleCollision(paddle)
 //
 // Check if this ball overlaps the paddle passed as an argument
-// and if so shrink the paddle by 10.
+// and if so paddle loses points by a factor of 1
 BadBall.prototype.handleCollision = function(paddle) {
   // Check if the bad ball overlaps the paddle on x axis
-  if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
+  if (this.x + this.size/1.5 > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the bad ball overlaps the paddle on y axis
-    if (this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
-      paddle.h -= 10;
+    if (this.y + this.size/1.5> paddle.y && this.y < paddle.y + paddle.h) {
+      paddle.score -= 1;
     }
   }
 }

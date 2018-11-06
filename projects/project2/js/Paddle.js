@@ -47,6 +47,7 @@ Paddle.prototype.update = function() {
   this.y += this.vy;
   this.y = constrain(this.y, 0, height - this.h);
   this.h = constrain(this.h, 30, 60);
+  this.score = constrain(this.score, 0, 25);
 }
 
 // display()
@@ -68,7 +69,7 @@ Paddle.prototype.display = function() {
 //
 // Check to see if paddle has been hit & if the timer has begun, if timer is running
 // paddle is trapped and unable to move, a red bar indicates when player will regain
-// mobility. Once 2 seconds have elapsed paddle regains mobility. 
+// mobility. Once 2 seconds have elapsed paddle regains mobility.
 Paddle.prototype.hitCheck = function() {
   if (this.hit === true){
     if (this.timer.running) {
