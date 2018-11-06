@@ -28,6 +28,7 @@ Shooter.prototype.handleInput = function(paddle) {
   if (keyIsDown(this.shootKey)) {
     if (paddle.score >= 1){
     this.fire = true;
+    zap.play();
   } else {
     this.fire = false
   }
@@ -91,6 +92,7 @@ if (this.fire === true) {
 Shooter.prototype.isOffScreen = function(){
     if (this.x < 0 || this.x > width+20){
       return true;
+      zap.currentTime = 0;
   } else {
     return false;
   }

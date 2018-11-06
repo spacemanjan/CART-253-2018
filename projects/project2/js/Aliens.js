@@ -73,3 +73,7 @@ Aliens.prototype.hunt = function(Ball) {
   }
 }
 }
+
+Aliens.prototype.reset = function() {
+  aliens.score = 0;
+}

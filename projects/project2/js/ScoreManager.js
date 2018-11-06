@@ -21,7 +21,7 @@ var pointsDrawn = 0;
 var x = this.x;
 var y = this.y;
 while (pointsDrawn < paddle.score){
- fill(255,0,255);
+ fill(66, 244, 232);
  rect(x,y,this.size,this.size);
  x += this.spacing
  pointsDrawn ++;

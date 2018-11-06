@@ -25,7 +25,8 @@ var extraT;
 var ball;
 var badBall = [];
 var evilBall;
-var soundTrack
+var soundTrack;
+var zap;
 
 //preload()
 function preload(){
@@ -39,6 +40,7 @@ function preload(){
   evilBall = loadImage("assets/images/badball.png")
 
   soundTrack = new Audio("assets/sounds/Nocturne.mp3");
+  zap = new Audio("assets/sounds/zap.wav");
 }
 
 // setup()
@@ -57,7 +59,7 @@ function setup() {
   leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
   // Create the left Paddle shot with the SPACE key as a trigger
   // Shooter (x, y, vx, speed, shootKey, ammo)
-  leftShot = new Shooter(leftPaddle.x, leftPaddle.y, 10, 32, false);
+  leftShot = new Shooter(leftPaddle.x, leftPaddle.y, 18, 32, false);
   // Create score board for the left Paddle
   //ScoreManager (x, y, size, score, spacing)
   leftScore = new ScoreManager(30, 25, 15, 20);
@@ -65,7 +67,7 @@ function setup() {
   rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
   // Create the right Paddle shot with the SHIFT key as a trigger
   // Shooter (x, y, xv, speed, shootKey, ammo)
-  rightShot = new Shooter(rightPaddle.x-10, rightPaddle.y, -10, 16, false);
+  rightShot = new Shooter(rightPaddle.x-10, rightPaddle.y, -18, 16, false);
   // Create score board for the right Paddle
   // ScoreManager (x, y, size, score, spacing)
   rightScore = new ScoreManager(width-45, 25, 15, -20);
@@ -96,6 +98,7 @@ function draw() {
       title.end = false;
       leftPaddle.reset();
       rightPaddle.reset();
+      aliens.reset();
     }
   } else {
     // if it's not a game over and title.start is true display start screen.
