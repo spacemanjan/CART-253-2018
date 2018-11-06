@@ -44,6 +44,7 @@ Shooter.prototype.update = function(paddle) {
   } else {
     this.y += paddle.vy;
     this.y = constrain(this.y, paddle.y + 27.7, paddle.y + 27.8);
+    this.x = constrain(this.x, paddle.x, paddle.x+6);
   }
 }
 
@@ -90,7 +91,7 @@ Shooter.prototype.handleCollision = function(paddle) {
 //
 // if bullet passes the limits of the screen it triggers the reset.
 Shooter.prototype.isOffScreen = function() {
-  if (this.x < 0 || this.x > width + 20) {
+  if (this.x < 0 - 10 || this.x > width + 20) {
     return true;
     zap.currentTime = 0;
   } else {
