@@ -58,11 +58,11 @@ Paddle.prototype.display = function() {
   noStroke();
   rect(this.x, this.y, this.w, this.h);
   //left paddle gun decor
-  rect(this.x+9, this.y+12.5, this.w,this.h-25);
-  rect(this.x+19, this.y+25,this.w, this.h-50);
+  rect(this.x + 9, this.y + 12.5, this.w, this.h - 25);
+  rect(this.x + 19, this.y + 25, this.w, this.h - 50);
   //right paddle gun decore
-  rect(this.x-10, this.y+12.5, this.w,this.h-25);
-  rect(this.x-19, this.y+25,this.w, this.h-50);
+  rect(this.x - 10, this.y + 12.5, this.w, this.h - 25);
+  rect(this.x - 19, this.y + 25, this.w, this.h - 50);
 }
 
 // paddle.hitCheck()
@@ -71,24 +71,24 @@ Paddle.prototype.display = function() {
 // paddle is trapped and unable to move, a red bar indicates when player will regain
 // mobility. Once 2 seconds have elapsed paddle regains mobility.
 Paddle.prototype.hitCheck = function() {
-  if (this.hit === true){
+  if (this.hit === true) {
     if (this.timer.running) {
-       this.speed = 0;
-       push();
-       fill(255,0,0);
-       rect(this.x, this.y, this.w, this.h-((millis() - this.timer.startTime)/33));
-       pop();
+      this.speed = 0;
+      push();
+      fill(255, 0, 0);
+      rect(this.x, this.y, this.w, this.h - ((millis() - this.timer.startTime) / 33));
+      pop();
       if (millis() - this.timer.startTime >= this.timer.duration) {
         this.timer.finished = true;
       }
       if (this.timer.finished) {
-      this.timer.running = false;
-      this.hit = false;
+        this.timer.running = false;
+        this.hit = false;
+      }
     }
+  } else {
+    this.speed = this.go;
   }
-} else {
-  this.speed = this.go;
-}
 }
 
 

@@ -29,11 +29,12 @@ var soundTrack;
 var zap;
 
 //preload()
-function preload(){
-  stars = [loadImage("assets/images/stars1.png"),loadImage("assets/images/stars2.png"),
-  loadImage("assets/images/stars3.png"),loadImage("assets/images/stars4.png"),
-  loadImage("assets/images/stars5.png"),loadImage("assets/images/stars6.png"),
-  loadImage("assets/images/stars7.png")];
+function preload() {
+  stars = [loadImage("assets/images/stars1.png"), loadImage("assets/images/stars2.png"),
+    loadImage("assets/images/stars3.png"), loadImage("assets/images/stars4.png"),
+    loadImage("assets/images/stars5.png"), loadImage("assets/images/stars6.png"),
+    loadImage("assets/images/stars7.png")
+  ];
 
   extraT = loadImage("assets/images/alien.png");
 
@@ -67,10 +68,10 @@ function setup() {
   rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
   // Create the right Paddle shot with the SHIFT key as a trigger
   // Shooter (x, y, xv, speed, shootKey, ammo)
-  rightShot = new Shooter(rightPaddle.x-10, rightPaddle.y, -18, 16, false);
+  rightShot = new Shooter(rightPaddle.x - 10, rightPaddle.y, -18, 16, false);
   // Create score board for the right Paddle
   // ScoreManager (x, y, size, score, spacing)
-  rightScore = new ScoreManager(width-45, 25, 15, -20);
+  rightScore = new ScoreManager(width - 45, 25, 15, -20);
   // Create aliens with autonomous controls
   //Aliens (x, y, vx, vy, size, speed, capture, score)
   aliens = new Aliens(250, 10, -3, 50, 0.015, false, false, 0);
@@ -117,9 +118,9 @@ function draw() {
       leftShot.handleInput(leftPaddle);
       leftPaddle.update();
       leftShot.update(leftPaddle);
-        if (leftShot.isOffScreen()){
-            leftShot.reset(leftPaddle);
-          }
+      if (leftShot.isOffScreen()) {
+        leftShot.reset(leftPaddle);
+      }
       leftShot.handleCollision(rightPaddle);
       leftScore.update(leftPaddle);
       leftShot.display();
@@ -130,25 +131,25 @@ function draw() {
       rightShot.handleInput(rightPaddle);
       rightPaddle.update();
       rightShot.update(rightPaddle);
-        if (rightShot.isOffScreen()) {
-            rightShot.reset(rightPaddle);
-          }
+      if (rightShot.isOffScreen()) {
+        rightShot.reset(rightPaddle);
+      }
       rightShot.handleCollision(leftPaddle);
       rightScore.update(rightPaddle);
       rightShot.display();
       rightPaddle.display();
       rightPaddle.hitCheck();
       //========ALIENS========================//
-        leftShot.handleDestroy();
-        rightShot.handleDestroy();
-    //=====ASK FOR HELP TO IMPROVE?===========//
-        aliens.hunt();
-        aliens.stun();
-     //=========BALL========================//
+      leftShot.handleDestroy();
+      rightShot.handleDestroy();
+      //=====ASK FOR HELP TO IMPROVE?===========//
+      aliens.hunt();
+      aliens.stun();
+      //=========BALL========================//
       ball.update();
-        if (ball.isOffScreen()) {
-          ball.reset();
-        }
+      if (ball.isOffScreen()) {
+        ball.reset();
+      }
       ball.handleCollision(leftPaddle);
       ball.handleCollision(rightPaddle);
       ball.handleCapture();

@@ -23,12 +23,12 @@ BadBall.prototype.update = function() {
   // Update position with velocity
   this.x += this.vx;
   // when ball reaches one side of the reverse x velocity and move down one row.
-  if (this.x < 0 || this.x + this.size/2 > width) {
+  if (this.x < 0 || this.x + this.size / 2 > width) {
     this.vx = -this.vx;
     this.y += this.vy;
   }
   // Check for touching lower edge and neutralize bad ball if so.
-  if (this.y + this.size/2 === height) {
+  if (this.y + this.size / 2 === height) {
     this.x = 0;
     this.y = -100;
     this.vx = 0;
@@ -50,9 +50,9 @@ BadBall.prototype.display = function() {
 // and if so paddle loses points by a factor of 1
 BadBall.prototype.handleCollision = function(paddle) {
   // Check if the bad ball overlaps the paddle on x axis
-  if (this.x + this.size/1.5 > paddle.x && this.x < paddle.x + paddle.w) {
+  if (this.x + this.size / 1.5 > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the bad ball overlaps the paddle on y axis
-    if (this.y + this.size/1.5> paddle.y && this.y < paddle.y + paddle.h) {
+    if (this.y + this.size / 1.5 > paddle.y && this.y < paddle.y + paddle.h) {
       paddle.score -= 1;
     }
   }

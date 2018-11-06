@@ -102,7 +102,7 @@ Ball.prototype.handleCapture = function(Aliens) {
       aliens.capture = false;
       ball.reset();
     }
-  } else if (aliens.destroyed === true){
+  } else if (aliens.destroyed === true) {
     this.x = this.x;
     this.y = this.y;
   }

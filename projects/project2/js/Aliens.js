@@ -35,22 +35,22 @@ Aliens.prototype.display = function() {
   pop();
 }
 
-Aliens.prototype.stun = function(){
-  if (this.destroyed === true){
+Aliens.prototype.stun = function() {
+  if (this.destroyed === true) {
     if (this.timer.running) {
-    this.capture = false;
-    this.y -= 25;
+      this.capture = false;
+      this.y -= 25;
       if (millis() - this.timer.startTime >= this.timer.duration) {
         this.timer.finished = true;
       }
       if (this.timer.finished) {
-      this.timer.running = false;
-      this.destroyed = false;
+        this.timer.running = false;
+        this.destroyed = false;
+      }
     }
-  }
-} else {
+  } else {
     this.destroyed = false;
-}
+  }
 }
 
 // hunt()
@@ -58,20 +58,20 @@ Aliens.prototype.stun = function(){
 // The main controller of the alien, mesures the distance between the alien and ball
 // checks to see if it's caught the ball or not, if not keeps chasing if yes begins to ascend
 Aliens.prototype.hunt = function(Ball) {
-  if (this.destroyed === false){
-  var d = dist(this.x, this.y, ball.x, ball.y);
-  var dx = (this.x - ball.x)*1.20;
-  var dy = (this.y - ball.y)*1.20;
-  // if the distance between the alien and the ball is not 30
-  if (d > ball.size * 3) {
-    this.x -= (dx * this.speed);
-    this.y -= (dy * this.speed);
-  // if the distance between the alien and the ball is 30 or less
-  } else {
-    this.capture = true;
-    this.y += this.vy;
+  if (this.destroyed === false) {
+    var d = dist(this.x, this.y, ball.x, ball.y);
+    var dx = (this.x - ball.x) * 1.20;
+    var dy = (this.y - ball.y) * 1.20;
+    // if the distance between the alien and the ball is not 30
+    if (d > ball.size * 3) {
+      this.x -= (dx * this.speed);
+      this.y -= (dy * this.speed);
+      // if the distance between the alien and the ball is 30 or less
+    } else {
+      this.capture = true;
+      this.y += this.vy;
+    }
   }
-}
 }
 
 Aliens.prototype.reset = function() {
