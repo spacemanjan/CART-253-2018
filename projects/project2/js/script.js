@@ -27,6 +27,9 @@ var badBall = [];
 var evilBall;
 var soundTrack;
 var zap;
+var titleFont;
+var subFont;
+var titleBackG;
 
 //preload()
 function preload() {
@@ -35,13 +38,15 @@ function preload() {
     loadImage("assets/images/stars5.png"), loadImage("assets/images/stars6.png"),
     loadImage("assets/images/stars7.png")
   ];
-
   extraT = loadImage("assets/images/alien.png");
-
-  evilBall = loadImage("assets/images/badball.png")
-
+  evilBall = loadImage("assets/images/badball.png");
+  titleBackG = loadImage("assets/images/stars1.png");
+// SOUNDS
   soundTrack = new Audio("assets/sounds/Nocturne.mp3");
   zap = new Audio("assets/sounds/zap.wav");
+// FONTS
+  titleFont = loadFont("assets/fonts/barcode.ttf");
+  subFont = loadFont("assets/fonts/unica.ttf");
 }
 
 // setup()
@@ -105,7 +110,7 @@ function draw() {
     // if it's not a game over and title.start is true display start screen.
     // BackgroundArt selects a new random star background else time to play.
     if (title.start === true) {
-      background(100);
+      image(titleBackG,0,0);
       title.display();
       starBackg.selection();
       soundTrack.currentTime = 0;
@@ -155,7 +160,6 @@ function draw() {
       ball.handleCapture();
       ball.display();
       //========BAD BALL======================//
-      //=======ASK IF THIS IS OKAY=============//
       for (var i = 0; i < aliens.score; i++) {
         //BadBall(x, y, vx, vy, size, speed)
         badBall.push(new BadBall(1 + i, 0, 5, 50, 30, 10));
