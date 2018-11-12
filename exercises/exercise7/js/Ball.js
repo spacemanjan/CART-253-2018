@@ -70,6 +70,9 @@ Ball.prototype.handleCollision = function(paddle) {
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
+      paddle.score += 1;
+      speechIndex = floor(random(0, speech.length));
+      speechtime = speech[speechIndex];
     }
   }
 }
