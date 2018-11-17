@@ -1,0 +1,31 @@
+{
+	"stages" : [
+		{
+			"stageID" : "introstage",
+			"strings": [
+				{"string": "thank you michael", "ID": "intro"},
+				{"string": "I'm a screw up", "ID": "intro2"},
+				{"string": "should have listened to mom", "ID": "intro3"},
+				{"string": "when is the test", "ID": "intro4"},
+				{"string": "test", "ID": "intro5", "choices": [
+					{"string": "option A", "ID": 101, "leadsTo": "A"},
+					{"string": "option B", "ID": 101, "leadsTo": "B"}
+				]}
+			]
+		},
+		{
+			"stageID": "nice",
+			"branch": "A",
+			"strings": [
+				{"string": "spank me", "ID": 6}
+			]
+		},
+		{
+			"stageID": "not nice",
+			"branch": "B",
+			"strings": [
+				{"string": "spank me fff", "ID": 6}
+			]
+		}
+	]
+}
