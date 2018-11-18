@@ -5,7 +5,7 @@
 //Paddle constructor
 
 //Sets the properties with the provided arguments or defaults
-function Paddle(x,y,w,h,speed,downKey,upKey,score) {
+function Paddle(x,y,w,h,speed,downKey,upKey,rightKey,leftKey,score) {
   this.x = x;
   this.y = y;
   this.vx = 0;
@@ -15,6 +15,8 @@ function Paddle(x,y,w,h,speed,downKey,upKey,score) {
   this.speed = speed;
   this.downKey = downKey;
   this.upKey = upKey;
+  this.rightKey = rightKey;
+  this.leftKey = leftKey;
   this.score = score;
 }
 
@@ -24,13 +26,24 @@ function Paddle(x,y,w,h,speed,downKey,upKey,score) {
 // appropriately
 Paddle.prototype.handleInput = function() {
   if (keyIsDown(this.upKey)) {
-    this.vy -= this.speed;
+    this.vy = -this.speed;
   }
   else if (keyIsDown(this.downKey)) {
-    this.vy += this.speed;
+    this.vy = this.speed;
   }
   else {
     this.vy = 0;
+  }
+  if (glitch.level1 === true) {
+	  if (keyIsDown(this.rightKey)) {
+		  this.vx = this.speed;
+	  }
+	  else if (keyIsDown(this.leftKey)) {
+		  this.vx = -this.speed;
+	  }
+	  else {
+		  this.vx = 0;
+	  }
   }
 }
 
@@ -39,7 +52,14 @@ Paddle.prototype.handleInput = function() {
 // Constrain the resulting position to be within the canvas
 Paddle.prototype.update = function() {
   this.y += this.vy;
+  this.x += this.vx;
   this.y = constrain(this.y, 0, height - this.h);
+}
+
+Paddle.prototype.isOffScreen = function(){
+	if (paddle.x > width) {
+
+	}
 }
 
 // display()

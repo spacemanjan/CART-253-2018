@@ -14,14 +14,13 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
-var dialogue;
-var strings;
+var glitch;
 
 //preload()
 //
-// Preloads JSON
+// Preload function for images, sounds, and maybe JSON (if I feel like killing myself)
 function preload() {
- 	strings = loadJSON("js/strings.json");
+
 }
 
 // setup()
@@ -33,15 +32,15 @@ function setup() {
   // Create a ball
   ball = new Ball(width/2,height/2,5,5,10,10);
   // Create the right paddle with UP and DOWN as controls
-  // Paddle(x,y,w,h,speed,downKey,upKey,score)
-  rightPaddle = new Paddle(width-10,height/2,10,60,1,DOWN_ARROW,UP_ARROW,0);
+  // Paddle(x,y,w,h,speed,downKey,upKey,rightKey,leftKey,score)
+  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,187,189,0);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  // Paddle(x,y,w,h,speed,downKey,upKey,score)
-  leftPaddle = new Paddle(0,height/2,10,60,1,83,87,0);
-  // Create the dialogue box
-  // function Dialogue (x,y,size,talking)
-  dialogue = new Dialogue(0,250,width,false, strings);
+ // Paddle(x,y,w,h,speed,downKey,upKey,rightKey,leftKey,score)
+  leftPaddle = new Paddle(0,height/2,10,60,10,83,87,68,65,0);
+  //
+  // Glitch(x,y,vx,vy,size,speed)
+  glitch = new Glitch(10,10,0,0,10,10,0);
 }
 
 // draw()
@@ -57,7 +56,10 @@ function draw() {
   ball.update();
   leftPaddle.update();
   rightPaddle.update();
-  dialogue.update();
+  glitch.update();
+  for (var i = 0; i < 5; i++) {
+	  glitchesLV1[i].display();
+  }
 
 
   if (ball.isOffScreen(true)){
@@ -66,15 +68,10 @@ function draw() {
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
+  glitch.handleCollision(ball);
 
-  dialogue.display();
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
-
-}
-
-function mousePressed () {
-	dialogue.setStage('introstage')
-    dialogue.changeString('intro4')
+  glitch.display();
 }
