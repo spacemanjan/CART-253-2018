@@ -12,9 +12,11 @@
 //
 // Written with JavaScript OOP.
 var ball;
-var leftPaddle;
-var rightPaddle;
+var player;
+var paddle;
 var glitch;
+var canvas1Width = 640;
+var canvas1Height = 480;
 
 //preload()
 //
@@ -27,17 +29,17 @@ function preload() {
 //
 // Creates the ball and paddles
 function setup() {
-  createCanvas(640,480);
+  createCanvas(1400,760);
   noStroke();
   // Create a ball
-  ball = new Ball(width/2,height/2,5,5,10,10);
-  // Create the right paddle with UP and DOWN as controls
-  // Paddle(x,y,w,h,speed,downKey,upKey,rightKey,leftKey,score)
-  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,187,189,0);
-  // Create the left paddle with W and S as controls
-  // Keycodes 83 and 87 are W and S respectively
+  ball = new Ball(canvas1Width/2,canvas1Height/2,5,5,10,10);
+  // Create the right paddle
+  // AutoPaddle(x,y,w,h,speed)
+  paddle = new AutoPaddle(canvas1Width-10,canvas1Height/2,10,60,10);
+  // Create the player with WASD as controls
+  // Keycodes 83,87,68,65 respectively
  // Paddle(x,y,w,h,speed,downKey,upKey,rightKey,leftKey,score)
-  leftPaddle = new Paddle(0,height/2,10,60,10,83,87,68,65,0);
+  player = new Paddle(0,canvas1Height/2,10,60,10,83,87,68,65);
   //
   // Glitch(x,y,vx,vy,size,speed)
   glitch = new Glitch(10,10,0,0,10,10,0);
@@ -49,13 +51,14 @@ function setup() {
 // and displays everything.
 function draw() {
   background(0);
+  console.log(screen.height);
 
-  leftPaddle.handleInput();
-  rightPaddle.handleInput();
+  player.handleInput();
+  paddle.controler(ball);
 
   ball.update();
-  leftPaddle.update();
-  rightPaddle.update();
+  player.update();
+  paddle.update();
   glitch.update();
   for (var i = 0; i < 5; i++) {
 	  glitchesLV1[i].display();
@@ -66,12 +69,11 @@ function draw() {
     ball.reset();
   }
 
-  ball.handleCollision(leftPaddle);
-  ball.handleCollision(rightPaddle);
+  ball.handleCollision();
   glitch.handleCollision(ball);
 
   ball.display();
-  leftPaddle.display();
-  rightPaddle.display();
+  player.display();
+  paddle.display();
   glitch.display();
 }

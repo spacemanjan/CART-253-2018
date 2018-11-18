@@ -5,7 +5,7 @@
 //Paddle constructor
 
 //Sets the properties with the provided arguments or defaults
-function Paddle(x,y,w,h,speed,downKey,upKey,rightKey,leftKey,score) {
+function Paddle(x,y,w,h,speed,downKey,upKey,rightKey,leftKey) {
   this.x = x;
   this.y = y;
   this.vx = 0;
@@ -17,7 +17,6 @@ function Paddle(x,y,w,h,speed,downKey,upKey,rightKey,leftKey,score) {
   this.upKey = upKey;
   this.rightKey = rightKey;
   this.leftKey = leftKey;
-  this.score = score;
 }
 
 // handleInput()

@@ -27,10 +27,10 @@ Ball.prototype.update = function () {
   this.y += this.vy;
 
   // Constrain y position to be on screen
-  this.y = constrain(this.y,0,height-this.size);
+  this.y = constrain(this.y,0,canvas1Height-this.size);
 
   // Check for touching upper or lower edge and reverse velocity if so
-  if (this.y === 0 || this.y + this.size === height) {
+  if (this.y === 0 || this.y + this.size === canvas1Height) {
     this.vy = -this.vy;
   }
 }
@@ -41,7 +41,7 @@ Ball.prototype.update = function () {
 // Otherwise it returns false.
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
-  if (this.x + this.size < 0 || this.x > width) {
+  if (this.x + this.size < 0 || this.x > canvas1Width) {
   return true;
   }
   else {
@@ -60,7 +60,7 @@ Ball.prototype.display = function () {
 //
 // Check if this ball overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
-Ball.prototype.handleCollision = function(paddle) {
+Ball.prototype.handleCollision = function() {
   // Check if the ball overlaps the paddle on x axis
   if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the ball overlaps the paddle on y axis
@@ -70,8 +70,18 @@ Ball.prototype.handleCollision = function(paddle) {
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
-      paddle.score += 1;
     }
+  }
+  // Check if the ball overlaps the paddle on x axis
+  if (this.x + this.size > player.x && this.x < player.x + player.w) {
+	// Check if the ball overlaps the paddle on y axis
+	if (this.y + this.size > player.y && this.y < player.y + player.h) {
+	  // If so, move ball back to previous position (by subtracting current velocity)
+	  this.x -= this.vx;
+	  this.y -= this.vy;
+	  // Reverse x velocity to bounce
+	  this.vx = -this.vx;
+	}
   }
 }
 
@@ -79,6 +89,6 @@ Ball.prototype.handleCollision = function(paddle) {
 //
 // Set position back to the middle of the screen
 Ball.prototype.reset = function () {
-  this.x = width/2;
-  this.y = height/2;
+  this.x = canvas1Width/2;
+  this.y = canvas1Height/2;
 }
