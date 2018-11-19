@@ -33,18 +33,18 @@ Paddle.prototype.handleInput = function() {
   else {
     this.vy = 0;
   }
-  if (glitch.level1 === true) {
-	  if (keyIsDown(this.rightKey)) {
+
+if (keyIsDown(this.rightKey)) {
 		  this.vx = this.speed;
 	  }
-	  else if (keyIsDown(this.leftKey)) {
+	else if (keyIsDown(this.leftKey)) {
 		  this.vx = -this.speed;
 	  }
 	  else {
 		  this.vx = 0;
 	  }
   }
-}
+
 
 // update()
 // Update y position based on velocity
@@ -52,17 +52,16 @@ Paddle.prototype.handleInput = function() {
 Paddle.prototype.update = function() {
   this.y += this.vy;
   this.x += this.vx;
-  if (glitch.level1 === false || glitch.level2 === false){
-  this.y = constrain(this.y, 0, canvas1Height - this.h);
-}
-//=============NEED TO UPDATE===================//
-// for some reason this isn't constraining the players x 
-if (glitch.level2 === false && this.x > 720){
-	this.x = constrain(this.x, 720, 1440);
-	console.log("ASSHASIDOS")
-}
+  this.y = constrain(this.y, 0, height - this.h);
+  this.x = constrain(this.x, 0, width - this.w);
+  this.speed = constrain(this.speed, 1, 10);
 }
 
+Paddle.prototype.isOffScreen = function(){
+	if (paddle.x > width) {
+
+	}
+}
 
 // display()
 //

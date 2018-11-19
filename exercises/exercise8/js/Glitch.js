@@ -32,7 +32,7 @@ function Glitch(x,y,vx,vy,size,speed) {
 // off left or right side.
 Glitch.prototype.update = function () {
 	for (var i = 0; i < 5; i++) {
-  		glitchesLV1.push(new Glitch(random(100,580),random(100,400),0,0,10,0));
+  		glitchesLV1.push(new Glitch(random(100,canvas1Width-100),random(100,canvas1Height-100),0,0,10,0));
 	}
 }
 // display()
@@ -43,7 +43,6 @@ Glitch.prototype.display = function () {
 	fill(255,0,0);
   	rect(this.x, this.y,this.size,this.size);
 	pop();
-	console.log(glitchesLV1[0].x)
 }
 
 // handleCollision(paddle)
