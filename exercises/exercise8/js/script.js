@@ -31,12 +31,16 @@ var canvas2X = 720;
 var canvas2Width =720;
 var canvas2Height =395
 
+//Sausage
+var doggo;
 //preload()
 //
 // Preload function for images, sounds, and maybe JSON (if I feel like killing myself)
 function preload() {
 	shipImage = loadImage("assets/images/face.png");
     bulletImage = loadImage("assets/images/heart.png");
+	targetImage = loadImage("assets/images/animals-target.png");
+    flipImage = loadImage("assets/images/flip.png");
 }
 
 // setup()
@@ -70,6 +74,11 @@ function setup() {
   // Ship(x,y,angle,acceleration,maxSpeed,turningSpeed,shipImage,bulletImage,shootplayer,shootstyle)
   ship1 = new Ship(5*width/8,canvas2Height/2,0,5,5,0.1,shipImage,bulletImage,true,false);
   ship2 = new Ship(7*width/8,canvas2Height/2,PI,5,5,0.1,shipImage,bulletImage,false,true);
+
+  // Sausage setup
+  //
+  // Create doggo
+    doggo = new Dog (width/4,3*height/4,120,2);
 }
 
 // draw()
@@ -96,7 +105,7 @@ function draw() {
     ball.reset();
   }
   ball.handleCollision();
-  glitch.handleCollision(ball);
+  glitch.handleCollision();
   ball.display();
   paddle.display();
 
@@ -113,5 +122,15 @@ function draw() {
 
   ship1.display();
   ship2.display();
+  for (x = 0; x < 1; x++) {
+	  glitchesLV2[x].display();
+  }
+}
+
+  //Sausage Draw
+ if (glitch.level2 === true){
+  doggo.update();
+  doggo.display();
+  doggo.handleCollision();
 }
 }

@@ -5,7 +5,9 @@
 
 // Glitch Variables
 var glitchesLV1 = [];
-
+var glitchesLV2 = [];
+var glitchLV2counter = 7;
+var x;
 // Glitch constructor
 //
 // Sets the glitch properties
@@ -34,6 +36,9 @@ Glitch.prototype.update = function () {
 	for (var i = 0; i < 5; i++) {
   		glitchesLV1.push(new Glitch(random(100,canvas1Width-100),random(100,canvas1Height-100),0,0,10,0));
 	}
+	for (x = 0; x < 1; x++) {
+		glitchesLV2.push(new Glitch(random(740,width-20),random(20,375),0,0,10,0));
+	}
 }
 // display()
 //
@@ -51,7 +56,8 @@ Glitch.prototype.display = function () {
 // and if so make the glitch disappear
 // Q:how can I have this work through all the Glitches without repeating
 // Q:how would I make these Glitches disappear (make their fills black?)
-Glitch.prototype.handleCollision = function(ball) {
+Glitch.prototype.handleCollision = function() {
+  // PONG GLITCH
   // Check if the ball overlaps the paddle on x axis
   if (ball.x + ball.size > glitchesLV1[0].x && ball.x < glitchesLV1[0].x + 20) {
     // Check if the ball overlaps the paddle on y axis
@@ -60,5 +66,16 @@ Glitch.prototype.handleCollision = function(ball) {
 	   glitchesLV1[0].y = 100;
 	   this.level1 = true;
     }
+  }
+  //LOVERS Glitch
+  if (player.x + player.w > glitchesLV2[0].x && player.x < glitchesLV2[0].x +20){
+	  if (player.y + player.h > glitchesLV2[0].y && player.y < glitchesLV2[0].y + 20){
+		  console.log("you got me");
+		  x -= 1;
+		  glitchLV2counter -= 1;
+	  }
+  }
+  if (glitchLV2counter === 0) {
+	  this.level2 = true;
   }
 }

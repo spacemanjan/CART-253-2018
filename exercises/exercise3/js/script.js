@@ -2,11 +2,9 @@
 Where's Sausage Dog?
 by Pippin Barr
 Edited by Yann-Maurice McNiven
-
 An algorithmic version of a Where's Waldo searching game where you
 need to click on the sausage dog you're searching for in amongst all
 the visual noise of other animals.
-
 Animal images from:
 https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal-icon-set/
 ******************************************************************************/
