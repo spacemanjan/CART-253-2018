@@ -1,11 +1,8 @@
 /*********************************************************
-
 Exercise 2 - The Artful Dodger
 Yann-Maurice
-
 Pippin Barr:
 Starter code for exercise 2.
-
 *********************************************************/
 
 // The position and size of our avatar circle

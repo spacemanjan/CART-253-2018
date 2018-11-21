@@ -1,26 +1,33 @@
 // Glitch
 //
-// A class which defines how many glitches will appear on each level, also tracks glitch
-// collection and triggers booleans that are used by other objects and the game overall.
+// A class which defines how many glitches you need to collect on each level,
+//  also tracks glitch collection, handles the collecting of glitches and manages which
+// level you have access to based on booleans.
 
 // Glitch Variables
 var glitchesLV1 = [];
 var glitchesLV2 = [];
-var glitchLV2counter = 7;
+var glitchesLV3 = [];
+var glitchesLV4 = [];
+var glitchcounter = 0;
+var glitchLV2counter = 1;
+var glitchLV3counter = 3;
 var x;
+var j;
 // Glitch constructor
 //
 // Sets the glitch properties
-function Glitch(x,y,vx,vy,size,speed) {
-  this.x = x;
-  this.y = y;
-  this.vx = vx;
-  this.vy = vy;
-  this.size = size;
-  this.level1 = false;
-  this.level2 = false;
-  this.level3 = false;
-  this.level4 = false;
+function Glitch( x, y, vx, vy, size, speed ) {
+	this.x = x;
+	this.y = y;
+	this.vx = vx;
+	this.vy = vy;
+	this.size = size;
+	this.alive = true;
+	this.level1 = false;
+	this.level2 = false;
+	this.level3 = false;
+	this.level4 = false;
 }
 
 // update()
@@ -32,50 +39,80 @@ function Glitch(x,y,vx,vy,size,speed) {
 // Level 4 generates glitches randomly (12 Glitches)
 // To beat the game must collect a total of (33 Glitches)
 // off left or right side.
-Glitch.prototype.update = function () {
-	for (var i = 0; i < 5; i++) {
-  		glitchesLV1.push(new Glitch(random(100,canvas1Width-100),random(100,canvas1Height-100),0,0,10,0));
-	}
-	for (x = 0; x < 1; x++) {
-		glitchesLV2.push(new Glitch(random(740,width-20),random(20,375),0,0,10,0));
-	}
-}
 // display()
 //
-// Draw the glitch on screen
-Glitch.prototype.display = function () {
+// Draw the glitch on screen if the glitch is dead don't display
+Glitch.prototype.display = function() {
+	if ( !this.alive ) {
+		return;
+	}
 	push();
-	fill(255,0,0);
-  	rect(this.x, this.y,this.size,this.size);
+	fill( 255, 0, 0 );
+	rect( this.x, this.y, this.size, this.size );
 	pop();
 }
 
 // handleCollision(paddle)
 //
-// Check if the ball overlaps the glitch passed as an argument
-// and if so make the glitch disappear
-// Q:how can I have this work through all the Glitches without repeating
-// Q:how would I make these Glitches disappear (make their fills black?)
-Glitch.prototype.handleCollision = function() {
-  // PONG GLITCH
-  // Check if the ball overlaps the paddle on x axis
-  if (ball.x + ball.size > glitchesLV1[0].x && ball.x < glitchesLV1[0].x + 20) {
-    // Check if the ball overlaps the paddle on y axis
-    if (ball.y + ball.size > glitchesLV1[0].y && ball.y < glitchesLV1[0].y + 20) {
-	   glitchesLV1[0].x = 100;
-	   glitchesLV1[0].y = 100;
-	   this.level1 = true;
-    }
-  }
-  //LOVERS Glitch
-  if (player.x + player.w > glitchesLV2[0].x && player.x < glitchesLV2[0].x +20){
-	  if (player.y + player.h > glitchesLV2[0].y && player.y < glitchesLV2[0].y + 20){
-		  console.log("you got me");
-		  x -= 1;
-		  glitchLV2counter -= 1;
-	  }
-  }
-  if (glitchLV2counter === 0) {
-	  this.level2 = true;
-  }
+// Check if anything overlaps the glitch passed as an argument
+// and if so make the glitch disappear and count it.
+Glitch.prototype.handleCollision = function( other ) {
+	if ( !this.alive ) {
+		return;
+	}
+	// Check if the ball overlaps the paddle on x axis
+	if ( other.x + other.w > this.x && other.x < this.x + 20 ) {
+		// Check if the ball overlaps the paddle on y axis
+		if ( other.y + other.h > this.y && other.y < this.y + 20 ) {
+			this.alive = false;
+			glitchcounter += 1;
+			// Lovers glitch manager
+			// adds a single glitch to the visual so long as the glitchs collect are between 6 & 12
+			if ( glitchcounter >= 6 && glitchcounter <= 12 ) {
+				glitchLV2counter++;
+			}
+			// Dodgers glitch manager
+			// adds 3 glitches when you've collected 15 glitches
+			if ( glitchcounter === 15 ) {
+				glitchLV3counter += 3;
+			}
+			// adds 3 glitches when you've collected 18 glitches
+			if ( glitchcounter === 18 ) {
+				glitchLV3counter += 3;
+			}
+		}
+	}
+}
+
+//handleLevels();
+//
+// manages which levels have been completed also triggers winning sign if level4 is true
+Glitch.prototype.handleLevels = function() {
+	if ( glitchcounter === 5 ) {
+		this.level1 = true;
+		push();
+		fill( 255, 0, 0 );
+		textSize( 20 );
+		text( "press space to play game", 800, 100 );
+		console.log( "SSRPESS TO SLAPE" )
+		pop();
+	}
+	if ( glitchcounter === 12 ) {
+		this.level2 = true;
+		textSize( 20 );
+		text( "press space to play game", 800, 400 );
+	}
+	if ( glitchcounter === 21 ) {
+		this.level3 = true;
+		textSize( 20 );
+		text( "press space to play game", 100, 400 );
+	}
+	if ( glitchcounter === 33 ) {
+		this.level4 = true;
+	}
+	if ( this.level4 === true ) {
+		textSize( 50 );
+		text( "YOU'RE A WINNER!", 640, 395 );
+
+	}
 }
