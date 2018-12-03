@@ -15,7 +15,8 @@
 // Universal Variables
 var player;
 var glitch;
-
+var glitchImage;
+var glitchSprite;
 // Pong Variables
 var ball;
 var paddle;
@@ -35,6 +36,8 @@ var canvas2Height = 395
 var doggo;
 
 var s1a1;
+var s1a2;
+var s1a3;
 var talkBox;
 
 //preload()
@@ -45,7 +48,10 @@ function preload() {
 	bulletImage = loadImage( "assets/images/heart.png" );
 	targetImage = loadImage( "assets/images/animals-target.png" );
 	flipImage = loadImage( "assets/images/flip.png" );
-	s1a1 = loadAnimation("assets/images/old_man0.png", "assets/images/old_man5.png");
+	s1a1 = loadAnimation("assets/images/s1a1_0.png", "assets/images/s1a1_5.png");
+	s1a2 = loadAnimation("assets/images/s1a20.png", "assets/images/s1a25.png");
+	s1a3= loadAnimation("assets/images/s1a30.png", "assets/images/s1a35.png");
+	glitchImage = loadAnimation("assets/images/Glitch0.png", "assets/images/Glitch6.png");
 }
 
 // setup()
@@ -85,7 +91,7 @@ function setup() {
 	doggo = new Dog( width / 4, 3 * height / 4, 120, 2 );
 	// Create dialogue box reffered to as TalkBox
 	// TalkBox(x, y, size, talking, str)
-	talkBox = new TalkBox(300,400,200,false,0);
+	talkBox = new TalkBox(300,400,200,0);
 
 	// GLITCH Setup
 	//

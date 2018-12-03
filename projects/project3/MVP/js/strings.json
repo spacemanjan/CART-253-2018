@@ -22,11 +22,18 @@
 			]
 		},
 		{
-			"stageID": "not nice",
+			"stageID": "nice",
 			"branch": "B",
 			"strings": [
 				{"string": "spank me fff", "ID": 6},
-				{"string": "spank me", "ID": 6},
+				{"string": "spank me", "ID": 6}
+			]
+		},
+		{
+			"stageID": "final",
+			"strings": [
+				{"string": "last call", "ID": 6},
+				{"string": "spank me", "ID": 6}
 			]
 		}
 	]

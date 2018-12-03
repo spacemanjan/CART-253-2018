@@ -17,7 +17,6 @@
 			"stageID": "nice",
 			"branch": "A",
 			"strings": [
-				{"string": "spank me", "ID": 6},
 				{"string": "spank me", "ID": 6}
 			]
 		},
@@ -25,8 +24,7 @@
 			"stageID": "not nice",
 			"branch": "B",
 			"strings": [
-				{"string": "spank me fff", "ID": 6},
-				{"string": "spank me", "ID": 6},
+				{"string": "spank me fff", "ID": 6}
 			]
 		}
 	]
