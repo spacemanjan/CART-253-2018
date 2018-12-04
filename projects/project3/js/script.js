@@ -35,9 +35,16 @@ var canvas2Height = 395
 //Sausage
 var doggo;
 
-var s1a1;
-var s1a2;
-var s1a3;
+var scene1;
+var scene2;
+var scene3;
+var scene4;
+var scene5;
+var scene6;
+var scene7;
+var oldman1;
+var oldman2;
+var oldman3;
 var talkBox;
 
 //preload()
@@ -48,10 +55,18 @@ function preload() {
 	bulletImage = loadImage( "assets/images/heart.png" );
 	targetImage = loadImage( "assets/images/animals-target.png" );
 	flipImage = loadImage( "assets/images/flip.png" );
-	s1a1 = loadAnimation("assets/images/s1a1_0.png", "assets/images/s1a1_5.png");
-	s1a2 = loadAnimation("assets/images/s1a20.png", "assets/images/s1a25.png");
-	s1a3= loadAnimation("assets/images/s1a30.png", "assets/images/s1a35.png");
+	scene1 = loadAnimation('assets/images/anim000.png', 'assets/images/anim005.png');
+	scene2 = loadAnimation('assets/images/secondOldman00.png', 'assets/images/secondOldman05.png');
+	scene3 = loadAnimation('assets/images/thirdOldman00.png', 'assets/images/thirdOldman05.png');
+	scene4 = loadAnimation('assets/images/fourthOldMan00.png','assets/images/fourthOldMan05.png');
+	scene5 = loadAnimation('assets/images/fiveOldMan00.png','assets/images/fiveOldMan05.png');
+	scene6 = loadAnimation('assets/images/sixOldMan00.png','assets/images/sixOldMan05.png');
+	scene7 = loadAnimation('assets/images/sevenOldMan00.png','assets/images/sevenOldMan05.png');
 	glitchImage = loadAnimation("assets/images/Glitch0.png", "assets/images/Glitch6.png");
+	oldman1 = loadAnimation('assets/images/oldMan&ball00.png','assets/images/oldMan&ball12.png');
+	oldman2 = loadAnimation('assets/images/oldmanhappy_00.png','assets/images/oldmanhappy_12.png');
+	oldman3 = loadAnimation('assets/images/Ball_00.png','assets/images/Ball_12.png');
+
 }
 
 // setup()
@@ -59,7 +74,7 @@ function preload() {
 // Creates the ball and paddles
 function setup() {
 	//Creates Full Game Canvas
-	createCanvas( 1440, 790 );
+	createCanvas( windowWidth, windowHeight );
 	noStroke();
 
 	// Universal setup
@@ -67,19 +82,19 @@ function setup() {
 	// Create the player with WASD as controls
 	// Keycodes 83,87,68,65 respectively
 	// Paddle(x,y,w,h,speed,downKey,upKey,rightKey,leftKey,score)
-	player = new Paddle( 0, canvas1Height / 2, 10, 60, 10, 83, 87, 68, 65 );
+	player = new Paddle( 0, windowHeight/4, 10, 60, 10, 83, 87, 68, 65 );
 	// Glitch(x,y,vx,vy,size,speed)
 	glitch = new Glitch( 10, 10, 0, 0, 10, 10, 0 );
 	// Create a ball
 	//Ball( x, y, vx, vy, size, speed )
-	ball = new Ball( canvas1Width / 2, canvas1Height / 2, 5, 5, 10, 10 );
+	ball = new Ball( windowWidth/4, windowHeight/4, 5, 5, 10, 10 );
 	// Create the right paddle
 	// AutoPaddle(x,y,w,h,speed)
-	paddle = new AutoPaddle( canvas1Width - 10, canvas1Height / 2, 10, 60, 10 );
+	paddle = new AutoPaddle( windowWidth/2 - 10, windowHeight/4, 10, 60, 10 );
 	// Create Ships
 // Ship(x,y,angle,acceleration,maxSpeed,turningSpeed,shipImage,bulletImage,shootplayer,shootstyle)
-	ship1 = new Ship( 5 * width / 8, canvas2Height / 2, 0, 5, 5, 0.1, shipImage, bulletImage, true, false );
-	ship2 = new Ship( 7 * width / 8, canvas2Height / 2, PI, 5, 5, 0.1, shipImage, bulletImage, false, true );
+	ship1 = new Ship( 5 * windowWidth / 8, windowHeight / 4, 0, 5, 5, 0.1, shipImage, bulletImage, true, false );
+	ship2 = new Ship( 7 * windowWidth / 8, windowHeight / 4, PI, 5, 5, 0.1, shipImage, bulletImage, false, true );
 	//Create dodgers
 	//Dodgers( x, y, size, speed, canvasBleed )
 	car1 = new Dodgers( 864, 592, 50, 5, 100 );
@@ -124,30 +139,43 @@ function draw() {
 	glitch.handleLevels();
 	talkBox.update();
 	talkBox.display();
-	// dialogue.mousePressed();
-	// dialogue.changeStage();
-	// dialogue.changeString();
-	// dialogue.display();
-
-
-	//Pong draw
-	paddle.controler( ball );
-	ball.update();
-	paddle.update();
-	for ( var i = 0; i < 5; i++ ) {
-		glitchesLV1[ i ].display();
-		glitchesLV1[ i ].handleCollision( ball );
-	}
-
-	if ( ball.isOffScreen( true ) ) {
-		ball.reset();
-	}
-	ball.handleCollision();
-	ball.display();
-	paddle.display();
+	level1();
 
 	//Lovers draw
 	if ( glitch.level1 === true ) {
+		level2();
+	}
+	// Dodgers draw
+	if ( glitch.level2 === true ) {
+		level3();
+	}
+	//Sausage Draw
+	if ( glitch.level3 === true ) {
+		level4();
+	}
+}
+	function level1() {
+		paddle.controler( ball );
+		ball.update();
+		paddle.update();
+		if (talkBox.active === false){
+		for ( var i = 0; i < 5; i++ ) {
+			glitchesLV1[ i ].display();
+			glitchesLV1[ i ].handleCollision( ball );
+		}
+	}
+
+		if ( ball.isOffScreen( true ) ) {
+			ball.reset();
+		}
+		ball.handleCollision();
+		ball.display();
+		paddle.display();
+	}
+	function level2() {
+		ship1.display();
+		ship2.display();
+		if (talkBox.active === false){
 		ship1.controller();
 		ship2.controller();
 
@@ -156,9 +184,6 @@ function draw() {
 
 		ship1.updateBullets( player );
 		ship2.updateBullets( player );
-
-		ship1.display();
-		ship2.display();
 		if ( glitch.level2 === false ) {
 			for ( x = 0; x < glitchLV2counter; x++ ) {
 				glitchesLV2[ x ].display();
@@ -166,20 +191,21 @@ function draw() {
 			}
 		}
 	}
-	// Dodgers draw
-	if ( glitch.level2 === true ) {
+}
+	function level3() {
+		car1.display();
+		car2.display();
+		car3.display();
+		car4.display();
+		if (talkBox.active === false){
 		car1.update();
 		car1.reset();
-		car1.display();
 		car2.update();
 		car2.reset();
-		car2.display();
 		car3.update();
 		car3.reset();
-		car3.display();
 		car4.update();
 		car4.reset();
-		car4.display();
 		if ( glitch.level3 === false ) {
 			for ( j = 0; j < glitchLV3counter; j++ ) {
 				glitchesLV3[ j ].display();
@@ -187,10 +213,8 @@ function draw() {
 			}
 		}
 	}
-
-
-	//Sausage Draw
-	if ( glitch.level3 === true ) {
+}
+	function level4(){
 		doggo.update();
 		doggo.display();
 		if ( glitch.level4 === false ) {
@@ -200,4 +224,3 @@ function draw() {
 			}
 		}
 	}
-}

@@ -23,7 +23,7 @@ function Glitch( x, y, vx, vy, size, speed ) {
 	this.vx = vx;
 	this.vy = vy;
 	this.size = size;
-	this.alive = false;
+	this.alive = true;
 	this.level1 = false;
 	this.level2 = false;
 	this.level3 = false;
@@ -89,22 +89,25 @@ Glitch.prototype.handleCollision = function( other ) {
 Glitch.prototype.handleLevels = function() {
 	if ( glitchcounter === 5 ) {
 		this.level1 = true;
+		talkBox.string = 2;
 		push();
 		fill( 255, 0, 0 );
 		textSize( 20 );
 		text( "press space to play game", 800, 100 );
-		console.log( "SSRPESS TO SLAPE" )
+		console.log( "Level1 is true" );
 		pop();
 	}
 	if ( glitchcounter === 12 ) {
 		this.level2 = true;
 		textSize( 20 );
 		text( "press space to play game", 800, 400 );
+		console.log( "Level2 is true");
 	}
 	if ( glitchcounter === 21 ) {
 		this.level3 = true;
 		textSize( 20 );
 		text( "press space to play game", 100, 400 );
+		console.log("Level3 is true");
 	}
 	if ( glitchcounter === 33 ) {
 		this.level4 = true;

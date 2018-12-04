@@ -111,7 +111,8 @@ Ship.prototype.controller = function() {
 			// And they should have a velocity matching the ships' angle
 			// but should travel at maximum speed (thank you pippin)
 			vx: this.maxSpeed * cos( this.angle ),
-			vy: this.maxSpeed * sin( this.angle )
+			vy: this.maxSpeed * sin( this.angle ),
+			alive: this.alive
 		}
 		// Add the bullet to the bullets array of the ship
 		this.bullets.push( newBullet );
@@ -144,7 +145,9 @@ Ship.prototype.updateBullets = function( paddle ) {
 	for ( var i = 0; i < this.bullets.length; i++ ) {
 		// Get the bullet based on its index
 		var bullet = this.bullets[ i ];
-
+		if (bullet.alive === false) {
+			return
+		}
 		// Update its position based on velocity
 		bullet.x += bullet.vx;
 		bullet.y += bullet.vy;
@@ -164,10 +167,8 @@ Ship.prototype.updateBullets = function( paddle ) {
 		// this will allow us to limit the number of bullets on screen at any time
 		// as well maybe play with special bullets that kill you and reset game
 		if ( bullet.x > width || bullet.x < 720 || bullet.y < 0 || bullet.y > canvas2Height ) {
-			bullet.vx = 0;
-			bullet.vy = 0;
-			bullet.x = 10;
-			bullet.y = 10;
+			bullet.alive = false;
+			console.log(bullet.alive);
 			// 	this.bullets.pop();
 			// 	console.log(this.bullets.length)
 		}
@@ -189,6 +190,9 @@ Ship.prototype.display = function() {
 
 	// Go through all the bullets and display the image for each one
 	for ( var i = 0; i < this.bullets.length; i++ ) {
+		if (this.bullets[i].alive === false){
+			return
+		}
 		push();
 		image( bulletImage, this.bullets[ i ].x, this.bullets[ i ].y, 10, 10 );
 		pop();

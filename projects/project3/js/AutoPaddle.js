@@ -5,7 +5,7 @@
 //AutoPaddle constructor
 //
 //Sets the properties with the provided arguments or defaults
-function AutoPaddle( x, y, w, h, speed,score ) {
+function AutoPaddle( x, y, w, h, speed ) {
 	this.x = x;
 	this.y = y;
 	this.vx = 0;
@@ -13,7 +13,6 @@ function AutoPaddle( x, y, w, h, speed,score ) {
 	this.w = w;
 	this.h = h;
 	this.speed = speed;
-	this.score = 0;
 }
 
 // controler()

@@ -38,7 +38,7 @@ function Ship( x, y, angle, acceleration, maxSpeed, turningSpeed, shipImage, bul
 	this.maxBullets = 10;
 	this.bulletCoolDown = 0;
 	this.bulletCoolDownMax = 15;
-	this.alive = true;
+ 	this.alive = true;
 }
 
 // controller()
@@ -91,7 +91,7 @@ Ship.prototype.controller = function() {
 		}
 		// if ship goes all the way to one side then reverse acceleration
 		// creates back and forth across screen
-		if ( this.x === width || this.x === 720 ) {
+		if ( this.x === width || this.x === windowWidth/2 ) {
 			this.acceleration = -this.acceleration;
 		}
 	}
@@ -114,7 +114,9 @@ Ship.prototype.controller = function() {
 			vy: this.maxSpeed * sin( this.angle )
 		}
 		// Add the bullet to the bullets array of the ship
+		if (glitch.level2 === false){
 		this.bullets.push( newBullet );
+	}
 		// Set the cooldown to max so it can start counting down
 		this.bulletCoolDown = this.bulletCoolDownMax;
 	}
@@ -155,8 +157,8 @@ Ship.prototype.updateBullets = function( paddle ) {
 				// If so make the bullets drop to the floor & slow down the paddle
 				bullet.vx = 0;
 				bullet.vy = 0;
-				bullet.y = canvas2Height - 10;
-				paddle.speed -= 1;
+				bullet.y = windowHeight/2 - 2;
+				paddle.editableSpeed -= 1;
 			}
 		}
 		//=========NEED TO UPDATE=====================//
@@ -166,8 +168,8 @@ Ship.prototype.updateBullets = function( paddle ) {
 		if ( bullet.x > width || bullet.x < 720 || bullet.y < 0 || bullet.y > canvas2Height ) {
 			bullet.vx = 0;
 			bullet.vy = 0;
-			bullet.x = 10;
-			bullet.y = 10;
+			bullet.x = -10;
+			bullet.y = -10;
 			// 	this.bullets.pop();
 			// 	console.log(this.bullets.length)
 		}

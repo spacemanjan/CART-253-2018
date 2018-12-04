@@ -8,8 +8,6 @@
 function Paddle( x, y, w, h, speed, downKey, upKey, rightKey, leftKey ) {
 	this.x = x;
 	this.y = y;
-	this.vx = 0;
-	this.vy = 0;
 	this.w = w;
 	this.h = h;
 	this.speed = speed;
@@ -17,6 +15,10 @@ function Paddle( x, y, w, h, speed, downKey, upKey, rightKey, leftKey ) {
 	this.upKey = upKey;
 	this.rightKey = rightKey;
 	this.leftKey = leftKey;
+	//hard coded props
+	this.vx = 0;
+	this.vy = 0;
+	this.editableSpeed = 10;
 	this.contained = false;
 	this.barrier = false;
 	this.hold = false;
@@ -52,6 +54,14 @@ Paddle.prototype.handleInput = function() {
 Paddle.prototype.update = function() {
 	this.y += this.vy;
 	this.x += this.vx;
+
+	this.editableSpeed = constrain(this.editableSpeed, 1,10);
+	if (glitch.level1 === true && glitch.level2 === false){
+		this.speed = this.editableSpeed;
+	}
+	if (glitch.level2 === true){
+		this.speed = this.speed;
+	}
 	// CONSTRAIN TO LEVEL (alot of this is hard coded will be changing that in next update)
 	if ( glitch.level1 === false || glitch.level2 === false ) {
 		this.y = constrain( this.y, 0, canvas1Height - this.h );
