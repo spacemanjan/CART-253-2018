@@ -6,6 +6,9 @@ A class to represent a spaceship that can be controlled with the keyboard.
 Movement is based on turning and acceleration model. The ship can also shoot
 bullets and can be hit by bullets.
 
+*this code was canibalized & modified from Pippin barr's spacelove
+*frankenstining of the code by yann-maurice mcniven
+
 ************************************************************************/
 
 // Ship()
@@ -38,22 +41,17 @@ function Ship( x, y, angle, acceleration, maxSpeed, turningSpeed, shipImage, bul
 	this.maxBullets = 10;
 	this.bulletCoolDown = 0;
 	this.bulletCoolDownMax = 15;
- 	this.alive = true;
+	this.alive = true;
 }
 
 // controller()
 //
 // controles the two ships based on the position of the player and each ships priority
 Ship.prototype.controller = function() {
-	//=========NEED TO UPDATE=============//
-	// maybe the ships should move more interestingly
-	// Also I have a glitch when the player's speed is brought to the absolute lowest
-	// limit, sometimes the controls will reverse and the hearts will begin making him faster
-	// cool bug, switches the game up but still not per my designs.
 	// if ship is shootstyle and player.x is beyond half width turn to the left
-	if ( this.shootstyle === true && this.playtime === true) {
-		if ( player.x > windowWidth/4*3 ) {
-			console.log("right");
+	if ( this.shootstyle === true && this.playtime === true ) {
+		if ( player.x > windowWidth / 2 ) {
+			console.log( "right" );
 			this.angle += this.turningSpeed;
 			this.angle = constrain( this.angle, -2.6, 2.6 );
 			// reverse the turningspeed if the ship reaches maximum angle
@@ -64,22 +62,10 @@ Ship.prototype.controller = function() {
 				this.turningSpeed = -this.turningSpeed;
 			}
 		}
-		// if player.x is less then half width turn to the right
-		else if ( player.x > windowWidth/4*3) {
-			console.log("left");
-			this.angle -= this.turningSpeed;
-			this.angle = constrain( this.angle, -2, 5 );
-			// wobble effect
-			if ( this.angle === -2 ) {
-				this.turningSpeed = -this.turningSpeed;
-			} else if ( this.angle === 5 ) {
-				this.turningSpeed = -this.turningSpeed;
-			}
-		}
 	}
 	// if ship is shootplayer and player position is above or below half height
 	// ship will turn facing up or down and move left and right across the screen
-	if ( this.shootplayer === true && this.playtime === true) {
+	if ( this.shootplayer === true && this.playtime === true ) {
 		this.x += this.acceleration;
 		if ( player.y > canvas2Height / 2 ) {
 			this.angle += this.turningSpeed;
@@ -90,7 +76,7 @@ Ship.prototype.controller = function() {
 		}
 		// if ship goes all the way to one side then reverse acceleration
 		// creates back and forth across screen
-		if ( this.x === width || this.x === windowWidth/2 ) {
+		if ( this.x === width || this.x === windowWidth / 2 ) {
 			this.acceleration = -this.acceleration;
 		}
 	}
@@ -99,8 +85,7 @@ Ship.prototype.controller = function() {
 	this.bulletCoolDown -= 0.2;
 	// Constrain the bullet cooldown to avoid weird numbers (Thank you Pippin)
 	this.bulletCoolDown = constrain( this.bulletCoolDown - 1, 0, this.bulletCoolDownMax )
-	//==========NEEDS UPDATING====================//
-	// bullets will begin being shot after dialogue
+
 	if ( this.bulletCoolDown === 0 && this.playtime === true ) {
 		// Create a bullet as an object with position and velocity
 		var newBullet = {
@@ -113,9 +98,9 @@ Ship.prototype.controller = function() {
 			vy: this.maxSpeed * sin( this.angle )
 		}
 		// Add the bullet to the bullets array of the ship
-		if (glitch.level2 === false){
-		this.bullets.push( newBullet );
-	}
+		if ( glitch.level2 === false ) {
+			this.bullets.push( newBullet );
+		}
 		// Set the cooldown to max so it can start counting down
 		this.bulletCoolDown = this.bulletCoolDownMax;
 	}
@@ -140,8 +125,6 @@ Ship.prototype.update = function() {
 // Check if they hit the other ship and update its size
 Ship.prototype.updateBullets = function( paddle ) {
 	// Go through all the bullets of this ship
-	// (Note this is hugely inefficient since it still looks at bullets that were fired long ago,
-	// we should really remove those from the array!)
 	for ( var i = 0; i < this.bullets.length; i++ ) {
 		// Get the bullet based on its index
 		var bullet = this.bullets[ i ];
@@ -156,7 +139,7 @@ Ship.prototype.updateBullets = function( paddle ) {
 				// If so make the bullets drop to the floor & slow down the paddle
 				bullet.vx = 0;
 				bullet.vy = 0;
-				bullet.y = windowHeight/2 - 2;
+				bullet.y = windowHeight / 2 - 2;
 				paddle.editableSpeed -= 1;
 			}
 		}
@@ -169,8 +152,6 @@ Ship.prototype.updateBullets = function( paddle ) {
 			bullet.vy = 0;
 			bullet.x = -10;
 			bullet.y = -10;
-			// 	this.bullets.pop();
-			// 	console.log(this.bullets.length)
 		}
 	}
 }

@@ -9,6 +9,7 @@ var glitchesLV1 = [];
 var glitchesLV2 = [];
 var glitchesLV3 = [];
 var glitchesLV4 = [];
+var glitchesEnd = [];
 var glitchcounter = 0;
 var glitchLV2counter = 1;
 var glitchLV3counter = 3;
@@ -17,11 +18,9 @@ var j;
 // Glitch constructor
 //
 // Sets the glitch properties
-function Glitch( x, y, vx, vy, size, speed ) {
+function Glitch( x, y, size ) {
 	this.x = x;
 	this.y = y;
-	this.vx = vx;
-	this.vy = vy;
 	this.size = size;
 	this.alive = true;
 	this.level1 = false;
@@ -48,7 +47,7 @@ Glitch.prototype.display = function() {
 		return;
 	}
 	push();
-	animation(glitchImage,this.x,this.y);
+	animation( glitchImage, this.x, this.y );
 	pop();
 }
 
@@ -86,7 +85,6 @@ Glitch.prototype.handleCollision = function( other ) {
 
 //handleLevels();
 //
-// manages which levels have been completed also triggers winning sign if level4 is true
 Glitch.prototype.handleLevels = function() {
 	if ( glitchcounter === 5 ) {
 		this.level1 = true;

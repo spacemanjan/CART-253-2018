@@ -18,7 +18,6 @@ function AutoPaddle( x, y, w, h, speed ) {
 // controler()
 //
 // Very rudimentary auto pilot, tracks the y of the ball so it always catches it
-//==========NEEDS WORK (FUTURE)==================//
 AutoPaddle.prototype.controler = function( ball ) {
 	this.vy = ball.vy;
 }

@@ -1,3 +1,11 @@
+//talkBox
+//
+// class which serves as the dialogue manager for the entier game
+// consists of many animations stored in the animations folder,
+// a string variable manages which scenes are playing as well as reseting the talking to 0
+// an active boolean is used to check for display.
+
+
 function TalkBox( x, y, size, str ) {
 	this.x = x;
 	this.y = y;
@@ -10,7 +18,7 @@ function TalkBox( x, y, size, str ) {
 
 
 TalkBox.prototype.update = function() {
-console.log(this.string, this.talking);
+	console.log( this.string, this.talking );
 	if ( this.active === true ) {
 		if ( keyWentDown( 32 ) ) {
 			this.talking += 1;
@@ -39,29 +47,29 @@ console.log(this.string, this.talking);
 	if ( this.string === 7 ) {
 		this.active = true;
 	}
-	if (this.string === 7 && this.talking === 7){
+	if ( this.string === 7 && this.talking === 7 ) {
 		this.active = false;
 	}
-	if (this.string === 9) {
+	if ( this.string === 9 ) {
 		this.active = true;
 	}
-	if (this.string === 9 && this.talking === 2){
+	if ( this.string === 9 && this.talking === 2 ) {
 		this.active = false;
 	}
 }
 
 
 TalkBox.prototype.display = function() {
-	if (this.string === 2){
+	if ( this.string === 2 ) {
 		this.talking = 1;
 	}
-	if (this.string === 4){
+	if ( this.string === 4 ) {
 		this.talking = 1;
 	}
-	if (this.string === 6){
+	if ( this.string === 6 ) {
 		this.talking = 1;
 	}
-	if (this.string === 8){
+	if ( this.string === 8 ) {
 		this.talking = 1;
 	}
 	if ( this.active === true ) {
@@ -90,57 +98,57 @@ TalkBox.prototype.display = function() {
 			} else if ( this.talking === 3 ) {
 				animation( oldman3, this.x, this.y );
 			} else if ( this.talking === 4 ) {
-				animation( loveruno1, this.x * 4-80, this.y );
+				animation( loveruno1, this.x * 4 - 80, this.y );
 			} else if ( this.talking === 5 ) {
-				animation( loverduo1, this.x * 4-80, this.y );
+				animation( loverduo1, this.x * 4 - 80, this.y );
 			} else if ( this.talking === 6 ) {
-				animation( loveruno2, this.x * 4-80, this.y );
+				animation( loveruno2, this.x * 4 - 80, this.y );
 			} else if ( this.talking === 7 ) {
-				animation( loverduo2, this.x * 4-80, this.y );
+				animation( loverduo2, this.x * 4 - 80, this.y );
 			} else if ( this.talking === 8 ) {
-				animation( couple1, this.x * 4-80, this.y );
+				animation( couple1, this.x * 4 - 80, this.y );
 			} else if ( this.talking === 9 ) {
-				animation( couple2, this.x * 4-80, this.y );
+				animation( couple2, this.x * 4 - 80, this.y );
 			}
 		}
 		if ( this.string === 5 ) {
 			if ( this.talking === 1 ) {
-				animation( couple3, this.x * 4-80, this.y );
+				animation( couple3, this.x * 4 - 80, this.y );
 			} else if ( this.talking === 2 ) {
-				animation(loverunohappy, this.x * 4-80, this.y );
+				animation( loverunohappy, this.x * 4 - 80, this.y );
 			} else if ( this.talking === 3 ) {
-				animation( balllead1, this.x * 4-80, this.y+290 );
+				animation( balllead1, this.x * 4 - 80, this.y + 290 );
 			} else if ( this.talking === 4 ) {
-				animation( brothers, this.x * 4-80, this.y+290 );
+				animation( brothers, this.x * 4 - 80, this.y + 290 );
 			} else if ( this.talking === 5 ) {
-				animation( balllead2, this.x * 4-80, this.y+290 );
+				animation( balllead2, this.x * 4 - 80, this.y + 290 );
 			} else if ( this.talking === 6 ) {
-				animation( brothers2, this.x * 4-80, this.y+290 );
+				animation( brothers2, this.x * 4 - 80, this.y + 290 );
 			} else if ( this.talking === 7 ) {
-				animation( balllead3, this.x * 4-80, this.y+290 );
+				animation( balllead3, this.x * 4 - 80, this.y + 290 );
 			} else if ( this.talking === 8 ) {
-				animation( balllead4, this.x * 4-80, this.y+290 );
+				animation( balllead4, this.x * 4 - 80, this.y + 290 );
 			}
 		}
-		if (this.string === 7){
+		if ( this.string === 7 ) {
 			if ( this.talking === 1 ) {
- 			   animation( balllead5, this.x * 4-80, this.y+290 );
- 		   } else if ( this.talking === 2 ) {
- 			   animation( ballbro1, this.x * 4-80, this.y+290 );
- 		   } else if ( this.talking === 3 ) {
- 			   animation( ballbro2, this.x * 4-80, this.y+290 );
- 		   } else if ( this.talking === 4 ) {
- 			   animation( ballbro3, this.x * 4-80, this.y+290 );
- 		   } else if ( this.talking === 5 ) {
- 			   animation( balllead6, this.x * 4-80, this.y+290 );
- 		   } else if ( this.talking === 6 ) {
- 			   animation( pup, this.x, this.y+290 );
- 		   }
+				animation( balllead5, this.x * 4 - 80, this.y + 290 );
+			} else if ( this.talking === 2 ) {
+				animation( ballbro1, this.x * 4 - 80, this.y + 290 );
+			} else if ( this.talking === 3 ) {
+				animation( ballbro2, this.x * 4 - 80, this.y + 290 );
+			} else if ( this.talking === 4 ) {
+				animation( ballbro3, this.x * 4 - 80, this.y + 290 );
+			} else if ( this.talking === 5 ) {
+				animation( balllead6, this.x * 4 - 80, this.y + 290 );
+			} else if ( this.talking === 6 ) {
+				animation( pup, this.x, this.y + 290 );
+			}
 		}
 		if ( this.string === 9 ) {
 			if ( this.talking === 1 ) {
-			   animation( happypup, this.x , this.y+290 );
-		   }
+				animation( happypup, this.x, this.y + 290 );
+			}
 		}
 	}
 }
