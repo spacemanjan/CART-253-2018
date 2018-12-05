@@ -28,6 +28,7 @@ function Glitch( x, y, vx, vy, size, speed ) {
 	this.level2 = false;
 	this.level3 = false;
 	this.level4 = false;
+	this.game = false;
 }
 
 // update()
@@ -59,10 +60,10 @@ Glitch.prototype.handleCollision = function( other ) {
 	if ( !this.alive ) {
 		return;
 	}
-	// Check if the ball overlaps the paddle on x axis
-	if ( other.x + other.w > this.x && other.x < this.x + 20 ) {
+	// Check if the ball overlaps the object on x axis
+	if ( other.x + other.w > this.x - 20 && other.x < this.x + 20 ) {
 		// Check if the ball overlaps the paddle on y axis
-		if ( other.y + other.h > this.y && other.y < this.y + 20 ) {
+		if ( other.y + other.h > this.y - 10 && other.y < this.y + 10 ) {
 			this.alive = false;
 			glitchcounter += 1;
 			// Lovers glitch manager
@@ -89,32 +90,21 @@ Glitch.prototype.handleCollision = function( other ) {
 Glitch.prototype.handleLevels = function() {
 	if ( glitchcounter === 5 ) {
 		this.level1 = true;
-		talkBox.string = 2;
-		push();
-		fill( 255, 0, 0 );
-		textSize( 20 );
-		text( "press space to play game", 800, 100 );
-		console.log( "Level1 is true" );
-		pop();
+		talkBox.string = 3;
 	}
 	if ( glitchcounter === 12 ) {
 		this.level2 = true;
-		textSize( 20 );
-		text( "press space to play game", 800, 400 );
-		console.log( "Level2 is true");
+		talkBox.string = 5;
 	}
 	if ( glitchcounter === 21 ) {
 		this.level3 = true;
-		textSize( 20 );
-		text( "press space to play game", 100, 400 );
-		console.log("Level3 is true");
+		talkBox.string = 7;
 	}
 	if ( glitchcounter === 33 ) {
+		talkBox.string = 9;
 		this.level4 = true;
 	}
 	if ( this.level4 === true ) {
-		textSize( 50 );
-		text( "YOU'RE A WINNER!", 640, 395 );
-
+		this.game = true;
 	}
 }

@@ -43,12 +43,6 @@ Ball.prototype.update = function() {
 Ball.prototype.isOffScreen = function() {
 	// Check for going off screen and reset if so
 	if ( this.x + this.w < 0 || this.x > canvas1Width ) {
-		if (this.x < 0) {
-	  // reverse the velocity to send the ball to the right side
-		this.vx = 5;
-		this.vy = -this.vy;
-		this.vy = random(-this.vy, this.vy);
-	}
 		return true;
 	} else {
 		return false;
@@ -87,7 +81,6 @@ Ball.prototype.handleCollision = function() {
 			this.y -= this.vy;
 			// Reverse x velocity to bounce
 			this.vx = -this.vx;
-			this.vy = map(player.y - this.y, -player.h, player.h*2, this.speed/2, -this.speed/2);
 		}
 	}
 }

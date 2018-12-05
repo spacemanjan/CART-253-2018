@@ -50,13 +50,11 @@ Ship.prototype.controller = function() {
 	// Also I have a glitch when the player's speed is brought to the absolute lowest
 	// limit, sometimes the controls will reverse and the hearts will begin making him faster
 	// cool bug, switches the game up but still not per my designs.
-	if ( keyIsDown( 32 ) ) {
-		this.playtime = true;
-	}
 	// if ship is shootstyle and player.x is beyond half width turn to the left
-	if ( this.shootstyle === true && this.playtime === true ) {
-		if ( player.x > canvas2Width / 2 ) {
-			this.angle -= this.turningSpeed;
+	if ( this.shootstyle === true && this.playtime === true) {
+		if ( player.x > windowWidth/4*3 ) {
+			console.log("right");
+			this.angle += this.turningSpeed;
 			this.angle = constrain( this.angle, -2.6, 2.6 );
 			// reverse the turningspeed if the ship reaches maximum angle
 			// creates wobbled shooting
@@ -67,11 +65,12 @@ Ship.prototype.controller = function() {
 			}
 		}
 		// if player.x is less then half width turn to the right
-		else if ( player.x < canvas2Width / 2 ) {
-			this.angle += this.turningSpeed;
-			this.angle = constrain( this.angle, 2, 5 );
+		else if ( player.x > windowWidth/4*3) {
+			console.log("left");
+			this.angle -= this.turningSpeed;
+			this.angle = constrain( this.angle, -2, 5 );
 			// wobble effect
-			if ( this.angle === 2 ) {
+			if ( this.angle === -2 ) {
 				this.turningSpeed = -this.turningSpeed;
 			} else if ( this.angle === 5 ) {
 				this.turningSpeed = -this.turningSpeed;
@@ -80,7 +79,7 @@ Ship.prototype.controller = function() {
 	}
 	// if ship is shootplayer and player position is above or below half height
 	// ship will turn facing up or down and move left and right across the screen
-	if ( this.shootplayer === true && this.playtime === true ) {
+	if ( this.shootplayer === true && this.playtime === true) {
 		this.x += this.acceleration;
 		if ( player.y > canvas2Height / 2 ) {
 			this.angle += this.turningSpeed;

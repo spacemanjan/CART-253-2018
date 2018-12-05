@@ -14,7 +14,7 @@ function Dodgers( x, y, size, speed, canvasBleed ) {
 	this.speed = speed;
 	this.canvasBleed = canvasBleed;
 	this.speedIncrease = 0.5;
-	this.smash = false;
+
 }
 
 
@@ -22,11 +22,6 @@ function Dodgers( x, y, size, speed, canvasBleed ) {
 // Update y position based on speed & speedIncrease
 // also starts their movements after player presses space.
 Dodgers.prototype.update = function() {
-	// if player presses SPACE then begin motion
-	if ( keyIsDown( 32 ) ) {
-		this.smash = true;
-	}
-	if ( this.smash === true ) {
 		this.y += this.speed;
 		this.speed = constrain( this.speed, 1, 11 );
 		// Wrapper based on canvasBleed of each individual dodger
@@ -35,14 +30,13 @@ Dodgers.prototype.update = function() {
 			this.speed += this.speedIncrease;
 		}
 	}
-}
 
 //reset()
 //
 // reset's the player to the left side if they touche a dodger
 Dodgers.prototype.reset = function() {
 
-	if ( dist( this.x, this.y, player.x, player.y ) < this.size / 2 + player.w * 2 ) {
+	if ( dist( this.x, this.y, player.x, player.y ) < this.size - player.w) {
 		player.x = 750;
 		player.y = 3 * height / 4;
 	}

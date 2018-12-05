@@ -10,6 +10,8 @@ function Dog( x, y, size, speed ) {
 	this.x = x;
 	this.y = y;
 	this.vx = 0;
+	this.w = size;
+	this.h = size;
 	this.size = size;
 	this.speed = speed;
 	this.acceleration = 0.05;
@@ -47,9 +49,8 @@ Dog.prototype.update = function() {
 //======NEED TO UPDATE===============//
 // it can be much improved, the dog still goes through the paddle at times I want to know if there's a trick to fix this
 Dog.prototype.handleCollision = function() {
-	if ( this.x > player.x && this.x <= player.x + player.w ) {
-		// Check if the dog hits the paddle
-		if ( this.y > player.y && this.y <= player.y + player.h ) {
+	if ( this.x > player.x - player.w && this.x < player.x + player.w*2 ) {
+		if ( this.y > player.y - player.h && this.y < player.y + player.h) {
 			// If so, move dog back to previous position (by subtracting current velocity)
 			this.x -= this.size / 2;
 			this.size = -this.size;
